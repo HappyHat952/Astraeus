@@ -1,0 +1,4 @@
+teams.foes.farmer.TheFarmer
+100
+teams.foes.rock.TheRock
+100

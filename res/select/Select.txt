@@ -1,4 +1,4 @@
 teams.foes.farmer.TheFarmer
-100
+600
 teams.foes.rock.TheRock
 100

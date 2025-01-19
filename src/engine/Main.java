@@ -16,7 +16,6 @@ public class Main extends StateBasedGame
     public static final int SELECTION_BATTLE_ID  = 3;
     public static final int GAME_ID  = 4;
     public static final int END_ID  = 5;
-       
     private final BasicGameState title;
     private final BasicGameState selectionBattle;
     private final BasicGameState game;

@@ -324,10 +324,10 @@ public class Analysis {
         return x;
     }
 
-//    public static void setGroupSize(int i)
-//    {
-//        PlotzUnit.setGroupSize(i);
-//    }
+    public static void setGroupSize(int i)
+    {
+        //PlotzUnit.setGroupSize(i);
+    }
 
     //OLD STUFF
 

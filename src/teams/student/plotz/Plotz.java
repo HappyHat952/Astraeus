@@ -57,12 +57,13 @@ public class Plotz extends Player
 
 	public void strategy()
 	{
-
-		if(countMyUnits(Catcher.class)<2) {
-			buildUnit(new Catcher(this));
-		} else if (getFleetValueUnitPercentage(Gatherer.class) < .25f) {
+//
+//		if(countMyUnits(Catcher.class)<2) {
+//			buildUnit(new Catcher(this));
+//		} else
+			if (getFleetValueUnitPercentage(Gatherer.class) < .20f) {
 			buildUnit(new Gatherer(this));
-		} else if (getFleetValueUnitPercentage(Miner.class) < .25f) {
+		} else if (getFleetValueUnitPercentage(Miner.class) < .20f) {
 			buildUnit(new Miner(this));
 		} else {
 			buildUnit(new Fighter(this));
@@ -71,11 +72,11 @@ public class Plotz extends Player
 		// identify where attack is happening
 		// pool up there
 
-//		Analysis.setGroupSize(7);
-		//BUILD RESOURCES:
-		// when we have fewer resources
-		// when we are going against healer
-		// at the very beginning
+		Analysis.setGroupSize(7);
+//		BUILD RESOURCES:
+//		 when we have fewer resources
+//		 when we are going against healer
+//		 at the very beginning
 //		if (Game.getTime() > 600*60 )
 //		{
 //			strategy = "tooLateToBuild";
@@ -94,16 +95,16 @@ public class Plotz extends Player
 //			PlotzUnit.setRallyPoint(1f);
 //			buildUnits(0.2f, 0.2f, 0.4f, 0.2f, 0.f);
 //		}
-//		//DEFEND MINERS AND GATHERERS:
-//		// when skirmishers are coming
-//		// also heavily protect the base
-//
-//		// AGAINST BIG ARMY
-//		// need skirmishers (break their economy)
-//		// bigger enemies and mods (determine later
-//		// few baits
-//
-//		// AGAINST PULLERS
+		//DEFEND MINERS AND GATHERERS:
+		// when skirmishers are coming
+		// also heavily protect the base
+
+		// AGAINST BIG ARMY
+		// need skirmishers (break their economy)
+		// bigger enemies and mods (determine later
+		// few baits
+
+		// AGAINST PULLERS
 //		if (EnemyAnalysis.hasPullers() && strategy.equals("generalFight"))
 //		{
 //			Analysis.setGroupSize(10);
@@ -129,7 +130,7 @@ public class Plotz extends Player
 
 		addMessage(String.valueOf(takenResources.size()));
 		if (Game.getTime() % 120 == 0) {
-//			Analysis.analyzePlayers();
+			Analysis.analyzePlayers();
 			safeResources = getSafeResources();
 			safeNodes = getSafeNodes();
 		}

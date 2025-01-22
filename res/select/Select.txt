@@ -1,4 +1,4 @@
 teams.student.plotz.Plotz
-600
-teams.foes.dummy.Dummy
+100
+teams.foes.vanguard.TheVanguard
 100

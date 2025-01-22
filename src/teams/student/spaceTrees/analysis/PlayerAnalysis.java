@@ -1,0 +1,128 @@
+package teams.student.spaceTrees.analysis;
+
+import components.weapon.economy.Collector;
+import components.weapon.economy.Drillbeam;
+import engine.Values;
+import objects.entity.unit.Unit;
+import org.newdawn.slick.geom.Point;
+import player.Player;
+
+import java.util.ArrayList;
+
+// stores information about players
+public class PlayerAnalysis {
+    static Player player;
+    static int totalSize;
+    static int fighterSize;
+    static int gathererSize;
+    static int minerSize;
+    static int minGatSize; // enemy miner AND gatherer total
+    static float fighterAvgMaxSpeed;
+    static Point avgFighterLocation;
+    static Point avgMinGatLocation;
+    static Point nearestFighterLocation;
+
+    static String strategy;
+
+    static ArrayList<Unit> allUnits = new ArrayList<>();
+    static ArrayList<Unit> allFighterUnits = new ArrayList<>();
+    static ArrayList<Unit> allGathererUnits = new ArrayList<>();
+    static ArrayList<Unit> allMinerUnits = new ArrayList<>();
+
+    // SETS THE PLAYER
+
+    static public void setPlayer( Player p){ player = p; }
+
+
+    static public Player getPlayer(){							return player;}
+
+    static public int getTotalSize(){							return totalSize;}
+    static public int getFighterSize(){					    	return fighterSize;}
+    static public int getMinerSize(){							return minerSize;}
+    static public int getGathererSize(){						return gathererSize;}
+    static public int getMinerAndGathererSize(){				return gathererSize + minerSize;}
+
+    static public ArrayList<Unit> getAllUnits(){				return allUnits;}
+    static public ArrayList<Unit> getFighters(){				return allFighterUnits;}
+    static public ArrayList<Unit> getMiners(){					return allMinerUnits;}
+    static public ArrayList<Unit> getGatherers(){				return allMinerUnits;}
+
+    //static public ArrayList<Unit> getMinerAndGathers(){			return allEnemyMinerUnits;}
+
+
+    static public float getAverageFighterSpeed(){					return fighterAvgMaxSpeed;};
+    static public Point getAvgFighterLocation(){					return avgFighterLocation;}
+    static public Point getAvgMinerAndGathererLocation(){			return avgFighterLocation;}
+    static public Point getNearestFighter(){						return nearestFighterLocation;}
+
+
+    public static void resetVariables()
+    {
+
+    }
+    public static void analyzePlayer()
+    {
+        //OPPONENT: General Variables
+        allUnits = player.getMyUnits();
+        totalSize = allUnits.size();
+
+        //temp variables
+        float tempSpeed = 0;
+        float xFight =0;
+        float yFight = 0;
+        float xMinGat = 0;
+        float yMinGat = 0;
+
+        //loops through all ENEMIES to find data
+        for (Unit e: allUnits)
+        {
+            //FIGHTER units counted and put in list, adds to total speed
+            if (!e.hasComponent(Collector.class) && !e.hasComponent(Drillbeam.class)) {
+
+                if(!allFighterUnits.contains(e))
+                {
+                    allFighterUnits.add(e);
+                    fighterSize = allFighterUnits.size();
+                }
+
+                tempSpeed += e.getMaxSpeed();
+                xFight += e.getX();
+                yFight += e.getY();
+            }
+            //GATHERER units counted and put in list
+            else if (e.hasComponent(Collector.class)) {
+
+                if(!allGathererUnits.contains(e))
+                {
+                    allGathererUnits.add(e);
+                    gathererSize = allGathererUnits.size();
+                }
+
+                xMinGat += e.getX();
+                yMinGat += e.getY();
+            }
+            //MINER units counted and put in list
+            else if (e.hasComponent(Drillbeam.class)) {
+
+                if (!allMinerUnits.contains(e))
+                {
+                    allMinerUnits.add(e);
+                    minerSize = allMinerUnits.size();
+                }
+
+                xMinGat += e.getX();
+                yMinGat += e.getY();
+            }
+
+        }
+
+        minGatSize = gathererSize + minerSize;
+
+        //AVERAGE SPEED & LOCATION
+        fighterAvgMaxSpeed =  tempSpeed/totalSize/ Values.SPEED;
+        avgFighterLocation = new Point(xFight/fighterSize, yFight/fighterSize);
+        avgMinGatLocation = new Point (xMinGat/minGatSize, yMinGat/minGatSize);
+
+
+    }
+}

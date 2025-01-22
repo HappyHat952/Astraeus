@@ -58,10 +58,11 @@ public class Plotz extends Player
 	public void strategy()
 	{
 //
-//		if(countMyUnits(Catcher.class)<2) {
-//			buildUnit(new Catcher(this));
-//		} else
-			if (getFleetValueUnitPercentage(Gatherer.class) < .20f) {
+		if(countMyUnits(Catcher.class)<2) {
+			buildUnit(new Catcher(this));
+		} else
+
+		if (getFleetValueUnitPercentage(Gatherer.class) < .20f) {
 			buildUnit(new Gatherer(this));
 		} else if (getFleetValueUnitPercentage(Miner.class) < .20f) {
 			buildUnit(new Miner(this));

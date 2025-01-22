@@ -42,16 +42,16 @@ public class Gatherer extends PlotzUnit {
 
 	public void returnResources() {
 //		fix dump logic
-//        moveTo(getHomeBase());
-//        if (getDistance(getHomeBase()) < 3000) {
-//            timer++;
-//            if (timer > 240) {
-//                dump();
-//                dumpTimer = 500;
-//                timer = 0;
-//
-//            }
-//        }
+        moveTo(getHomeBase());
+        if (getDistance(getHomeBase()) < 3000) {
+            timer++;
+            if (timer > 240) {
+                dump();
+                dumpTimer = 500;
+                timer = 0;
+
+            }
+        }
 
 		if(isFull())
 		{

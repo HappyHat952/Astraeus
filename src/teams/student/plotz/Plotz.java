@@ -27,12 +27,12 @@ public class Plotz extends Player
 	public void setup()
 	{		
 		setName("Plotz");
-		setTeamImage("src/teams/student/plotz/plotzLogo.png");
+        setTeamImage("src/teams/student/plotz/plotz.png");
 		setTitle("plotzing to success");
 
-		setColorPrimary(170, 170, 170);
-		setColorSecondary(200, 200, 50);
-		setColorAccent(255, 255, 255);
+		setColorPrimary(96, 130, 182);
+		setColorSecondary(201, 15, 2);
+		setColorAccent(0, 0, 0);
 
 		start = true;
 
@@ -61,11 +61,18 @@ public class Plotz extends Player
 //		if(countMyUnits(Catcher.class)<2) {
 //			buildUnit(new Catcher(this));
 //		} else
-			if (getFleetValueUnitPercentage(Gatherer.class) < .20f) {
+
+		if (getFleetValueUnitPercentage(Gatherer.class) < .20f)
+		{
 			buildUnit(new Gatherer(this));
-		} else if (getFleetValueUnitPercentage(Miner.class) < .20f) {
+		}
+		else if (getFleetValueUnitPercentage(Miner.class) < .20f)
+		{
+
 			buildUnit(new Miner(this));
-		} else {
+		}
+		else
+		{
 			buildUnit(new Fighter(this));
 		}
 		// AGAINST SMALL ATTACK

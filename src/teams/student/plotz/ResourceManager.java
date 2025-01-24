@@ -14,6 +14,7 @@ public class ResourceManager {
     public static ArrayList<Resource> takenResources = new ArrayList<Resource>();
     public static ArrayList<Resource> availableResources;
     public static ArrayList<Resource> allResources;
+    final static private int SAFE_DISTANCE = 3000;
 
     public ResourceManager()
     {
@@ -63,7 +64,7 @@ public class ResourceManager {
     public static boolean isSafe(Resource r) {
         ArrayList<Unit> enemies = EnemyAnalysis.getFighters();
         for(Unit u: enemies) {
-            if (u.getDistance(r) < 3000) {
+            if (u.getDistance(r) < SAFE_DISTANCE) {
                 return false;
             }
         }
@@ -74,7 +75,7 @@ public class ResourceManager {
         ArrayList<Unit> enemies = EnemyAnalysis.getFighters();
 
         for(Unit u: enemies) {
-            if (u.getDistance(n) < 3000) {
+            if (u.getDistance(n) < SAFE_DISTANCE) {
                 return false;
             }
         }

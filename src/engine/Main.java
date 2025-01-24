@@ -26,7 +26,6 @@ public class Main extends StateBasedGame
 	public Main(String name) 
 	{
 		super(name);
-		//hi
 		title = new Splash(TITLE_ID);
 		game = new Game(GAME_ID);
 		selectionBattle = new Menu(SELECTION_BATTLE_ID, (Game) game);

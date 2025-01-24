@@ -64,6 +64,8 @@ public class Plotz extends Player
 
 		if (getFleetValueUnitPercentage(Gatherer.class) < .20f)
 		{
+
+		if (getFleetValueUnitPercentage(Gatherer.class) < .20f) {
 			buildUnit(new Gatherer(this));
 		}
 		else if (getFleetValueUnitPercentage(Miner.class) < .20f)

@@ -1,4 +1,4 @@
 teams.student.bartlebyFanClub.BartlebyFanClub
 100
-teams.foes.vanguard.TheVanguard
+teams.foes.librarian.TheLibrarian
 100

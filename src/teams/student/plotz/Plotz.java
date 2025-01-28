@@ -55,33 +55,27 @@ public class Plotz extends Player
 		return strategy;
 	}
 
-	public void strategy()
-	{
+	public void strategy() {
 //
 //		if(countMyUnits(Catcher.class)<2) {
 //			buildUnit(new Catcher(this));
 //		} else
 
-		if (getFleetValueUnitPercentage(Gatherer.class) < .20f)
-		{
-
 		if (getFleetValueUnitPercentage(Gatherer.class) < .20f) {
-			buildUnit(new Gatherer(this));
-		}
-		else if (getFleetValueUnitPercentage(Miner.class) < .20f)
-		{
 
-			buildUnit(new Miner(this));
-		}
-		else
-		{
-			buildUnit(new Fighter(this));
-		}
-		// AGAINST SMALL ATTACK
-		// identify where attack is happening
-		// pool up there
+			if (getFleetValueUnitPercentage(Gatherer.class) < .20f) {
+				buildUnit(new Gatherer(this));
+			} else if (getFleetValueUnitPercentage(Miner.class) < .20f) {
 
-		Analysis.setGroupSize(7);
+				buildUnit(new Miner(this));
+			} else {
+				buildUnit(new Fighter(this));
+			}
+			// AGAINST SMALL ATTACK
+			// identify where attack is happening
+			// pool up there
+
+			Analysis.setGroupSize(7);
 //		BUILD RESOURCES:
 //		 when we have fewer resources
 //		 when we are going against healer
@@ -104,16 +98,16 @@ public class Plotz extends Player
 //			PlotzUnit.setRallyPoint(1f);
 //			buildUnits(0.2f, 0.2f, 0.4f, 0.2f, 0.f);
 //		}
-		//DEFEND MINERS AND GATHERERS:
-		// when skirmishers are coming
-		// also heavily protect the base
+			//DEFEND MINERS AND GATHERERS:
+			// when skirmishers are coming
+			// also heavily protect the base
 
-		// AGAINST BIG ARMY
-		// need skirmishers (break their economy)
-		// bigger enemies and mods (determine later
-		// few baits
+			// AGAINST BIG ARMY
+			// need skirmishers (break their economy)
+			// bigger enemies and mods (determine later
+			// few baits
 
-		// AGAINST PULLERS
+			// AGAINST PULLERS
 //		if (EnemyAnalysis.hasPullers() && strategy.equals("generalFight"))
 //		{
 //			Analysis.setGroupSize(10);
@@ -127,6 +121,7 @@ public class Plotz extends Player
 //			Analysis.setGroupSize(7);
 //		}
 //		manageHealers.assign();
+		}
 	}
 
 

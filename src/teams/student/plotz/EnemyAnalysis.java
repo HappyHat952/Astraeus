@@ -342,5 +342,15 @@ public class EnemyAnalysis {
     }
 
 
-
+    public static Point getNearestGatherer(Unit u) {
+        float distance = 9999999;
+        Point nearestGatherer = new Point(0,0);
+        for (Unit g: allGathererUnits) {
+           if (g.getDistance(u.getPosition()) < distance) {
+               distance = g.getDistance(u.getPosition());
+               nearestGatherer = g.getPosition();
+           }
+        }
+        return nearestGatherer;
+    }
 }

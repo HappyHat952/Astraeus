@@ -24,7 +24,15 @@ public class TestPlotz extends Player
 	
 	public void strategy() 
 	{
-		buildUnits(.2f,.2f,.4f, .2f,0f);
+		if (OverallAnalysis.getCurrentStage() == OverallAnalysis.BUILD)
+		{
+			buildUnits(.2f,.2f,.4f, .2f,0f);
+		}
+		else if (OverallAnalysis.getCurrentStage() == OverallAnalysis.FIGHT)
+		{
+			buildUnits(.12f, .12f, .56f, .2f,0f);
+		}
+
 
 		overall.update();
 	}

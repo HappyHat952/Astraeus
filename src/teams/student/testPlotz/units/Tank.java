@@ -10,6 +10,9 @@ import objects.entity.unit.Style;
 import objects.entity.unit.Unit;
 import teams.student.testPlotz.TestPlotz;
 import teams.student.testPlotz.TestPlotzUnit;
+import teams.student.testPlotz.analysis.OverallAnalysis;
+
+import static teams.student.testPlotz.analysis.OverallAnalysis.FIGHT;
 
 public class Tank extends TestPlotzUnit {
 
@@ -64,8 +67,29 @@ public class Tank extends TestPlotzUnit {
 //        else
 //        {
         //moveTo(getRallyPoint());
-        Unit enemy = getNearestEnemy();
-        moveTo(enemy);
+        if (OverallAnalysis.getCurrentStage() == FIGHT)
+        {
+            Unit enemy = getNearestEnemy();
+            moveTo(enemy);
+        }
+        else if (OverallAnalysis.getCurrentStage() == OverallAnalysis.BUILD)
+        {
+            Unit base = getHomeBase();
+            Unit enemy = getNearestEnemy();
+
+            if(enemy != null && getDistance(enemy) < 3000)
+            {
+                moveTo(enemy);
+            }
+            else if (base != null)
+            {
+                moveTo(base);
+            }
+
+
+        }
+
+
 
 
 //            // If the weapon is on cooldown

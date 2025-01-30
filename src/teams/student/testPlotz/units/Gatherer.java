@@ -1,6 +1,7 @@
 package teams.student.testPlotz.units;
 
 
+import components.upgrade.Shield;
 import components.weapon.economy.Collector;
 import objects.entity.unit.Frame;
 import objects.entity.unit.Model;
@@ -29,6 +30,7 @@ public class Gatherer extends TestPlotzUnit
 		setModel(Model.TRANSPORT);
 		setStyle(Style.BUBBLE);
 		add(Collector.class);
+//		add(Shield.class);
 		myResource = null;
 		isAssigned = false;
 		dumpTimer = 0;

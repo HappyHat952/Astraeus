@@ -6,6 +6,7 @@ import engine.Values;
 import objects.entity.unit.Unit;
 import org.newdawn.slick.geom.Point;
 import player.Player;
+import teams.student.plotz.units.Catcher;
 
 import java.util.ArrayList;
 
@@ -45,7 +46,7 @@ public class AllyAnalysis {
     static public ArrayList<Unit> getAllUnits(){				return allUnits;}
     static public ArrayList<Unit> getFighters(){				return allFighterUnits;}
     static public ArrayList<Unit> getMiners(){					return allMinerUnits;}
-    static public ArrayList<Unit> getGatherers(){				return allMinerUnits;}
+    static public ArrayList<Unit> getGatherers(){				return allGathererUnits;}
 
     //static public ArrayList<Unit> getMinerAndGathers(){			return allEnemyMinerUnits;}
 
@@ -87,7 +88,7 @@ public class AllyAnalysis {
                 yFight += e.getY();
             }
             //GATHERER units counted and put in list
-            else if (e.hasComponent(Collector.class)) {
+            else if (e.hasComponent(Collector.class) && !(e instanceof Catcher)) {
 
                 if(!allGathererUnits.contains(e))
                 {

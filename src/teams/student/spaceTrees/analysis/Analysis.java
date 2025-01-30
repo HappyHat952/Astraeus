@@ -14,7 +14,7 @@ import teams.student.spaceTrees.SpaceTreesUnit;
 
 import java.util.ArrayList;
 
-public class Analysis {
+public class    Analysis {
 // This class contains methods relating to enemy & ally movement, as well as general math & statistics.
 
 	//Enemy info

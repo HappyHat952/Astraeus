@@ -108,7 +108,6 @@ public class Gatherer extends TestPlotzUnit
 		float nearestDistance = Float.MAX_VALUE;
 		Resource nearestResource = null;
 		ArrayList<Resource> resources = ResourceManager.getSafeResources();
-//      ArrayList<Resource> resources = objects.resource.ResourceManager.getResources();
 		if (resources == null) {
 			return null;
 		}

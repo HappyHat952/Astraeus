@@ -10,13 +10,13 @@ public class TestPlotz extends Player
 	OverallAnalysis overall;
 	public void setup()
 	{		
-		setName("Test Plotz");
+		setName("Plotz");
 		setTeamImage("src/teams/student/testPlotz/plotzLogo.png");
-		setTitle("Team");
+		setTitle("The Plotzful Four");
 
-		setColorPrimary(23, 23, 170);
-		setColorSecondary(23, 200, 23);
-		setColorAccent(255, 23, 255);
+		setColorPrimary(96, 130, 182);
+		setColorSecondary(201, 15, 2);
+		setColorAccent(0, 0, 0);
 
 		overall = new OverallAnalysis(this);
 
@@ -26,7 +26,7 @@ public class TestPlotz extends Player
 	{
 		if (OverallAnalysis.getCurrentStage() == OverallAnalysis.BUILD)
 		{
-			buildUnits(.2f,.2f,.4f, .2f,0f);
+			buildUnits(.25f,.25f,.3f, .2f,0f);
 		}
 		else if (OverallAnalysis.getCurrentStage() == OverallAnalysis.FIGHT)
 		{
@@ -53,7 +53,15 @@ public class TestPlotz extends Player
 		}
 		else if (getFleetValueUnitPercentage(Fighter.class)< fighter)
 		{
-			buildUnit(new Fighter(this));
+			if (OverallAnalysis.getAlly().hasRelay())
+			{
+				buildUnit(new Fighter(this));
+			}
+			else
+			{
+				buildUnit(new Commander(this));
+			}
+
 		}
 		else if (getFleetValueUnitPercentage(Tank.class)< tank)
 		{

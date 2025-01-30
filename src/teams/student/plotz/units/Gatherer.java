@@ -4,6 +4,7 @@ import objects.entity.unit.Frame;
 import objects.entity.unit.Model;
 import objects.entity.unit.Style;
 import objects.resource.Resource;
+import org.newdawn.slick.geom.Point;
 import teams.student.plotz.Plotz;
 import teams.student.plotz.PlotzUnit;
 import teams.student.plotz.ResourceManager;
@@ -13,8 +14,10 @@ import java.util.ArrayList;
 public class Gatherer extends PlotzUnit {
 	public int timer = 0;
 	public int dumpTimer;
+	final private int TIME = 500;
 	public Resource myResource;
 	public boolean isAssigned;
+	private boolean a;
 	public Gatherer(Plotz p) {
 		super(p);
 	}
@@ -27,6 +30,7 @@ public class Gatherer extends PlotzUnit {
 		myResource = null;
 		isAssigned = false;
 		dumpTimer = 0;
+		a = false;
 	}
 
 
@@ -39,25 +43,71 @@ public class Gatherer extends PlotzUnit {
 
 	}
 
+	public Point getFutureHomeBasePosition() {
+
+		float distance = Math.abs(getHomeBase().getCenterX() - getX());
+
+
+		float timeToBase = distance / getCurSpeed();
+
+
+		float futureX = getHomeBase().getCenterX() + (getHomeBase().getSpeedX() * timeToBase);
+		float futureY = getHomeBase().getCenterY();
+
+		return new Point((int) futureX, (int) futureY);
+	}
+
 
 	public void returnResources() {
 //		fix dump logic
-        moveTo(getHomeBase());
-        if (getDistance(getHomeBase()) < 3000) {
-            timer++;
-            if (timer > 240) {
-                dump();
-                dumpTimer = 500;
+
+//        turnTo(getHomeBase());
+//        if (getDistance(getHomeBase()) < 3000) {
+//            timer++;
+//            if (timer > TIME) {
+//				turnTo(getHomeBase());
+//				dump();
+//                dumpTimer = TIME;
+//                timer = 0;
+//
+//            } else {
+//				if (a) {
+//					turnTo(getHomeBase());
+//					a = false;
+//				} else {
+//					turnAround();
+//					a = true;
+//				}
+//			}
+
+
+
+		timer++;
+            if (timer > TIME) {
+				turnTo(getFutureHomeBasePosition());
+				dump();
+                dumpTimer = TIME;
                 timer = 0;
 
-            }
+
+            } else {
+//				if (a) {
+					moveTo(getFutureHomeBasePosition());
+//					a = false;
+//				} else {
+//					turnAround();
+//					move();
+//					a = true;
+//				}
+//			}
         }
 
-		if(isFull())
-		{
-			moveTo(getHomeBase());
-			deposit();
-		}
+//		if(isFull())
+//		{
+//			moveTo(getHomeBase());
+//			deposit();
+//		}
+
 
 	}
 

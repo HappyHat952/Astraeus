@@ -39,9 +39,11 @@ public class TestPlotz extends Player
 
 	private void buildUnits ( float gather, float miner, float fighter, float tank, float healer)
 	{
-		if (getFleetValueUnit(Healer.class)< 4)
+		if (getFleetValueUnit(Healer.class)< 3)
 		{
 			buildUnit(new Healer(this));
+		} else if (getFleetValueUnit(Distractor.class)< 1) {
+			buildUnit(new Distractor(this));
 		}
 		else if (getFleetValueUnitPercentage(Gatherer.class)< gather)
 		{

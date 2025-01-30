@@ -1,4 +1,4 @@
 teams.student.testPlotz.TestPlotz
 100
 teams.foes.farmer.TheFarmer
-120
+100

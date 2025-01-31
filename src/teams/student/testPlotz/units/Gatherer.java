@@ -92,9 +92,9 @@ public class Gatherer extends TestPlotzUnit
 						moveTo(myResource);
 						destinationX = myResource.getCenterX();
 						destinationY = myResource.getCenterY();
-						if (getDistance(myResource) <= getMaxRange() * .65f) {
+//						if (getDistance(myResource) <= getMaxRange() * .65f) {
 							((Collector) getWeaponOne()).use(myResource);
-						}
+//						}
 						if (myResource.isPickedUp()) {
 							isAssigned = false;
 						}

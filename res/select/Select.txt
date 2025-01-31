@@ -1,4 +1,4 @@
 teams.student.testPlotz.TestPlotz
 100
-teams.foes.farmer.TheFarmer
+teams.foes.arsonist.TheArsonist
 100

@@ -39,7 +39,7 @@ public class TestPlotz extends Player
 
 	private void buildUnits ( float gather, float miner, float fighter, float tank, float healer)
 	{
-		if (getFleetValueUnit(Healer.class)< 3)
+		if (getFleetValueUnit(Healer.class)< 2)
 		{
 			buildUnit(new Healer(this));
 		} else if (getFleetValueUnit(Distractor.class)< 1) {
@@ -55,14 +55,14 @@ public class TestPlotz extends Player
 		}
 		else if (getFleetValueUnitPercentage(Fighter.class)< fighter)
 		{
-			if (OverallAnalysis.getAlly().hasRelay())
-			{
+//			if (OverallAnalysis.getAlly().hasRelay())
+//			{
 				buildUnit(new Fighter(this));
-			}
-			else
-			{
-				buildUnit(new Commander(this));
-			}
+//			}
+//			else
+//			{
+//				buildUnit(new Commander(this));
+//			}
 
 		}
 		else if (getFleetValueUnitPercentage(Tank.class)< tank)

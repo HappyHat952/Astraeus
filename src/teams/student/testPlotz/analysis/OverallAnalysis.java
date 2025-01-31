@@ -11,6 +11,12 @@ public class OverallAnalysis {
 
     private static TestPlotz plotz;
 
+    public static final int BUILD = 0;
+    public static final int FIGHT = 1;
+    public static final int FINAL = 2;
+
+    private static int currentStage;
+
     private static Point coreRallyPoint;
     private static Point enemyPt;
     private static Point allyPt;
@@ -38,11 +44,11 @@ public class OverallAnalysis {
     public static Point getCoreRallyPoint(){ return coreRallyPoint;}
     public static ArrayList<Point> getAllRallyPoints(){ return rallyPts;}
     public static float getRallyPercent(){ return rallyPercent;}
+    public static int getCurrentStage(){ return currentStage;}
 
-    public void update()
-    {
-        if(ally!= null && enemy != null)
-        {
+    public void update() {
+        //setting rally points;
+        if (ally != null && enemy != null) {
             ally.update();
             enemy.update();
             setRallyDetails();
@@ -50,10 +56,23 @@ public class OverallAnalysis {
             setAllRallyPoint();
         }
 
+        //determining the stage
+        if (ally.getPlayer().getMineralsMined() < 150) {
+            currentStage = BUILD;
+        } else
+        {
+            currentStage = FIGHT;
+        }
+
     }
 
     public static void draw(Graphics g)
     {
+        //display current stage
+        g.setColor(Color.white);
+        ally.getPlayer().addMessage(""+ currentStage);
+        ally.getPlayer().addMessage(""+ally.hasRelay());
+
         //draws enemy to ally
         g.setColor(Color.red);
         g.setLineWidth(4);
@@ -99,9 +118,10 @@ public class OverallAnalysis {
     public void setAllRallyPoint()
     {
         rallyPts = new ArrayList<>();
+        float length = ally.getPlayer().getMyBase().getDistance(enemy.getPlayer().getMyBase());
         for (float i = -(float)numRallyPoint/2; i<=(float)numRallyPoint/2; i++)
         {
-            rallyPts.add(new Point(coreRallyPoint.getX(), coreRallyPoint.getY() + 1000*i));
+            rallyPts.add(new Point(coreRallyPoint.getX(), coreRallyPoint.getY() + length*.5f*i));
         }
     }
 

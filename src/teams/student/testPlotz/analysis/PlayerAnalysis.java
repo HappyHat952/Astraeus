@@ -2,27 +2,32 @@ package teams.student.testPlotz.analysis;
 
 import components.weapon.economy.Collector;
 import components.weapon.economy.Drillbeam;
+import components.weapon.utility.CommandRelay;
 import components.weapon.utility.Pullbeam;
 import objects.entity.unit.Unit;
 import player.Player;
+import teams.student.testPlotz.units.Commander;
 
 import java.util.ArrayList;
 
 public class PlayerAnalysis {
 
-    Player player;
+    private Player player;
 
-    int timer;
+    private int timer;
+
+    private boolean hasRelay;
 
 
-
-    static ArrayList<Unit> myUnits = new ArrayList<>();
-    static ArrayList<Unit> myFighterUnits = new ArrayList<>();
-    static ArrayList<Unit> myPullerUnits = new ArrayList<>();
-    static ArrayList<Unit> myGathererUnits = new ArrayList<>();
-    static ArrayList<Unit> myMinerUnits = new ArrayList<>();
+    private ArrayList<Unit> myUnits = new ArrayList<>();
+    private ArrayList<Unit> myFighterUnits = new ArrayList<>();
+    private ArrayList<Unit> myPullerUnits = new ArrayList<>();
+    private ArrayList<Unit> myGathererUnits = new ArrayList<>();
+    private ArrayList<Unit> myMinerUnits = new ArrayList<>();
 
     public Player getPlayer(){ return player;}
+
+    public boolean hasRelay(){ return hasRelay;}
 
     public ArrayList<Unit> getMyUnits(){ return myUnits;}
     public ArrayList<Unit> getFighters(){ return myFighterUnits;}
@@ -44,13 +49,20 @@ public class PlayerAnalysis {
 
     public void update()
     {
-        timer ++;
-        if (timer %60 == 0)
-        {
-            resetUnitLists();
-            loopUnits();
-            timer = 0;
-        }
+//        timer ++;
+//        if (timer %60 == 0)
+//        {
+//
+//        }
+        resetBooleans();
+        resetUnitLists();
+        loopUnits();
+//        timer = 0;
+    }
+
+    public void resetBooleans()
+    {
+        hasRelay = false;
     }
 
     public void resetUnitLists()
@@ -66,20 +78,30 @@ public class PlayerAnalysis {
     {
         for (Unit u: myUnits)
         {
-            if (!u.hasComponent(Collector.class) && !u.hasComponent(Drillbeam.class)) {
-                myFighterUnits.add(u);
-            }
-            else if (u.hasComponent(Collector.class)) {
-                myGathererUnits.add(u);
-            }
-            //MINER units counted and put in list
-            else if (u.hasComponent(Drillbeam.class)){
-                myFighterUnits.add(u);
-            }
-            else if (u.hasComponent(Pullbeam.class))
+
+            putUnitInLists(u);
+            if (u instanceof Commander)
             {
-                myPullerUnits.add(u);
+                hasRelay = true;
             }
+        }
+    }
+    public void putUnitInLists(Unit u)
+    {
+        //puts units in list.
+        if (!u.hasComponent(Collector.class) && !u.hasComponent(Drillbeam.class)) {
+            myFighterUnits.add(u);
+        }
+        else if (u.hasComponent(Collector.class)) {
+            myGathererUnits.add(u);
+        }
+        //MINER units counted and put in list
+        else if (u.hasComponent(Drillbeam.class)){
+            myFighterUnits.add(u);
+        }
+        else if (u.hasComponent(Pullbeam.class))
+        {
+            myPullerUnits.add(u);
         }
     }
 }

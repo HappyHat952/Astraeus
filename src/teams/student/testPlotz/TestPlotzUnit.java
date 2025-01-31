@@ -8,6 +8,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
 import player.Player;
 import teams.student.testPlotz.analysis.OverallAnalysis;
+import teams.student.testPlotz.units.Gatherer;
+import teams.student.testPlotz.units.Miner;
 
 import java.util.ArrayList;
 
@@ -156,19 +158,44 @@ public abstract class TestPlotzUnit extends Unit
 			{
 				enemy = getNearestEnemyUnit();
 			}
-			if(enemy != null)
+			if (enemy != null && enemy.getHomeBase().isDamaged())
 			{
-				if(getDistance(enemy) > getMaxRange()*.95f)
+				moveTo(enemy.getHomeBase());
+			}
+
+			if (OverallAnalysis.getCurrentStage() == OverallAnalysis.FIGHT)
+			{
+
+				if(enemy != null)
 				{
-					moveTo(enemy);
-				}
-				else
-				{
-					turnTo(enemy);
-					turnAround();
-					move();
+					if(getDistance(enemy) > getMaxRange()*.95f)
+					{
+						moveTo(enemy);
+					}
+					else
+					{
+						turnTo(enemy);
+						turnAround();
+						move();
+					}
 				}
 			}
+			else if (OverallAnalysis.getCurrentStage() == OverallAnalysis.BUILD)
+			{
+				Unit miner = getNearestUnit(OverallAnalysis.getAlly().getPlayer(), Miner.class);
+
+					if(enemy != null && getDistance(enemy) < 3000)
+					{
+						moveTo(enemy);
+					}
+					else if (miner != null)
+					{
+						moveTo(miner);
+					}
+
+
+			}
+
 
 		}
 		else
@@ -176,11 +203,13 @@ public abstract class TestPlotzUnit extends Unit
 			Unit ally = getNearestAlly();
 			Point rally = getNearestRallyPoint();
 
-			if (getDistance(rally)< getDistance(ally))
-			{
-				moveTo(rally);
-			}
-			else if(getDistance(ally) > getMaxRange())
+//			if (getDistance(rally)< getDistance(ally))
+//			{
+//				moveTo(rally);
+//			}
+//			else
+//
+				if(getDistance(ally) > getMaxRange())
 			{
 				moveTo(ally);
 			}
@@ -190,8 +219,15 @@ public abstract class TestPlotzUnit extends Unit
 				turnAround();
 				move();
 			}
+			if (getDistance(ally)< getSize())
+			{
+				turnTo(ally);
+				turnAround();
+				move();
+			}
 
 		}
+
 
 	}
 	

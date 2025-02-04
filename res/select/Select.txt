@@ -1,4 +1,4 @@
-teams.foes.farmer.TheFarmer
-600
-teams.foes.rock.TheRock
+teams.student.testPlotz.TestPlotz
+100
+teams.foes.arsonist.TheArsonist
 100

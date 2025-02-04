@@ -7,6 +7,8 @@ import components.weapon.kinetic.Autocannon;
 import objects.entity.unit.Frame;
 import objects.entity.unit.Model;
 import objects.entity.unit.Style;
+import teams.student.plotz.AllyAnalysis;
+import objects.entity.unit.Unit;
 import teams.student.plotz.Plotz;
 import teams.student.plotz.PlotzUnit;
 
@@ -31,6 +33,21 @@ public class Fighter extends PlotzUnit
 
 	}
 
+	@Override
+	public void movement() {
+		Unit enemy = getNearestEnemy();
 
-
+		if(enemy != null)
+		{
+			if(getDistance(enemy) > getMaxRange())
+			{
+				moveTo(enemy);
+			}
+			else
+			{
+				turnTo(getHomeBase());
+				move();
+			}
+		}
+	}
 }

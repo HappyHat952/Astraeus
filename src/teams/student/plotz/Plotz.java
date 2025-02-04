@@ -1,8 +1,10 @@
 package teams.student.plotz;
 
 import engine.states.Game;
+import objects.entity.unit.Unit;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.geom.Point;
 import player.Player;
 import teams.student.plotz.units.Catcher;
 import teams.student.plotz.units.Fighter;
@@ -14,6 +16,7 @@ import teams.student.plotz.Analysis;
 
 import java.util.ArrayList;
 
+import static teams.student.plotz.AllyAnalysis.getGatherers;
 import static teams.student.plotz.ResourceManager.*;
 
 public class Plotz extends Player
@@ -55,13 +58,14 @@ public class Plotz extends Player
 		return strategy;
 	}
 
-	public void strategy() {
+	public void strategy()
+	{
 //
 //		if(countMyUnits(Catcher.class)<2) {
 //			buildUnit(new Catcher(this));
 //		} else
 
-		if (getFleetValueUnitPercentage(Gatherer.class) < .20f) {
+//		if (getFleetValueUnitPercentage(Gatherer.class) < .20f) {
 
 			if (getFleetValueUnitPercentage(Gatherer.class) < .20f) {
 				buildUnit(new Gatherer(this));
@@ -121,7 +125,7 @@ public class Plotz extends Player
 //			Analysis.setGroupSize(7);
 //		}
 //		manageHealers.assign();
-		}
+//		}
 	}
 
 
@@ -159,6 +163,18 @@ public class Plotz extends Player
 				g.setColor(Color.green);
 				g.drawOval(n.getCenterX(), n.getCenterY(), 80, 80);
 			}
+		}
+		// NEW STUFF
+		for (Unit gatherer : getGatherers()) {
+			Point futurePosition = ((Gatherer) (gatherer)).getFutureHomeBasePosition();
+
+
+			g.setColor(Color.red);
+			g.drawLine(gatherer.getX(), gatherer.getY(), futurePosition.getX(), futurePosition.getY());
+
+
+			g.setColor(Color.blue);
+			g.fillOval(futurePosition.getX() - 3, futurePosition.getY() - 3, 6, 6);
 		}
 //		if (EnemyAnalysis.getAvgFighterLocation()!= null && PlotzUnit.getEnemyFighter() != null && PlotzUnit.getAllyBuilder() != null)
 //		{

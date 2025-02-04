@@ -21,6 +21,7 @@ public class Fighter extends SpaceTreesUnit {
 	int cluster;
 	public Fighter(SpaceTrees p) {
 		super(p);
+		//places each ship inn a random cluster between 1-3.
 		cluster = (int)(Math.random()*3)-1;
 	}
 	public Fighter(SpaceTrees p, String weapon) {

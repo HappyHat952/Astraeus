@@ -1,6 +1,7 @@
 package teams.student.testPlotz.units;
 
 
+import components.upgrade.Shield;
 import components.weapon.economy.Collector;
 import objects.entity.unit.Frame;
 import objects.entity.unit.Model;
@@ -29,6 +30,7 @@ public class Gatherer extends TestPlotzUnit
 		setModel(Model.TRANSPORT);
 		setStyle(Style.BUBBLE);
 		add(Collector.class);
+//		add(Shield.class);
 		myResource = null;
 		isAssigned = false;
 		dumpTimer = 0;
@@ -90,9 +92,9 @@ public class Gatherer extends TestPlotzUnit
 						moveTo(myResource);
 						destinationX = myResource.getCenterX();
 						destinationY = myResource.getCenterY();
-						if (getDistance(myResource) <= getMaxRange() * .65f) {
+//						if (getDistance(myResource) <= getMaxRange() * .65f) {
 							((Collector) getWeaponOne()).use(myResource);
-						}
+//						}
 						if (myResource.isPickedUp()) {
 							isAssigned = false;
 						}
@@ -108,7 +110,6 @@ public class Gatherer extends TestPlotzUnit
 		float nearestDistance = Float.MAX_VALUE;
 		Resource nearestResource = null;
 		ArrayList<Resource> resources = ResourceManager.getSafeResources();
-//      ArrayList<Resource> resources = objects.resource.ResourceManager.getResources();
 		if (resources == null) {
 			return null;
 		}

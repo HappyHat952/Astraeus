@@ -14,6 +14,8 @@ public class ResourceManager {
     public static ArrayList<Resource> takenResources = new ArrayList<Resource>();
     public static ArrayList<Resource> availableResources;
     public static ArrayList<Resource> allResources;
+    public static ArrayList<Resource> thrownResources = new ArrayList<>();
+
     final static private int SAFE_DISTANCE = 3000;
 
     public ResourceManager()

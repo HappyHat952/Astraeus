@@ -69,11 +69,12 @@ public class Healer extends TestPlotzUnit {
         ArrayList<Unit> allies = origin.getAlliesInRadius(radius);
 
         for (int i = 0; i < allies.size(); i++) {
-            if (lowestHealth <= 0) {
+            if (lowestHealth <= 0 && !(allies.get(i) instanceof Distractor)) {
                 lowestHealth = allies.get(i).getCurEffectiveHealth();
                 lowestAlly = allies.get(i);
             } else {
-                if (allies.get(i).getCurEffectiveHealth() < lowestHealth && !allies.get(i).hasWeapon(ElectromagneticPulse.class) && !allies.get(i).hasWeapon(Collector.class) && !allies.get(i).hasWeapon(Drillbeam.class)) {
+                if (allies.get(i).getCurEffectiveHealth() < lowestHealth && !allies.get(i).hasWeapon(ElectromagneticPulse.class) &&
+                        !allies.get(i).hasWeapon(Collector.class) && !allies.get(i).hasWeapon(Drillbeam.class) && !(allies.get(i) instanceof Distractor)) {
                     lowestHealth = allies.get(i).getCurEffectiveHealth();
                     lowestAlly = allies.get(i);
                 }

@@ -6,6 +6,7 @@ import components.weapon.economy.Drillbeam;
 import components.weapon.energy.Laser;
 import components.weapon.explosive.Missile;
 import components.weapon.utility.SpeedBoost;
+import engine.states.Game;
 import objects.entity.unit.Frame;
 import objects.entity.unit.Model;
 import objects.entity.unit.Style;
@@ -17,6 +18,8 @@ import java.util.ArrayList;
 
 public class Distractor extends TestPlotzUnit {
     private int offset;
+    private Unit nearAllEnmy;
+    private Unit nearResEnmy;
     public Distractor(TestPlotz p) {
         super(p);
         if (Math.random() <= 0.5)
@@ -27,6 +30,8 @@ public class Distractor extends TestPlotzUnit {
         {
             offset = -1;
         }
+        nearAllEnmy = getMyNearestEnemy(); // closest of all enemy ships
+        nearResEnmy = getSafestGatherer();
     }
 
     @Override
@@ -43,8 +48,15 @@ public class Distractor extends TestPlotzUnit {
     @Override
     public void action()
     {
-        Unit nearAllEnmy = getMyNearestEnemy(); // closest of all enemy ships
-        Unit nearResEnmy = getSafestGatherer(); // closest of all resource-collecting ships
+        if (getTimeAlive() < 15 * 60) {
+            nearResEnmy = getSafestGatherer(); // closest of all resource-collecting ships
+        }
+
+//        if (nearResEnmy == null || !nearResEnmy.isAlive()) { // ADD SAFETY RATING
+            nearResEnmy = getSafestGatherer(); // so it doesnt reset until its dead
+//        }
+        nearAllEnmy = getMyNearestEnemy(); // closest of all enemy ships
+
 
         // If its just created, go to rally point ->2500 pixels n or s of homebase
         if(getTimeAlive() < 15 * 60)
@@ -73,6 +85,9 @@ public class Distractor extends TestPlotzUnit {
 //            moveTo(x-3000, 3000*offset);
 ////            setDestination(x-3000, 3000*offset);
 //            getWeaponTwo().use();
+        } else if (getDistance(getEnemyBase()) < 300) {
+            turnTo(getEnemyBase());
+            turnAround();
         }
 
         // if a resource enemy doesn't exist, go to the home base-- THIS IS WHY IT CIRCLES @ end

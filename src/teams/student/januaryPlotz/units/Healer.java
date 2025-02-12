@@ -1,4 +1,4 @@
-package teams.student.testPlotz.units;
+package teams.student.januaryPlotz.units;
 
 import components.upgrade.Plating;
 import components.upgrade.Shield;
@@ -11,13 +11,14 @@ import objects.entity.unit.Frame;
 import objects.entity.unit.Model;
 import objects.entity.unit.Style;
 import objects.entity.unit.Unit;
-import teams.student.testPlotz.TestPlotz;
-import teams.student.testPlotz.TestPlotzUnit;
+import teams.student.januaryPlotz.JanPlotzUnit;
+import teams.student.januaryPlotz.JanuaryPlotz;
+
 
 import java.util.ArrayList;
 
-public class Healer extends TestPlotzUnit {
-    public Healer(TestPlotz p) {
+public class Healer extends JanPlotzUnit {
+    public Healer(JanuaryPlotz p) {
         super(p);
     }
 
@@ -69,13 +70,11 @@ public class Healer extends TestPlotzUnit {
         ArrayList<Unit> allies = origin.getAlliesInRadius(radius);
 
         for (int i = 0; i < allies.size(); i++) {
-            if (lowestHealth <= 0 && !(allies.get(i) instanceof Distractor && !(allies.get(i) instanceof Commander))) {
+            if (lowestHealth <= 0) {
                 lowestHealth = allies.get(i).getCurEffectiveHealth();
                 lowestAlly = allies.get(i);
             } else {
-                if (allies.get(i).getCurEffectiveHealth() < lowestHealth && !allies.get(i).hasWeapon(ElectromagneticPulse.class) &&
-                        !allies.get(i).hasWeapon(Collector.class) && !allies.get(i).hasWeapon(Drillbeam.class) && !(allies.get(i) instanceof Distractor)
-                && !(allies.get(i) instanceof Commander)) {
+                if (allies.get(i).getCurEffectiveHealth() < lowestHealth && !allies.get(i).hasWeapon(ElectromagneticPulse.class) && !allies.get(i).hasWeapon(Collector.class) && !allies.get(i).hasWeapon(Drillbeam.class)) {
                     lowestHealth = allies.get(i).getCurEffectiveHealth();
                     lowestAlly = allies.get(i);
                 }

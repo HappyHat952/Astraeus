@@ -1,7 +1,9 @@
 package teams.student.testPlotz.analysis;
 
+import components.weapon.Weapon;
 import components.weapon.economy.Collector;
 import components.weapon.economy.Drillbeam;
+import components.weapon.explosive.Missile;
 import components.weapon.utility.CommandRelay;
 import components.weapon.utility.Pullbeam;
 import objects.entity.unit.Unit;
@@ -12,7 +14,7 @@ import java.util.ArrayList;
 
 public class PlayerAnalysis {
 
-    private Player player;
+    private static Player player;
 
     private int timer;
 
@@ -103,5 +105,36 @@ public class PlayerAnalysis {
         {
             myPullerUnits.add(u);
         }
+    }
+
+    public static String getPrimaryWeapon() {
+        ArrayList<Weapon> weapons = new ArrayList<>();
+        int fighterCount = 0;
+
+        for (Unit u: player.getAllUnits()) {
+            if (!u.hasWeapon(Drillbeam.class) && !u.hasWeapon(Collector.class))
+            {
+               fighterCount++;
+                if (u.getWeaponOne() != null) {
+                   weapons.add(u.getWeaponOne());
+               }
+                if (u.getWeaponTwo() != null) {
+                    weapons.add(u.getWeaponTwo());
+                }
+            }
+        }
+
+        int count = 0;
+        for (Weapon w: weapons) {
+            if (w instanceof Missile) {
+                count++;
+            }
+        }
+        if (((float) count /fighterCount) >= 0.2f) {
+            return "missile";
+        }
+        return "other";
+
+
     }
 }

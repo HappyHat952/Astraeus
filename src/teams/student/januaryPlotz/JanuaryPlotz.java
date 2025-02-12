@@ -1,18 +1,17 @@
-package teams.student.testPlotz;
+package teams.student.januaryPlotz;
 
 import org.newdawn.slick.Graphics;
 import player.Player;
-import teams.student.testPlotz.analysis.OverallAnalysis;
-import teams.student.testPlotz.analysis.ResourceManager;
-import teams.student.testPlotz.units.*;
+import teams.student.januaryPlotz.analysis.OverallAnalysis;
+import teams.student.januaryPlotz.units.*;
 
-public class TestPlotz extends Player
+public class JanuaryPlotz extends Player
 {
 	OverallAnalysis overall;
 	public void setup()
 	{		
 		setName("Plotz");
-		setTeamImage("src/teams/student/testPlotz/plotzLogo.png");
+		setTeamImage("src/teams/student/januaryPlotz/plotzLogo.png");
 		setTitle("The Plotzful Four");
 
 		setColorPrimary(96, 130, 182);
@@ -31,7 +30,7 @@ public class TestPlotz extends Player
 		}
 		else if (OverallAnalysis.getCurrentStage() == OverallAnalysis.FIGHT)
 		{
-			buildUnits(.12f, .12f, .51f, .25f,0f);
+			buildUnits(.12f, .12f, .56f, .2f,0f);
 		}
 
 
@@ -40,14 +39,9 @@ public class TestPlotz extends Player
 
 	private void buildUnits ( float gather, float miner, float fighter, float tank, float healer)
 	{
-		if (getFleetValueUnit(Distractor.class)< 1) {
-			buildUnit(new Distractor(this));
-		}
-		else if (getFleetValueUnit(Healer.class)< 2) {
+		if (getFleetValueUnit(Healer.class)< 4)
+		{
 			buildUnit(new Healer(this));
-		}
-		else if (getFleetValueUnit(Commander.class)< 1) {
-			buildUnit(new Commander(this));
 		}
 		else if (getFleetValueUnitPercentage(Gatherer.class)< gather)
 		{
@@ -59,15 +53,7 @@ public class TestPlotz extends Player
 		}
 		else if (getFleetValueUnitPercentage(Fighter.class)< fighter)
 		{
-//			if (OverallAnalysis.getAlly().hasRelay())
-//			{
-				buildUnit(new Fighter(this));
-//			}
-//			else
-//			{
-//				buildUnit(new Commander(this));
-//			}
-
+			buildUnit(new Fighter(this));
 		}
 		else if (getFleetValueUnitPercentage(Tank.class)< tank)
 		{
@@ -82,7 +68,6 @@ public class TestPlotz extends Player
 	public void draw(Graphics g) 
 	{
 		OverallAnalysis.draw(g);
-		ResourceManager.draw(g);
 	}
 	
 }

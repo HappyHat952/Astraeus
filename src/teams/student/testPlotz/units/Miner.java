@@ -29,7 +29,7 @@ public class Miner extends TestPlotzUnit
 	{
 		setFrame(Frame.LIGHT);
 		setStyle(Style.BOXY);
-		setModel(Model.ARTILLERY);
+		setModel(Model.DESTROYER);
 		add(Drillbeam.class);
 	}
 

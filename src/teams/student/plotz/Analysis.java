@@ -1,19 +1,16 @@
 package teams.student.plotz;
 
-import java.util.ArrayList;
-
 import components.weapon.economy.Collector;
 import components.weapon.economy.Drillbeam;
 import components.weapon.utility.Pullbeam;
 import engine.Utility;
 import engine.Values;
 import objects.entity.unit.Unit;
-import objects.resource.Resource;
 import org.newdawn.slick.Color;
+import org.newdawn.slick.geom.Point;
 import player.Player;
 
-import org.newdawn.slick.geom.Point;
-import teams.student.plotz.*;
+import java.util.ArrayList;
 
 public class Analysis {
 // This class contains methods relating to enemy & ally movement, as well as general math & statistics.

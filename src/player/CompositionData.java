@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class CompositionData
 {
-    private ArrayList<TypeData> data;
+    private final ArrayList<TypeData> data;
 
     public CompositionData()
     {
@@ -35,6 +35,30 @@ public class CompositionData
             }
         }
         return 0;
+    }
+
+    public int getTotalLost()
+    {
+        int total = 0;
+
+        for(TypeData t : data)
+        {
+            total += t.lost;
+
+        }
+        return total;
+    }
+
+    public int getTotalMade()
+    {
+        int total = 0;
+
+        for(TypeData t : data)
+        {
+            total += t.made;
+
+        }
+        return total;
     }
 
     public void recordMade(Class<? extends Unit> type)

@@ -1,4 +1,4 @@
-teams.student.testPlotz.TestPlotz
-100
-teams.foes.arsonist.TheArsonist
+teams.foes.rock.TheRock
+150
+teams.student.bartlebyFanClub.BartlebyFanClub
 100

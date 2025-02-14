@@ -13,6 +13,7 @@ public class HeavyMunitions extends Upgrade
 	{
 		super();
 		mass = MASS;
+		size = SIZE;
 		name = "Heavy Munitions";
 	}
 	

@@ -1,18 +1,16 @@
 package teams.student.plotz;
 
 import engine.states.Game;
+import objects.entity.node.Node;
 import objects.entity.unit.Unit;
+import objects.resource.Resource;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
 import player.Player;
-import teams.student.plotz.units.Catcher;
 import teams.student.plotz.units.Fighter;
 import teams.student.plotz.units.Gatherer;
 import teams.student.plotz.units.Miner;
-import objects.entity.node.Node;
-import objects.resource.Resource;
-import teams.student.plotz.Analysis;
 
 import java.util.ArrayList;
 

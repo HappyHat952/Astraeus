@@ -8,9 +8,9 @@ import objects.entity.unit.Frame;
 import objects.entity.unit.Model;
 import objects.entity.unit.Style;
 import objects.entity.unit.Unit;
-import teams.student.testPlotz.analysis.ResourceManager;
 import teams.student.testPlotz.TestPlotz;
 import teams.student.testPlotz.TestPlotzUnit;
+import teams.student.testPlotz.analysis.ResourceManager;
 
 import java.util.ArrayList;
 

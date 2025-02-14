@@ -2,7 +2,6 @@ package teams.student.testPlotz.analysis;
 
 import components.weapon.economy.Collector;
 import components.weapon.economy.Drillbeam;
-import components.weapon.utility.CommandRelay;
 import components.weapon.utility.Pullbeam;
 import objects.entity.unit.Unit;
 import player.Player;
@@ -32,7 +31,7 @@ public class PlayerAnalysis {
     public ArrayList<Unit> getMyUnits(){ return myUnits;}
     public ArrayList<Unit> getFighters(){ return myFighterUnits;}
     public ArrayList<Unit> getMyPullerUnits(){ return myPullerUnits;}
-    public ArrayList<Unit> getMyGathererUnts(){ return myGathererUnits;}
+    public ArrayList<Unit> getMyGathererUnits(){ return myGathererUnits;}
     public ArrayList<Unit> getMyMinerUnits(){ return myMinerUnits;}
 
     public int getNumUnits(){ return myUnits.size();}

@@ -13,6 +13,7 @@ import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.state.StateBasedGame;
 import ui.display.Camera;
 import ui.display.DisplayManager;
+import ui.display.hud.Hud;
 import ui.sound.AudioManager;
 
 public class InputManager 
@@ -155,10 +156,21 @@ public class InputManager
 			case Input.KEY_T:
 				OptimizationToggler.toggle();
 				break;
+			case Input.KEY_F:
+				focusEntity();
+				break;
 			}
 
 		}
 
+	}
+	
+	public static void focusEntity()
+	{
+		if (selectedEntity != null)
+		{
+			Camera.focus(selectedEntity);
+		}
 	}
 	
 	public static void toggleBorders()
@@ -271,8 +283,14 @@ public class InputManager
 	}
 	public static void mousePressed(int button, int x, int y)
 	{
+		if (Hud.mousePressed(button, x, y))
+		{
+			// Hud handled the mouse input.
+			return;
+		}
+		
 		if(button == Input.MOUSE_LEFT_BUTTON)
-		{				
+		{
 			float unitScreenX = x / Camera.getZoom() - Camera.getScreenCenterX();
 			float unitScreenY = y / Camera.getZoom() - Camera.getScreenCenterY();
 

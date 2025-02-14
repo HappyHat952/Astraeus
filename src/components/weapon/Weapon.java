@@ -36,9 +36,9 @@ public abstract class Weapon extends Component
 	protected float useSlow;
 
 	protected float USE_SLOW_NONE = .0f;
-	protected float USE_SLOW_LIGHT_MINOR = .08f;
-	protected float USE_SLOW_LIGHT_MAJOR = .24f;
-	protected float USE_SLOW_LIGHT_AVERAGE = .16f;
+	protected float USE_SLOW_LIGHT_MINOR = .20f;
+	protected float USE_SLOW_LIGHT_AVERAGE = .25f;
+	protected float USE_SLOW_LIGHT_MAJOR = .30f;
 
 	/*************** Constructor ***************/
 	

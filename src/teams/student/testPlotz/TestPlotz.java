@@ -24,6 +24,10 @@ public class TestPlotz extends Player
 	
 	public void strategy() 
 	{
+		if (!overall.getEnemy().getPlayer().equals(getOpponent()))
+		{
+			overall = new OverallAnalysis(this);
+		}
 		if (OverallAnalysis.getCurrentStage() == OverallAnalysis.BUILD)
 		{
 			buildUnits(.25f,.25f,.3f, .2f,0f);

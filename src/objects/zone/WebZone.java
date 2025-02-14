@@ -10,6 +10,7 @@ import conditions.debuffs.Stop;
 import conditions.debuffs.slow.WebSlow;
 import conditions.instant.Damage;
 import engine.Utility;
+import objects.entity.Entity;
 import objects.entity.unit.BaseShip;
 import objects.entity.unit.Frame;
 import objects.entity.unit.Unit;
@@ -37,7 +38,7 @@ float slow;
 
 	}
 	
-	public void applyEffect(Unit u)
+	public void applyEffect(Entity u)
 	{
 		
 		if(!(u instanceof BaseShip) && !u.hasCondition(Fast.class))

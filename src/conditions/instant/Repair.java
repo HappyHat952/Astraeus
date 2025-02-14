@@ -5,7 +5,7 @@ import conditions.Instant;
 public class Repair extends Instant
 {	
 	private final float amount;
-	private boolean restoresShields;
+	private final boolean restoresShields;
 
 	public Repair(float amount, boolean restoresShields)
 	{

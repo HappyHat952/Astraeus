@@ -1,6 +1,5 @@
 package teams.student.spaceTrees.units;
 
-import components.mod.offense.KratosMod;
 import components.upgrade.HeavyPlating;
 import components.upgrade.Plating;
 import components.weapon.kinetic.Autocannon;

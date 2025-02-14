@@ -6,7 +6,7 @@ import conditions.Buff;
 
 public class Glory extends Buff
 {
-	final float REPAIR_BONUS = .20f;
+	final float REPAIR_BONUS = .50f;
 	final int TIME_REDUCTION = 1;
 
 	public Glory(int duration)

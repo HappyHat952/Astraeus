@@ -16,8 +16,8 @@ import objects.entity.unit.Unit;
 public class Pullbeam extends WeaponTargetUnit
 {
 	public static final int SIZE = 2;
-	public static final int MAX_RANGE = 500;
-	public static final float PULL_FORCE = 5f;
+	public static final int MAX_RANGE = 700;
+	public static final float PULL_FORCE = 6f;
 	public static final int USE_TIME = 0;
 	public static final int COOLDOWN = 30;
 

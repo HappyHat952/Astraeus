@@ -25,7 +25,7 @@ public class HealingWeapon extends WeaponTargetUnit
 
     private boolean restoresShields = false;
 
-    private float healingScalar = 1;
+    private final float healingScalar = 1;
 
     public static final WeaponType WEAPON_TYPE = WeaponType.UTILITY;
     public static final DamageType DAMAGE_TYPE = DamageType.NONE;
@@ -81,20 +81,10 @@ public class HealingWeapon extends WeaponTargetUnit
 
     protected void activation(objects.entity.unit.Unit target, boolean isHit)
     {
-        // ApolloMod breaks through decay
         if(getOwner().hasMod(ApolloMod.class))
         {
-//            target.getConditions().removeDebuffs();
             target.addCondition(new Glory(ApolloMod.DURATION));
         }
-
-        // Otherwise, we can't heal or apply positive conditions
-        else if(target.hasCondition(Decay.class))
-        {
-            return;
-        }
-
-        target.addCondition(new Repair(healAmount * healingScalar, restoresShields));
 
         if(getOwner().hasMod(PerseusMod.class))
         {
@@ -110,6 +100,16 @@ public class HealingWeapon extends WeaponTargetUnit
         {
             target.addCondition(new Revelry(DionysusMod.DURATION));
         }
+
+        // Otherwise, we can't heal
+        else if(target.hasCondition(Decay.class))
+        {
+            return;
+        }
+
+        target.addCondition(new Repair(healAmount * healingScalar, restoresShields));
+
+
 
 
     }

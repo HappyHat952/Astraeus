@@ -7,6 +7,7 @@ import conditions.buffs.Fast;
 import conditions.debuffs.Pull;
 import conditions.debuffs.Push;
 import engine.Utility;
+import objects.entity.Entity;
 import objects.entity.unit.BaseShip;
 import objects.entity.unit.Frame;
 import objects.entity.unit.Unit;
@@ -42,7 +43,7 @@ public class RiftZone extends Zone
 		
 	}
 	
-	public void applyEffect(Unit u)
+	public void applyEffect(Entity u)
 	{
 		
 		if(!(u instanceof BaseShip) && !u.hasCondition(Fast.class))

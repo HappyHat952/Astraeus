@@ -11,19 +11,21 @@ import objects.zone.Zone;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import player.Player;
 import territory.TerritoryManager;
 import ui.display.hud.Hud;
+import ui.display.message.Chat;
 import ui.display.message.GlobalMessage;
 import ui.display.message.MessageList;
 import ui.display.opener.Opener;
+import ui.sound.Sounds;
 
 public class DisplayManager 
 {
-	public static final int MESSAGE_TIME = 120;
+	public static final int MESSAGE_TIME = 160;
 	private static Graphics g;
 
 	private static MessageList globalMessages;
-
 
 	public static void setup(Graphics g)
 	{
@@ -64,7 +66,6 @@ public class DisplayManager
 		g.translate(Camera.getScreenCenterX(), Camera.getScreenCenterY());
 		renderWorld();
 
-
 		// Reset for Overlay
 		g.resetTransform();	
 		renderOverlay();
@@ -81,15 +82,13 @@ public class DisplayManager
 		{
 			Image i = TerritoryManager.getBackground();		//		 3840 x 2160
 
-			float w = 3840 * 4/5;
-			float h = 2160 * 4/5;
+			float w = 3840;// * 4/5;
+			float h = 2160;// * 4/5;
 
 			int bright = (int) (255 * Settings.backgroundBrightness);
 			Color c = new Color(bright, bright, bright);
 			i.draw(-w/4, -h/4, w, h, c);
 		}
-
-
 	}
 
 	private static void renderWorld()
@@ -223,7 +222,16 @@ public class DisplayManager
 			g.resetLineWidth();
 		}
 
+	}
 
+	public static void chat(Player player, String message)
+	{
+		if(Settings.sfxOn)
+		{
+			Sounds.message.play(1, 2 + 2f * Settings.soundVolume);
+		}
+
+		globalMessages.addMessage(new Chat(player, message, MESSAGE_TIME * 2));
 	}
 
 	public static void addMessage(String message)

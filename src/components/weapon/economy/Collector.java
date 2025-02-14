@@ -16,12 +16,12 @@ public class Collector extends WeaponTargetResource {
     public static final int COOLDOWN = 0;
     public static final int CAPACITY = 2;
 
-    public static final float PULL_ACC = 160f * Values.ACC;
+    public static final float PULL_ACC = 220 * Values.ACC;
     public static final int PICKUP_RADIUS = 75;
 
     public static final WeaponType WEAPON_TYPE = WeaponType.RESOURCE;
     public static final DamageType DAMAGE_TYPE = DamageType.NONE;
-    public static final int MASS = 20;
+    public static final int MASS = 4;
     public static final float USE_SLOW = .40f;
 
     public static final int ANIM_BEAM_WIDTH = 17;

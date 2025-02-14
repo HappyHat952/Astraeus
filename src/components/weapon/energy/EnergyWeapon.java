@@ -15,7 +15,6 @@ import conditions.debuffs.Decay;
 import conditions.debuffs.Push;
 import conditions.debuffs.Stun;
 import conditions.instant.Damage;
-import objects.entity.node.Node;
 import objects.entity.unit.Unit;
 import ui.sound.Sounds;
 
@@ -28,8 +27,6 @@ public abstract class EnergyWeapon extends WeaponTargetUnit
     protected int animationDuration;
     protected float soundPitch;
 
-    private int bonusLaserAccuracy;
-
     public EnergyWeapon()
     {
         super();
@@ -38,26 +35,31 @@ public abstract class EnergyWeapon extends WeaponTargetUnit
         name = "Laser";
     }
 
-    public float getAccuracy()
-    {
-        return super.getAccuracy() + bonusLaserAccuracy;
-    }
 
     public void applyMod()
     {
         if(getOwner().hasMod(EosMod.class))
         {
             name = EosMod.NAME;
-            bonusLaserAccuracy += EosMod.LASER_ACCURACY_BONUS;
+            accuracy += EosMod.LASER_ACCURACY_BONUS;
         }
 
         if(getOwner().hasMod(PoseidonMod.class))
         {
             name = PoseidonMod.NAME;
-            useTime *= PoseidonMod.LASER_USE_TIME_SCALAR;
-            cooldown *= PoseidonMod.LASER_COOLDOWN_SCALAR;
             animationDuration *= .5f;
             animationWidth *= 3;
+        }
+
+        if(getOwner().hasMod(ZeusMod.class))
+        {
+          //  System.out.println(maxRange);
+
+//            damage *= ZeusMod.DAMAGE_SCALAR;
+            maxRange += ZeusMod.RANGE_BONUS;
+            accuracy = Math.round(accuracy * ZeusMod.ACC_SCALAR);
+
+            //System.out.println(maxRange);
         }
 
         if(getOwner().hasMod(HadesMod.class))
@@ -101,10 +103,9 @@ public abstract class EnergyWeapon extends WeaponTargetUnit
         {
             float damage = getDamage();
 
-            if(getOwner().hasMod(ZeusMod.class) && Math.random() < ZeusMod.CRITICAL_CHANCE)
+            if(getOwner().hasMod(PoseidonMod.class))
             {
-                damage *= ZeusMod.CRITICAL_DAMAGE;
-                target.addCondition(new Stun(ZeusMod.STUN_DURATION, animationDuration));
+                damage += getOwner().getCurShield() * PoseidonMod.DAMAGE_FROM_SHIELD_SCALAR;
             }
 
             target.addCondition(new Damage(damage, getDamageType()));

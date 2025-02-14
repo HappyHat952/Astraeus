@@ -11,10 +11,10 @@ public class Node extends Entity
 {
 	public static final float MIN_TURN_SPEED = .005f;
 	public static final float MAX_TURN_SPEED = .02f;
-	public static final int RESOURCES_AVERAGE = 10;
+	public static final int RESOURCES_AVERAGE = 14;
 	public static final int DROP_ON_DEATH_AVERAGE = 0;
 	public static final int RESOURCE_SPREAD_AVERAGE = 75;
-	public static final int AVERAGE_HULL = 2000;
+	public static final int AVERAGE_HULL = 2500;
 
 	protected int resourcesStart;
 	protected int resourcesLeft;

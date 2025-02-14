@@ -3,11 +3,11 @@ package teams.student.testPlotz.units;
 import components.upgrade.Munitions;
 import components.upgrade.Shield;
 import components.weapon.energy.HeavyLaser;
-import components.weapon.utility.CommandRelay;
 import objects.entity.unit.Frame;
 import objects.entity.unit.Model;
 import objects.entity.unit.Style;
 import objects.entity.unit.Unit;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.geom.Point;
 import teams.student.testPlotz.TestPlotz;
 import teams.student.testPlotz.TestPlotzUnit;
@@ -17,6 +17,7 @@ public class Fighter extends TestPlotzUnit
 {
 
 	String weapon;
+
 	public Fighter(TestPlotz p) {super(p); }
 	
 
@@ -27,7 +28,7 @@ public class Fighter extends TestPlotzUnit
 		setFrame(Frame.HEAVY);
 		setStyle(Style.WEDGE);
 
-		add(HeavyLaser.class);
+		add( HeavyLaser.class);
 		add(Munitions.class);
 		add(Shield.class);
 
@@ -38,7 +39,7 @@ public class Fighter extends TestPlotzUnit
 
 		if (getCurEffectiveHealth()/getMaxEffectiveHealth() >.2f)
 		{
-			Unit enemy = getNearestCriticalFighter(this, getMaxRange());
+			Unit enemy = getNearestCriticalFighter(this, (int)(getMaxRange()*1.2f));
 
 			if (enemy == null)
 			{
@@ -47,6 +48,8 @@ public class Fighter extends TestPlotzUnit
 			if (enemy != null && enemy.getHomeBase().isDamaged())
 			{
 				moveTo(enemy.getHomeBase());
+				color = Color.orange;
+				targetUnit = enemy.getHomeBase();
 			}
 
 			if (OverallAnalysis.getCurrentStage() == OverallAnalysis.FIGHT)
@@ -57,12 +60,16 @@ public class Fighter extends TestPlotzUnit
 					if(getDistance(enemy) > getMaxRange()*.95f)
 					{
 						moveTo(enemy);
+						color = Color.green;
+						targetUnit = enemy;
 					}
 					else
 					{
 						turnTo(enemy);
 						turnAround();
 						move();
+						color = Color.red;
+						targetUnit = this;
 					}
 				}
 			}
@@ -73,10 +80,14 @@ public class Fighter extends TestPlotzUnit
 				if(enemy != null && getDistance(enemy) < 3000)
 				{
 					moveTo(enemy);
+					color = Color.cyan;
+					targetUnit = enemy;
 				}
 				else if (miner != null)
 				{
 					moveTo(miner);
+					color = Color.pink;
+					targetUnit = miner;
 				}
 
 
@@ -98,18 +109,24 @@ public class Fighter extends TestPlotzUnit
 			if(getDistance(ally) > getMaxRange())
 			{
 				moveTo(ally);
+				color = Color.pink;
+				targetUnit = ally;
 			}
 			else
 			{
 				turnTo(ally);
 				turnAround();
-				move();
+
+				color = Color.red;
+				targetUnit = this;
 			}
 			if (getDistance(ally)< getSize())
 			{
 				turnTo(ally);
 				turnAround();
 				move();
+				color = Color.red;
+				targetUnit = this;
 			}
 
 		}

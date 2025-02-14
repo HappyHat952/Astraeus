@@ -12,8 +12,8 @@ import ui.display.Fonts;
 
 public class ObjectMessage extends Message
 {
-	private GameObject owner;
-	private Font myFont;
+	private final GameObject owner;
+	private final Font myFont;
 
 	public ObjectMessage(GameObject u, String message)
 	{

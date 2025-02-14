@@ -14,7 +14,7 @@ public class Miner extends TheVanguardUnit
 	public void design()
 	{
 		setFrame(Frame.LIGHT);
-		setModel(Model.ARTILLERY);
+		setModel(Model.DESTROYER);
 		setStyle(Style.BOXY);
 		add(Drillbeam.class);
 	}

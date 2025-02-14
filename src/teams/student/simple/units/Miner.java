@@ -6,6 +6,7 @@ import components.weapon.economy.Collector;
 import components.weapon.economy.Drillbeam;
 import objects.entity.node.Node;
 import objects.entity.unit.Frame;
+import objects.entity.unit.Model;
 import objects.entity.unit.Style;
 import teams.student.simple.Simple;
 import teams.student.simple.SimpleUnit;
@@ -21,6 +22,7 @@ public class Miner extends SimpleUnit
 	public void design()
 	{
 		setFrame(Frame.LIGHT);
+		setModel(Model.DESTROYER);
 		setStyle(Style.BOXY);
 		add(Drillbeam.class);
 	}

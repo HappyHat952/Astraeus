@@ -4,8 +4,8 @@ import org.newdawn.slick.Color;
 
 public interface Values 
 { 
-	String VERSION = "2.5.2";
-	String RELEASE_DATE = "3-19-24";
+	String VERSION = "2.5.6";
+	String RELEASE_DATE = "2-13-25";
 
 	// Image Scaling
 	

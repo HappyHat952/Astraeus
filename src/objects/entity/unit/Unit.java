@@ -57,6 +57,8 @@ public abstract class Unit extends Entity implements Values
     public final static float BASIC_SPEED = 100 * Values.SPEED;
     public final static float BASIC_ACCELERATION = 100 * Values.ACC;
 
+    protected ArrayList<MissileEntity> missilesLocked;
+
     protected Image imageSecondary;
     protected Image imageAccent;
     protected Image imageMove;
@@ -87,13 +89,14 @@ public abstract class Unit extends Entity implements Values
 
     private Color revelryColor;
 
+
     public Unit()
     {
         super(0, 0);
         components = new ComponentSystem(this);
         healthbar = new UnitHealthbar(this);
         model = Model.CRUISER;
-
+        missilesLocked = new ArrayList<>();
     }
 
     public Unit(Player p)
@@ -125,6 +128,11 @@ public abstract class Unit extends Entity implements Values
         Point pos = getSpawn(p);
         this.x = pos.getX();
         this.y = pos.getY();
+    }
+
+    public void addMissileLock(MissileEntity m)
+    {
+        missilesLocked.add(m);
     }
 
     public void setStyle(Style style)
@@ -222,7 +230,7 @@ public abstract class Unit extends Entity implements Values
 
     public final int getMass()
     {
-        return mass;
+        return mass + getCargo() * Resource.MASS;
     }
 
     public final int getCapacity()
@@ -860,7 +868,7 @@ public abstract class Unit extends Entity implements Values
 
         this.model = model;
         increaseMaxStructure(model.getStructure());
-        addBlock(model.getBlock());
+//        addBlock(model.getBlock());
         increasePower(model.getPower());
         increaseCapacity(model.getCapacity());
         applyAccuracyBonus(model.getAccuracy());
@@ -1025,6 +1033,7 @@ public abstract class Unit extends Entity implements Values
     public final void add(Class<? extends Component> clazz)
     {
         components.add(clazz);
+
     }
 
     public final float getDodgeChance()
@@ -1042,6 +1051,16 @@ public abstract class Unit extends Entity implements Values
         pullTimer++;
         pushTimer++;
         updateSmoke();
+
+        // Clear missiles from list
+        for(int i = 0; i < missilesLocked.size(); i++)
+        {
+            if(missilesLocked.get(i).isDead())
+            {
+                missilesLocked.remove(i);
+                i--;
+            }
+        }
 
 //		dbgMessage(pullTimer);
 
@@ -1449,6 +1468,29 @@ public abstract class Unit extends Entity implements Values
 //				continue;
 //			}
 
+            if (getDistance(m) < nearestMissileDistance && m.getOwner().getPlayer() == getOpponent())
+            {
+                nearestMissileDistance = getDistance(m);
+                nearestMissile = m;
+            }
+        }
+
+        return nearestMissile;
+    }
+
+    public boolean hasMissileLockedOnMe()
+    {
+        return !missilesLocked.isEmpty();
+    }
+
+    public MissileEntity getNearestMissileLockedOnMe()
+    {
+        ArrayList<MissileEntity> missiles = missilesLocked;
+        float nearestMissileDistance = Float.MAX_VALUE;
+        MissileEntity nearestMissile = null;
+
+        for (MissileEntity m : missiles)
+        {
             if (getDistance(m) < nearestMissileDistance && m.getOwner().getPlayer() == getOpponent())
             {
                 nearestMissileDistance = getDistance(m);

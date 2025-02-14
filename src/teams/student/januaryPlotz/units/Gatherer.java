@@ -6,7 +6,6 @@ import objects.entity.unit.Frame;
 import objects.entity.unit.Model;
 import objects.entity.unit.Style;
 import objects.resource.Resource;
-
 import teams.student.januaryPlotz.JanPlotzUnit;
 import teams.student.januaryPlotz.JanuaryPlotz;
 import teams.student.januaryPlotz.analysis.ResourceManager;

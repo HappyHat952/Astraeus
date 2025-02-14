@@ -15,7 +15,7 @@ public class Miner extends LibrarianUnit
 	public void design()
 	{
 		setFrame(Frame.LIGHT);
-		setModel(Model.ARTILLERY);
+		setModel(Model.DESTROYER);
 		setStyle(Style.BOXY);
 		add(Drillbeam.class);
 	}

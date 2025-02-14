@@ -15,6 +15,7 @@ import java.util.ArrayList;
 public class Resource extends GameObject
 {
 	public static final float ROTATION_SPEED = .2f;
+	public static final int MASS = 3;
 
 	protected Color color;
 	private int spinDirection;

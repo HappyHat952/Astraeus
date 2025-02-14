@@ -16,7 +16,7 @@ public class GravitationalRift extends WeaponTargetUnit
 	public static final float PULL_FORCE = 1.20f;
 	public static final int USE_TIME = 60;
 	public static final int COOLDOWN = 2000;
-	public static final int RADIUS = 250;
+	public static final int RADIUS = 300;
 	public static final int DURATION = 6*60;
 
 	public static final DamageType DAMAGE_TYPE = DamageType.NONE;

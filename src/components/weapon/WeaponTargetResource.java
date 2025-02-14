@@ -20,8 +20,7 @@ public abstract class WeaponTargetResource extends Weapon
 	{	
 		updateTimers();
 
-	;
-		// Every frame make sure my target is still valid and in range, and that I can act, or break the lock
+        // Every frame make sure my target is still valid and in range, and that I can act, or break the lock
 		if(lockedTarget != null && !lockedTarget.isPickedUp() && inRange(lockedTarget) && getOwner().canAct())
 		{
 			// Then check if I can actually fire - (includes a check for useLockTimer)

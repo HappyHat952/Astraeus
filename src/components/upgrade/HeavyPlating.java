@@ -13,6 +13,7 @@ public class HeavyPlating extends Upgrade
 	public HeavyPlating()
 	{
 		super();
+		size = SIZE;
 		mass = MASS;
 	}
 	

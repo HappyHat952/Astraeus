@@ -6,8 +6,8 @@ public class Laser extends EnergyWeapon
 	public static final int MAX_RANGE = 600;
 	public static final int DAMAGE = 35;
 	public static final int USE_TIME = 90;
-	public static final int COOLDOWN = 150;
-	public static final float ACCURACY = .40f;
+	public static final int COOLDOWN = 120;
+	public static final float ACCURACY = .50f;
 	public static final int MASS = 5;
 
 	public Laser()

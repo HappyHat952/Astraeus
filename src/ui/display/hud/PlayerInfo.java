@@ -196,7 +196,7 @@ public class PlayerInfo
 		}
 		
 		g.setColor(new Color(255, 150, 200));
-		Utility.drawStringCenterCenter(g, Fonts.bigFont, "" + dmg + "%", x + w * (combatX-pairGap/2), y + h * .42f);
+		Utility.drawStringCenterCenter(g, Fonts.bigFont, dmg + "%", x + w * (combatX-pairGap/2), y + h * .42f);
 		g.setColor(Color.white);
 		Utility.drawStringCenterCenter(g, Fonts.smallFont, "Damage", x + w *(combatX-pairGap/2), y + h * .65f);
 	
@@ -215,7 +215,7 @@ public class PlayerInfo
 		float totalDamage = player.getDamageTaken() + player.getDamageMitigated();
 		if(player.getDamageMitigated() > 0)
 		{
-			mitigation =  Math.round ((float) player.getDamageMitigated() / totalDamage * 100);
+			mitigation =  Math.round (player.getDamageMitigated() / totalDamage * 100);
 		}
 
 

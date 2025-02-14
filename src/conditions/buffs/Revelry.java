@@ -4,7 +4,7 @@ import conditions.Buff;
 
 public class Revelry extends Buff
 {
-	final float POWER_BONUS = .2f;
+	final float POWER_BONUS = .5f;
 	final float SPEED_SCALAR = .5f;
 
 	public Revelry(int duration) {

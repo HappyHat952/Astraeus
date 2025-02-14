@@ -7,9 +7,8 @@ public class PoseidonMod extends Mod {
 	public static int MASS = 2;
 
 	public static final float LASER_PUSH_EFFECT = 20f;
-	public static final int LASER_PUSH_DURATION = 20;
-	public static final float LASER_USE_TIME_SCALAR = 1.00f;
-	public static final float LASER_COOLDOWN_SCALAR = 1.00f;
+	public static final int LASER_PUSH_DURATION = 15;
+	public static final float DAMAGE_FROM_SHIELD_SCALAR = .04f;
 
 	public static String NAME = "Tidal Blast";
 

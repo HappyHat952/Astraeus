@@ -5,6 +5,7 @@ import engine.Main;
 import engine.Settings;
 import engine.Settings.CameraMode;
 import engine.Values;
+import objects.entity.Entity;
 import objects.entity.unit.BaseShip;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
@@ -46,6 +47,8 @@ public class Camera
 	private static float ySpeed = 0;
 
 	public static boolean mousePanActivated;
+	
+	private static Entity focusedEntity;
 
 
 	public static float getX() 				{	return x;			}
@@ -98,6 +101,12 @@ public class Camera
 	{
 		controls(gc);
 		
+		if (focusedEntity != null)
+		{
+			x = focusedEntity.getCenterX();
+			y = focusedEntity.getCenterY();
+		}
+		
 		if(currentZoom < goalZoom)
 		{
 			currentZoom = Math.min(currentZoom + ZOOM_RATE, goalZoom);
@@ -133,6 +142,7 @@ public class Camera
 				ySpeed = -SCROLL_RATE_KEY_MAX / getZoomScrollModifier();
 			}
 			y += ySpeed;
+			unfocus();
 		}
 
 		if (gc.getInput().isKeyDown(Input.KEY_S))
@@ -143,6 +153,7 @@ public class Camera
 				ySpeed = SCROLL_RATE_KEY_MAX / getZoomScrollModifier();
 			}
 			y += ySpeed;
+			unfocus();
 		}
 
 		if (gc.getInput().isKeyDown(Input.KEY_A))
@@ -154,6 +165,7 @@ public class Camera
 				xSpeed = -SCROLL_RATE_KEY_MAX / getZoomScrollModifier();
 			}
 			x += xSpeed;
+			unfocus();
 		}
 
 		if (gc.getInput().isKeyDown(Input.KEY_D))
@@ -166,11 +178,13 @@ public class Camera
 				xSpeed = SCROLL_RATE_KEY_MAX / getZoomScrollModifier();
 			}
 			x += xSpeed;
+			unfocus();
 		}
 
 		if (gc.getInput().isKeyDown(Input.KEY_HOME)) {
 			x = 0;
 			y = 0;
+			unfocus();
 		}
 
 		if(gc.getInput().isKeyDown(Input.KEY_INSERT))
@@ -186,11 +200,11 @@ public class Camera
 			mousePanActivated = true;
 			
 			Cursor emptyCursor;
-			int min = org.lwjgl.input.Cursor.getMinCursorSize();
+			int min = Cursor.getMinCursorSize();
 			IntBuffer tmp = BufferUtils.createIntBuffer(min * min);
 			try 
 			{
-				emptyCursor = new org.lwjgl.input.Cursor(min, min, min / 2, min / 2, 1, tmp, null);
+				emptyCursor = new Cursor(min, min, min / 2, min / 2, 1, tmp, null);
 					Mouse.setNativeCursor(emptyCursor);
 			} 
 			catch (LWJGLException e) {
@@ -209,6 +223,7 @@ public class Camera
 		{
 			x = 0;
 			y = 0;
+			unfocus();
 			
 			
 //			try 
@@ -264,9 +279,7 @@ public class Camera
 				y += DELTA_Y * SCROLL_RATE_BASE_MOUSE;
 			} 
 			
-		
-		
-
+			unfocus();
 		}
 
 	}
@@ -274,6 +287,7 @@ public class Camera
 	public static void centerView(float xPos, float yPos) {
 		x = xPos;
 		y = yPos;
+		unfocus();
 	}
 
 
@@ -307,5 +321,15 @@ public class Camera
 
 		viewSizeX = (int) (Main.getScreenWidth() / currentZoom);
 		viewSizeY = (int) (Main.getScreenHeight() / currentZoom);
+	}
+	
+	public static void focus(Entity entity)
+	{
+		focusedEntity = entity;
+	}
+	
+	public static void unfocus()
+	{
+		focusedEntity = null;
 	}
 }

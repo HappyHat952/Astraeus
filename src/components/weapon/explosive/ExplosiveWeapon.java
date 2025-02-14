@@ -23,6 +23,7 @@ public abstract class ExplosiveWeapon extends WeaponTargetUnit
 
     protected float soundPitchMin;
     protected float soundPitchMax;
+    protected float speedScalar;
 
     public ExplosiveWeapon()
     {
@@ -30,6 +31,7 @@ public abstract class ExplosiveWeapon extends WeaponTargetUnit
         weaponType = WEAPON_TYPE;
         damageType = DAMAGE_TYPE;
         name = "Missile";
+        speedScalar = 1;
     }
 
     public void applyMod()
@@ -38,12 +40,16 @@ public abstract class ExplosiveWeapon extends WeaponTargetUnit
         {
             name = ArtemisMod.NAME;
             maxRange += ArtemisMod.MISSLE_RANGE_BONUS;
+            accuracy += ArtemisMod.MISSILE_ACCURACY_BONUS;
         }
         if (getOwner().hasMod(HermesMod.class))
         {
             name = HermesMod.NAME;
             useTime -= HermesMod.REDUCED_USE_TIME;
             cooldown += HermesMod.INCREASED_COOLDOWN;
+            speedScalar = HermesMod.SPEED_SCALAR;
+            maxRange += HermesMod.RANGE;
+
         }
         if (getOwner().hasMod(CerberusMod.class))
         {
@@ -85,7 +91,7 @@ public abstract class ExplosiveWeapon extends WeaponTargetUnit
                     NyxMod.DURATION));
         } else
         {
-            Game.addMissile(new MissileEntity(getOwner(), target, isHit, getMaxRange(), getDamage(), getDamageType(), getRadius()));
+            Game.addMissile(new MissileEntity(getOwner(), target, isHit, getMaxRange(), getDamage(), getDamageType(), getRadius(), speedScalar));
         }
     }
 

@@ -1,7 +1,6 @@
 package teams.student.bartlebyFanClub;
 
 import org.newdawn.slick.Graphics;
-
 import player.Player;
 import teams.student.bartlebyFanClub.units.*;
 

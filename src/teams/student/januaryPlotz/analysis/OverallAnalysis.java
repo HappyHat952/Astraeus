@@ -1,9 +1,12 @@
 package teams.student.januaryPlotz.analysis;
 
+import objects.entity.unit.Unit;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
+import teams.student.testPlotz.units.Gatherer;
 import teams.student.januaryPlotz.JanuaryPlotz;
+import teams.student.testPlotz.units.Miner;
 
 import java.util.ArrayList;
 
@@ -88,6 +91,17 @@ public class OverallAnalysis {
         {
             g.setColor(Color.cyan);
             g.fillOval(p.getX(),p.getY(), 15,15);
+        }
+
+
+        for (Unit u: ally.getMyGathererUnts()) {
+           Point p = ((Gatherer) u).getDestination();
+            g.drawLine(u.getX(), u.getY(), p.getX(), p.getY());
+        }
+
+        for (Unit u: ally.getMyMinerUnits()) {
+            Point p = ((Miner) u).getDestination();
+            g.drawLine(u.getX(), u.getY(), p.getX(), p.getY());
         }
     }
 

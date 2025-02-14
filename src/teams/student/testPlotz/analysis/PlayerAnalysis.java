@@ -1,7 +1,10 @@
 package teams.student.testPlotz.analysis;
 
+import components.weapon.Weapon;
 import components.weapon.economy.Collector;
 import components.weapon.economy.Drillbeam;
+import components.weapon.explosive.Missile;
+import components.weapon.utility.CommandRelay;
 import components.weapon.utility.Pullbeam;
 import objects.entity.unit.Unit;
 import player.Player;
@@ -31,7 +34,7 @@ public class PlayerAnalysis {
     public ArrayList<Unit> getMyUnits(){ return myUnits;}
     public ArrayList<Unit> getFighters(){ return myFighterUnits;}
     public ArrayList<Unit> getMyPullerUnits(){ return myPullerUnits;}
-    public ArrayList<Unit> getMyGathererUnits(){ return myGathererUnits;}
+    public ArrayList<Unit> getMyGathererUnts(){ return myGathererUnits;}
     public ArrayList<Unit> getMyMinerUnits(){ return myMinerUnits;}
 
     public int getNumUnits(){ return myUnits.size();}
@@ -102,5 +105,36 @@ public class PlayerAnalysis {
         {
             myPullerUnits.add(u);
         }
+    }
+
+    public String getPrimaryWeapon() {
+        ArrayList<Weapon> weapons = new ArrayList<>();
+        int fighterCount = 0;
+
+        for (Unit u: player.getAllUnits()) {
+            if (!u.hasWeapon(Drillbeam.class) && !u.hasWeapon(Collector.class))
+            {
+               fighterCount++;
+                if (u.getWeaponOne() != null) {
+                   weapons.add(u.getWeaponOne());
+               }
+                if (u.getWeaponTwo() != null) {
+                    weapons.add(u.getWeaponTwo());
+                }
+            }
+        }
+
+        int count = 0;
+        for (Weapon w: weapons) {
+            if (w instanceof Missile) {
+                count++;
+            }
+        }
+        if (((float) count /fighterCount) >= 0.2f) {
+            return "missile";
+        }
+        return "other";
+
+
     }
 }

@@ -8,9 +8,10 @@ import objects.entity.unit.Frame;
 import objects.entity.unit.Model;
 import objects.entity.unit.Style;
 import objects.entity.unit.Unit;
+import org.newdawn.slick.geom.Point;
+import teams.student.testPlotz.analysis.ResourceManager;
 import teams.student.testPlotz.TestPlotz;
 import teams.student.testPlotz.TestPlotzUnit;
-import teams.student.testPlotz.analysis.ResourceManager;
 
 import java.util.ArrayList;
 
@@ -29,7 +30,7 @@ public class Miner extends TestPlotzUnit
 	{
 		setFrame(Frame.LIGHT);
 		setStyle(Style.BOXY);
-		setModel(Model.DESTROYER);
+		setModel(Model.ARTILLERY);
 		add(Drillbeam.class);
 	}
 
@@ -154,5 +155,13 @@ public class Miner extends TestPlotzUnit
 		}
 
 		return nearestNode;
+	}
+
+	public Point getDestination() {
+		if (target != null) {
+			return target.getPosition();
+		} else {
+			return getHomeBase().getPosition();
+		}
 	}
 }

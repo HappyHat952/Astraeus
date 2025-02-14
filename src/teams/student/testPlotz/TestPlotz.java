@@ -3,6 +3,7 @@ package teams.student.testPlotz;
 import org.newdawn.slick.Graphics;
 import player.Player;
 import teams.student.testPlotz.analysis.OverallAnalysis;
+import teams.student.testPlotz.analysis.ResourceManager;
 import teams.student.testPlotz.units.*;
 
 public class TestPlotz extends Player
@@ -34,7 +35,7 @@ public class TestPlotz extends Player
 		}
 		else if (OverallAnalysis.getCurrentStage() == OverallAnalysis.FIGHT)
 		{
-			buildUnits(.12f, .12f, .56f, .2f,0f);
+			buildUnits(.12f, .12f, .51f, .25f,0f);
 		}
 
 
@@ -43,12 +44,15 @@ public class TestPlotz extends Player
 
 	private void buildUnits ( float gather, float miner, float fighter, float tank, float healer)
 	{
-		if (getFleetValueUnit(Healer.class)< 2)
-		{
-			buildUnit(new Healer(this));
-		} else if (getFleetValueUnit(Distractor.class)< 1) {
+		if (getFleetValueUnit(Distractor.class)< 1) {
 			buildUnit(new Distractor(this));
 		}
+		else if (getFleetValueUnit(Healer.class)< 2) {
+			buildUnit(new Healer(this));
+		}
+//		else if (getFleetValueUnit(Commander.class)< 1) {
+//			buildUnit(new Commander(this));
+//		}
 		else if (getFleetValueUnitPercentage(Gatherer.class)< gather)
 		{
 			buildUnit(new Gatherer(this));
@@ -82,6 +86,7 @@ public class TestPlotz extends Player
 	public void draw(Graphics g) 
 	{
 		OverallAnalysis.draw(g);
+		ResourceManager.draw(g);
 	}
 	
 }

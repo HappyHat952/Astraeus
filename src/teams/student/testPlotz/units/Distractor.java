@@ -64,6 +64,10 @@ public class Distractor extends TestPlotzUnit {
 //            setDestination(getHomeBase().getX(), 2500);
         }
 
+        if (!this.isInBounds()) {
+            moveTo(getEnemyBase());
+        }
+
         //if a nearest enemy exists and its distance is less than our max range, avoid by switching sides.
         if (nearAllEnmy != null && getDistance(nearAllEnmy) < nearAllEnmy.getMaxRange() + 100) {
 

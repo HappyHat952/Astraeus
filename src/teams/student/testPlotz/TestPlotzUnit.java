@@ -118,11 +118,12 @@ public abstract class TestPlotzUnit extends Unit
 		float lowestHealth = Float.MAX_VALUE;
 
 		for (Unit u : targets) {
-			//need help with this
-			float health = u.getCurEffectiveHealth()*(1- u.getDodgeChance());
+			float health = u.getCurEffectiveHealth() * (1 - u.getDodgeChance());
 
+			Unit nearestAlly = u.getNearestAlly();
+			boolean isSecluded = (nearestAlly == null || u.getDistance(nearestAlly) > 2500);
 
-			if (u!=origin && health < lowestHealth && !isPassive(u) && !u.equals(origin)) {
+			if (u != origin && health < lowestHealth && !isPassive(u) && !isSecluded) {
 				lowestHealth = health;
 				critical = u;
 			}

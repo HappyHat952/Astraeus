@@ -46,9 +46,9 @@ public class TestPlotz extends Player
 		else if (getFleetValueUnit(Healer.class)< 2) {
 			buildUnit(new Healer(this));
 		}
-		else if (getFleetValueUnit(Commander.class)< 1) {
-			buildUnit(new Commander(this));
-		}
+//		else if (getFleetValueUnit(Commander.class)< 1) {
+//			buildUnit(new Commander(this));
+//		}
 		else if (getFleetValueUnitPercentage(Gatherer.class)< gather)
 		{
 			buildUnit(new Gatherer(this));

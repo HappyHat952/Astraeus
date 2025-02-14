@@ -32,6 +32,7 @@ public class Commander extends Fighter{
             add(CommandRelay.class);
         add(Shield.class);
     }
+
 //    public void movement() {
 //        ArrayList<Unit> allyFighters = OverallAnalysis.getAlly().getFighters();
 //

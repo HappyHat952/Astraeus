@@ -42,6 +42,14 @@ public abstract class TestPlotzUnit extends Unit
 		spreadValue = 500;
 		k=.1f;
 	}
+
+	public Point getAvgPoint(Point a, Point b)
+	{
+		float x = (a.getX() + b.getX())/2;
+		float y = (a.getY() + b.getY())/2;
+		return (new Point(x,y));
+
+	}
 	
 	public TestPlotz getPlayer()
 	{

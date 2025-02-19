@@ -7,6 +7,7 @@ import components.weapon.explosive.Missile;
 import components.weapon.utility.CommandRelay;
 import components.weapon.utility.Pullbeam;
 import objects.entity.unit.Unit;
+import org.newdawn.slick.geom.Point;
 import player.Player;
 import teams.student.testPlotz.units.Commander;
 
@@ -27,6 +28,12 @@ public class PlayerAnalysis {
     private ArrayList<Unit> myGathererUnits = new ArrayList<>();
     private ArrayList<Unit> myMinerUnits = new ArrayList<>();
 
+    private Point avgUnits;
+    private Point avgFighterUnits;
+    private Point avgPullerUnits;
+    private Point avgGathererUnits;
+    private Point avgMinerUnits;
+
     public Player getPlayer(){ return player;}
 
     public boolean hasRelay(){ return hasRelay;}
@@ -42,6 +49,12 @@ public class PlayerAnalysis {
     public int getNumPullerUnits(){ return myPullerUnits.size();}
     public int getNumGathererUnits() { return myGathererUnits.size();}
     public int getNumMinerUnits() { return myMinerUnits.size();}
+
+    public Point getAvgPtUnits(){ return avgUnits;}
+    public Point getAvgPtFighterUnits(){ return avgFighterUnits;}
+    public Point getAvgPtPullerUnits(){ return avgPullerUnits;}
+    public Point getAvgPtGathererUnits() { return avgMinerUnits;}
+    public Point getAvgPtMinerUnits() { return avgMinerUnits;}
 
 
 
@@ -59,12 +72,23 @@ public class PlayerAnalysis {
         resetBooleans();
         resetUnitLists();
         loopUnits();
+        findAveragePts();
 //        timer = 0;
     }
 
     public void resetBooleans()
     {
         hasRelay = false;
+    }
+
+    public void findAveragePts()
+    {
+        avgUnits = getAvgPoint(myUnits);
+       avgFighterUnits= getAvgPoint(myFighterUnits);
+       avgPullerUnits=getAvgPoint(myPullerUnits);
+        avgGathererUnits=getAvgPoint(myGathererUnits);
+      avgMinerUnits=getAvgPoint(myMinerUnits);
+
     }
 
     public void resetUnitLists()
@@ -105,6 +129,19 @@ public class PlayerAnalysis {
         {
             myPullerUnits.add(u);
         }
+    }
+
+    public Point getAvgPoint(ArrayList<Unit> list)
+    {
+        float xSum =0;
+        float ySum=0;
+
+        for (Unit u: list)
+        {
+            xSum +=u.getX();
+            ySum += u.getY();
+        }
+        return new Point (xSum/list.size(), ySum/list.size());
     }
 
     public String getPrimaryWeapon() {

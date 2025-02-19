@@ -121,7 +121,7 @@ public class OverallAnalysis {
         float length = ally.getPlayer().getMyBase().getDistance(enemy.getPlayer().getMyBase());
         for (float i = -(float)numRallyPoint/2; i<=(float)numRallyPoint/2; i++)
         {
-            rallyPts.add(new Point(coreRallyPoint.getX(), coreRallyPoint.getY() + length*.5f*i));
+            rallyPts.add(new Point(coreRallyPoint.getX(), coreRallyPoint.getY() + length*.15f*i));
         }
     }
 

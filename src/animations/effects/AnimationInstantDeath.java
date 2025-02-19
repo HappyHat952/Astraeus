@@ -10,7 +10,7 @@ public class AnimationInstantDeath extends Animation
 
 	public AnimationInstantDeath(Entity e)
 	{
-		super(e.getX() + e.getSize() / 2, e.getY() + e.getSize() / 2, 30);
+		super(e.getX() + e.getSize() / 2, e.getY() + e.getSize() / 2, 60);
 	}
 	
 	public void update()
@@ -20,6 +20,6 @@ public class AnimationInstantDeath extends Animation
 
 	public void render(Graphics g) 
 	{
-		g.drawImage(Images.finisher, x - 16, y - 16 );
+		g.drawImage(Images.finisher, x - 16, y - 16);
 	}
 }

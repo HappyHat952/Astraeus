@@ -4,11 +4,11 @@ import components.weapon.Weapon;
 import components.weapon.economy.Collector;
 import components.weapon.economy.Drillbeam;
 import objects.entity.unit.Unit;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
 import player.Player;
 import teams.student.testPlotz.analysis.OverallAnalysis;
-import teams.student.testPlotz.units.Gatherer;
 import teams.student.testPlotz.units.Miner;
 
 import java.util.ArrayList;
@@ -26,6 +26,9 @@ public abstract class TestPlotzUnit extends Unit
 	private static float k;
 	private static int spreadValue;
 	private static Point rallyPoint;
+
+	protected Unit targetUnit;
+	protected Color color;
 
 
 	public TestPlotzUnit(Player p)
@@ -100,7 +103,7 @@ public abstract class TestPlotzUnit extends Unit
 
 	public void attack(Weapon w) {
 
-		Unit enemy = getNearestCriticalFighter(this, getMaxRange());
+		Unit enemy = getNearestCriticalFighter(this, (int)(getMaxRange()*.9f));
 		if (enemy == null) {
 			enemy = getNearestEnemy();
 		}
@@ -109,18 +112,48 @@ public abstract class TestPlotzUnit extends Unit
 		}
 	}
 
-	public static Unit getNearestCriticalFighter(Unit origin, int radius) {
+	public static Unit getLowestEffectiveHealthFighter(Unit origin, int radius) {
 		ArrayList<Unit> targets = origin.getEnemiesInRadius(radius);
 		Unit critical = null;
 		float lowestHealth = Float.MAX_VALUE;
 
 		for (Unit u : targets) {
-			//need help with this
-			float health = u.getCurEffectiveHealth()*(1- u.getDodgeChance());
+			float health = u.getCurEffectiveHealth() * (1 - u.getDodgeChance());
 
+			Unit nearestAlly = u.getNearestAlly();
+			boolean isSecluded = (nearestAlly == null || u.getDistance(nearestAlly) > 2500);
 
-			if (u!=origin && health < lowestHealth && !isPassive(u) && !u.equals(origin)) {
+			if (u != origin && health < lowestHealth && !isPassive(u) && !isSecluded) {
 				lowestHealth = health;
+				critical = u;
+			}
+		}
+		return critical;
+	}
+
+	public static Unit getNearestCriticalFighter(Unit origin, int radius) {
+		ArrayList<Unit> targets = origin.getEnemiesInRadius(radius);
+		Unit critical = null;
+		//float lowestHealth = Float.MAX_VALUE;
+		int maxPoints = Integer.MIN_VALUE;
+
+		for (Unit u : targets) {
+			//need help with this
+			int points =0;
+			points -= u.getCurEffectiveHealth()*(1- u.getDodgeChance());
+
+			if (u.getWeaponOne()!= null)
+			{
+				points += u.getWeaponOne().getDamage();
+			}
+			if (u.getWeaponTwo()!= null)
+			{
+				points += u.getWeaponTwo().getDamage();
+			}
+
+
+			if (u!=origin && points > maxPoints && !isPassive(u) && !u.equals(origin)) {
+				maxPoints = points;
 				critical = u;
 			}
 		}
@@ -152,7 +185,7 @@ public abstract class TestPlotzUnit extends Unit
 
 		if (getCurEffectiveHealth()/getMaxEffectiveHealth() >.2f)
 		{
-			Unit enemy = getNearestCriticalFighter(this, getMaxRange());
+			Unit enemy = getLowestEffectiveHealthFighter(this, getMaxRange());
 
 			if (enemy == null)
 			{
@@ -233,7 +266,11 @@ public abstract class TestPlotzUnit extends Unit
 	
 	public void draw(Graphics g)
 	{
-		g.drawString(""+(getCurEffectiveHealth()/getMaxEffectiveHealth()), x, y);
+		if(targetUnit != null && color != null)
+		{
+			g.setColor(color);
+			g.fillRect(targetUnit.getX(), targetUnit.getY(), 5,5);
+		}
 	}
 	public Point getNearestRallyPoint()
 	{

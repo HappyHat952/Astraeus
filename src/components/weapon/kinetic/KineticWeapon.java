@@ -28,7 +28,6 @@ public abstract class KineticWeapon extends WeaponTargetUnitSequentialFire
     protected float soundVolume;
     protected int animationSize;
 
-    private int bonusShots = 0;
     private int bonusRange = 0;
 
     public KineticWeapon(int delayTotal)
@@ -39,10 +38,7 @@ public abstract class KineticWeapon extends WeaponTargetUnitSequentialFire
         name = "Autocannon";
     }
 
-    public int getNumShots()
-    {
-        return numShots + bonusShots;
-    }
+
 
     public int getMaxRange()
     {
@@ -61,7 +57,7 @@ public abstract class KineticWeapon extends WeaponTargetUnitSequentialFire
         if(getOwner().hasMod(KratosMod.class))
         {
             name = KratosMod.NAME;
-            bonusShots = KratosMod.SHOT_PENALTY;
+            numShots = KratosMod.SHOT_AMOUNT;
             accuracy -= KratosMod.ACCURACY_PENALTY;
         }
         if(getOwner().hasMod(HadesMod.class))
@@ -88,15 +84,15 @@ public abstract class KineticWeapon extends WeaponTargetUnitSequentialFire
     {
         if(isHit)
         {
-            // Damage
-            if(getOwner().hasMod(KratosMod.class))
-            {
-                target.addCondition(new Damage(getDamage() * KratosMod.DAMAGE_SCALAR, getDamageType(), getActualTravelTime(target), getBlockPenetration()));
-            }
-            else
-            {
+//            // Damage
+//            if(getOwner().hasMod(KratosMod.class))
+//            {
+//                target.addCondition(new Damage(getDamage() * KratosMod.DAMAGE_SCALAR, getDamageType(), getActualTravelTime(target), getBlockPenetration()));
+//            }
+//            else
+//            {
                 target.addCondition(new Damage(getDamage(), getDamageType(), getActualTravelTime(target), getBlockPenetration()));
-            }
+//            }
 
             // Kratos Mod Stop Effect
             if(getOwner().hasMod(KratosMod.class))

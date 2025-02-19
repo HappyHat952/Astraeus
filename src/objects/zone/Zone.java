@@ -2,7 +2,7 @@ package objects.zone;
 
 import engine.states.Game;
 import objects.GameObject;
-import objects.entity.unit.Unit;
+import objects.entity.Entity;
 import player.Player;
 
 import java.util.ArrayList;
@@ -18,9 +18,9 @@ abstract public class Zone extends GameObject
 	protected boolean targetsAllies;
 	protected boolean targetsAll;
 	
-	private ArrayList<Unit> allUnits;
-	private ArrayList<Unit> alliedUnits;
-	private ArrayList<Unit> enemyUnits;
+	private ArrayList<Entity> allEntities;
+	private ArrayList<Entity> alliedEntities;
+	private ArrayList<Entity> enemyEntities;
 
 	
 	public Zone(float x, float y) 
@@ -47,9 +47,9 @@ abstract public class Zone extends GameObject
 	
 	private void init()
 	{
-		allUnits = new ArrayList<Unit>();
-		alliedUnits = new ArrayList<Unit>();
-		enemyUnits = new ArrayList<Unit>();
+		allEntities = new ArrayList<Entity>();
+		alliedEntities = new ArrayList<Entity>();
+		enemyEntities = new ArrayList<Entity>();
 	}
 	
 	public boolean isDone()
@@ -64,8 +64,13 @@ abstract public class Zone extends GameObject
 		applyEffects();
 		time++;
 	}
-	
-	public float getPercentDistance(Unit u)
+
+	public float getRadius()
+	{
+		return radius;
+	}
+
+	public float getPercentDistance(Entity u)
 	{
 		return getDistance(u) / radius;
 	}
@@ -77,21 +82,26 @@ abstract public class Zone extends GameObject
 	
 	private void updateUnits()
 	{
-		allUnits = Game.getUnits();
-		alliedUnits.clear();
-		enemyUnits.clear();
+
+		allEntities.clear();
+
+		allEntities.addAll(Game.getUnits());
+		allEntities.addAll(Game.getMissiles());
+
+		alliedEntities.clear();
+		enemyEntities.clear();
 		
 		if(player != null)
 			
-		for(Unit u : allUnits)
+		for(Entity u : allEntities)
 		{
 			if(u.getPlayer() == getPlayer())
 			{
-				alliedUnits.add(u);
+				alliedEntities.add(u);
 			}
 			else
 			{
-				enemyUnits.add(u);
+				enemyEntities.add(u);
 			}
 		}
 	}
@@ -114,7 +124,7 @@ abstract public class Zone extends GameObject
 	
 	private void applyEffectAll()
 	{
-		for(Unit u : allUnits)
+		for(Entity u : allEntities)
 		{
 			if(getDistance(u) <= radius)
 			{
@@ -126,7 +136,7 @@ abstract public class Zone extends GameObject
 	
 	private void applyEffectEnemies()
 	{
-		for(Unit u : enemyUnits)
+		for(Entity u : enemyEntities)
 		{
 			if(getDistance(u) <= radius)
 			{
@@ -138,7 +148,7 @@ abstract public class Zone extends GameObject
 	
 	private void applyEffectAllies()
 	{
-		for(Unit u : alliedUnits)
+		for(Entity u : alliedEntities)
 		{
 			if(getDistance(u) <= radius)
 			{
@@ -147,7 +157,7 @@ abstract public class Zone extends GameObject
 		}
 	}
 	
-	protected void applyEffect(Unit u)
+	protected void applyEffect(Entity u)
 	{
 		
 	}

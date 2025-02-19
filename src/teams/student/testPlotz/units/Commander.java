@@ -28,24 +28,20 @@ public class Commander extends Fighter{
         setModel(Model.ARTILLERY);
         setStyle(Style.BOXY);
 
-        if (PlayerAnalysis.getPrimaryWeapon().equals("missile")) {
-            add(AntiMissileSystem.class);
-        } else {
+
             add(CommandRelay.class);
-        }
         add(Shield.class);
     }
 
-    @Override
-    public void movement() {
+//    public void movement() {
 //        ArrayList<Unit> allyFighters = OverallAnalysis.getAlly().getFighters();
-////
-////        for (Unit a: allyFighters) {
-////        }
-////
-////        moveTo(partner);
-////        getWeaponOne().use();
-
-    }
+//
+//        for (Unit a: allyFighters) {
+//        }
+//
+//        moveTo(partner);
+//        getWeaponOne().use();
+//
+//    }
 
 }

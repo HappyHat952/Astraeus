@@ -7,7 +7,6 @@ import components.weapon.kinetic.Autocannon;
 import objects.entity.unit.Frame;
 import objects.entity.unit.Model;
 import objects.entity.unit.Style;
-import teams.student.plotz.AllyAnalysis;
 import objects.entity.unit.Unit;
 import teams.student.plotz.Plotz;
 import teams.student.plotz.PlotzUnit;

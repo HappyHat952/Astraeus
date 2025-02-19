@@ -11,13 +11,13 @@ public class SpeedBoost extends Weapon
 {
 	public static final int SIZE = 1;
 	public static final float SPEED_MULTIPLIER = 2.5f;
-	public static final int DURATION = 300;
+	public static final int DURATION = 360;
 	public static final int USE_TIME = 1;
 	public static final int COOLDOWN = 900;
 
 	public static final WeaponType WEAPON_TYPE = WeaponType.UTILITY;
 	public static final DamageType DAMAGE_TYPE = DamageType.NONE;
-	public static final int MASS = 2;
+	public static final int MASS = 0;
 
 	public SpeedBoost()
 	{

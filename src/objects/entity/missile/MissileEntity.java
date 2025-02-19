@@ -9,6 +9,7 @@ import engine.Utility;
 import engine.Values;
 import engine.states.Game;
 import objects.entity.Entity;
+import objects.entity.unit.Unit;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 
 public class MissileEntity extends Entity
 {
-	public static float TRIGGER_DISTANCE = 25;
+	public static float TRIGGER_DISTANCE = 15;
 	protected static float EXPLOSION_IMAGE_SCALING = .25f;
 	
 	protected int smokeSize = 12;
@@ -31,14 +32,15 @@ public class MissileEntity extends Entity
 	private final boolean locked;
 	private final float damage;
 	private final DamageType damageType;
-	
+	private final float zAxisMissAcc;
+
 	protected Image imageSecondary;
 	protected Image imageMove;
 	protected int radius;
 	private final int duration;
 	private int time;
 
-	public MissileEntity(objects.entity.unit.Unit owner, Entity target, boolean locked, int range, float damage, DamageType damageType, int radius)
+	public MissileEntity(Unit owner, Entity target, boolean locked, int range, float damage, DamageType damageType, int radius, float speedScalar)
 	{
 		super(owner.getCenterX(), owner.getCenterY(), owner.getTeam());
 		this.owner = owner;
@@ -48,9 +50,9 @@ public class MissileEntity extends Entity
 		imageSecondary = Images.missile.getSprite(0,1);
 		imageMove = Images.missile.getSprite(0, 2);
 		
-		setSpeed(60 * Values.SPEED);
-		setAcceleration(320 * Values.ACC);
-
+		setSpeed(65 * Values.SPEED * speedScalar);
+		setAcceleration(320 * Values.ACC * speedScalar);
+		zAxisMissAcc = Utility.random(.001, .003);
 		if(locked)
 		{
 			this.damage = damage;
@@ -63,15 +65,15 @@ public class MissileEntity extends Entity
 		this.damageType = damageType;
 		this.radius = radius;
 
-		if(wasHit())
-		{
-			this.duration = (int) (range / getMaxSpeed() * 1.30);
+//		if(wasHit())
+//		{
+			this.duration = (int) (range / getMaxSpeed() * 1.40);
+//		}
+//		else
+//		{
+//			this.duration = (int) (range / getMaxSpeed() * 1.10);
+//		}
 
-		}
-		else
-		{
-			this.duration = (int) (range / getMaxSpeed());
-		}
 
 
 
@@ -92,15 +94,29 @@ public class MissileEntity extends Entity
 
 
 	}
-	
+
+	public int getTimeLeft()
+	{
+		return duration - time;
+	}
+
 	public void update()
 	{
 		super.update();
 		time++;
-		
+
+		if(!locked)
+		{
+			scale = scale - zAxisMissAcc;
+
+			if(scale <= .35)
+			{
+				die();
+			}
+		}
+
 		if(locked && time > 40 && target != null && target.isAlive())
 		{
-
 			moveTo(target);	
 		}
 		else 
@@ -108,10 +124,10 @@ public class MissileEntity extends Entity
 			move();
 		}
 		
-		objects.entity.unit.Unit u = getNearestEnemy();
+		Unit u = getNearestEnemy();
 			
 		// Explode on trigger of being near a unit
-		if(u != null && getDistance(u) < TRIGGER_DISTANCE)
+		if(u != null && getDistance(u) < TRIGGER_DISTANCE * getScale())
 		{
 			dealAreaDamage();
 			die();
@@ -138,7 +154,7 @@ public class MissileEntity extends Entity
 	{
 		float x = getCenterX();
 		float y = getCenterY();
-		AnimationManager.add(new Smoke(x, y, 10));
+		AnimationManager.add(new Smoke(x, y, 10 * getScale()));
 	}
 	
 	public void dealAreaDamage()
@@ -181,7 +197,7 @@ public class MissileEntity extends Entity
 		}
 
 		float percentAway = distanceAway / radius;
-		float actualDamage = damage * (1-percentAway);
+		float actualDamage = damage * (1-percentAway) * getScale();
 
 		if(Math.random() > u.getDodgeChance())
 		{

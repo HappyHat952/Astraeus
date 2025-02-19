@@ -16,6 +16,7 @@ public class Main extends StateBasedGame
     public static final int SELECTION_BATTLE_ID  = 3;
     public static final int GAME_ID  = 4;
     public static final int END_ID  = 5;
+       
     private final BasicGameState title;
     private final BasicGameState selectionBattle;
     private final BasicGameState game;
@@ -26,6 +27,7 @@ public class Main extends StateBasedGame
 	public Main(String name) 
 	{
 		super(name);
+		
 		title = new Splash(TITLE_ID);
 		game = new Game(GAME_ID);
 		selectionBattle = new Menu(SELECTION_BATTLE_ID, (Game) game);

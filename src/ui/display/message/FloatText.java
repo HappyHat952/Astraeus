@@ -14,12 +14,12 @@ public class FloatText extends Message
 {
 	public final static int DEFAULT_DURATION = 100;
 
-	private GameObject owner;
+	private final GameObject owner;
 	private float x;
 	private float y;
 	private Font myFont;
-	private float ySpeed;
-	private float xSpeed;
+	private final float ySpeed;
+	private final float xSpeed;
 
 	private int value;
 

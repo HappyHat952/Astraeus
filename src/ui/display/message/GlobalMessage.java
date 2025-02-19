@@ -38,11 +38,11 @@ public class GlobalMessage extends Message
 		else
 		{
 			int alpha = (int) Math.pow((255 * this.percentComplete()), 1.3);
-			g.setColor(new Color(255, 255, 255, alpha));
+			g.setColor(new Color(200, 200, 200, alpha));
 		}
 
 		float x = Main.getScreenWidth() / 2;
-		float y = Main.getScreenHeight() - (id + 2) * f.getHeight("A") - (Main.getScreenHeight() * Hud.BAR_HEIGHT_PERCENT);
+		float y = Main.getScreenHeight() - (id + 2) * f.getHeight("A") * 1.2f - (Main.getScreenHeight() * Hud.BAR_HEIGHT_PERCENT);
 		
 		Utility.drawStringCenterTop(g, f, message, x, y);
 	}

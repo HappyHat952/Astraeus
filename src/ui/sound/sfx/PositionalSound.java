@@ -81,26 +81,26 @@ public class PositionalSound extends Sound
 	
 	public float soundMultiplierSpeed()
 	{
-		if(Settings.gameSpeed == 1)
-		{
+//		if(Settings.gameSpeed == 1)
+//		{
 			return 1;
-		}
-		else if(Settings.gameSpeed == 2)
-		{
-			return .85f;
-		}
-		else if(Settings.gameSpeed == 5)
-		{
-			return .70f;
-		}
-		else if(Settings.gameSpeed == 10)
-		{
-			return .55f;
-		}
-		else 
-		{
-			return .40f;
-		}
+//		}
+//		else if(Settings.gameSpeed == 2)
+//		{
+//			return .85f;
+//		}
+//		else if(Settings.gameSpeed == 5)
+//		{
+//			return .70f;
+//		}
+//		else if(Settings.gameSpeed == 10)
+//		{
+//			return .55f;
+//		}
+//		else
+//		{
+//			return .40f;
+//		}
 	}
 
 }

@@ -14,7 +14,6 @@ import objects.entity.unit.Unit;
 import teams.student.januaryPlotz.JanPlotzUnit;
 import teams.student.januaryPlotz.JanuaryPlotz;
 
-
 import java.util.ArrayList;
 
 public class Healer extends JanPlotzUnit {

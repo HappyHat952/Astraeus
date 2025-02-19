@@ -1,14 +1,10 @@
 package teams.student.plotz;
 
-import engine.Utility;
-import objects.GameObject;
 import objects.entity.node.Node;
 import objects.entity.unit.Unit;
 import objects.resource.Resource;
-import player.Player;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class ResourceManager {
     public static ArrayList<Resource> takenResources = new ArrayList<Resource>();

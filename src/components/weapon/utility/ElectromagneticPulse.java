@@ -19,7 +19,7 @@ public class ElectromagneticPulse extends Weapon
 	public static final int DURATION = 180;
 	public static final int USE_TIME = 60;
 	public static final int COOLDOWN = 4000;
-	public static final int RADIUS = 500;
+	public static final int RADIUS = 600;
 	public static final int ANIM_DURATION = 80;
 	public static final WeaponType WEAPON_TYPE = WeaponType.UTILITY;
 	public static final int MASS = 20;

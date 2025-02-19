@@ -52,8 +52,13 @@ public final class BaseShip extends Unit
 		
 		turnRate = TURN_RATE_START;
 
-	}	
-	
+	}
+
+	public void repairHull(float amount, boolean restoresShields)
+	{
+
+	}
+
 	public void update() 
 	{
 		super.update();
@@ -67,29 +72,28 @@ public final class BaseShip extends Unit
 		
 		getWeaponOne().use(u);
 		getWeaponTwo().use(u);
-		
+
+		setBaseShipSpeed();
+		changeSpeed(getAcceleration(), getTheta(), false);
+
 		if(team == 0 && getCenterX() > 0)
 		{
-			skirmishing = true;
+			xSpeed = 0;
 		}
 		if(team == 1 && getCenterX() < -0)
 		{
-			skirmishing = true;
+			xSpeed = 0;
 		}
 		
-		if(skirmishing)
-		{
-			rotate(trueTheta + TURN_RATE_START);
-		}
 
-		setBaseShipSpeed();
+
 
 //		xSpeed = 5;
 //		System.out.println("----");
 //		System.out.println(getMaxSpeed() + " " + getTheta());
 //		System.out.println(xSpeed + " " + ySpeed);
 
-		changeSpeed(getAcceleration(), getTheta(), false);
+
 
 //		System.out.println(getMaxSpeed() + " " + getTheta());
 //		System.out.println(xSpeed + " " + ySpeed);
@@ -103,6 +107,8 @@ public final class BaseShip extends Unit
 			super.addCondition(c);
 		}
 	}
+
+
 	
 	public void action() 
 	{

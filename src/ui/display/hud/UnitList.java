@@ -110,19 +110,19 @@ public class UnitList
 
 					// Made
 					g.setColor(new Color(0, 0, 0));
-					Utility.drawStringCenterTop(g, Fonts.mediumFont, ""+current+"/"+made, Main.getScreenWidth() * .05f+2, y - i * spacing + 45+2);
+					Utility.drawStringCenterTop(g, Fonts.mediumFont, current+"/"+made, Main.getScreenWidth() * .05f+2, y - i * spacing + 45+2);
 
 					float percentage = ((float) current) / ((float) made);
 
 					g.setColor(new Color((int) (90 + ((1-percentage) * 80)), (int) (90 + (percentage * 80)), 90));
-					Utility.drawStringCenterTop(g, Fonts.mediumFont, ""+current+"/"+made, Main.getScreenWidth() * .05f, y - i * spacing + 45);
+					Utility.drawStringCenterTop(g, Fonts.mediumFont, current+"/"+made, Main.getScreenWidth() * .05f, y - i * spacing + 45);
 
 					// Count and Name
 					g.setColor(new Color(0, 0, 0));
-					Utility.drawStringLeftTop(g, Fonts.bigFont, ""+d.name, Main.getScreenWidth() * .075f+2, y - i * spacing + 40+2);
+					Utility.drawStringLeftTop(g, Fonts.bigFont, d.name, Main.getScreenWidth() * .075f+2, y - i * spacing + 40+2);
 
 					g.setColor(Utility.blend(owner.getColorPrimary(), Color.gray));
-					Utility.drawStringLeftTop(g, Fonts.bigFont, ""+d.name , Main.getScreenWidth() * .075f, y - i * spacing + 40);
+					Utility.drawStringLeftTop(g, Fonts.bigFont, d.name, Main.getScreenWidth() * .075f, y - i * spacing + 40);
 
 
 
@@ -138,19 +138,19 @@ public class UnitList
 
 					// Made
 					g.setColor(new Color(0, 0, 0));
-					Utility.drawStringCenterTop(g, Fonts.mediumFont, ""+current+"/"+made, Main.getScreenWidth() * .975f, y - i * spacing + 45+2);
+					Utility.drawStringCenterTop(g, Fonts.mediumFont, current+"/"+made, Main.getScreenWidth() * .975f, y - i * spacing + 45+2);
 
 					float percentage = ((float) current) / ((float) made);
 
 					g.setColor(new Color((int) (90 + ((1-percentage) * 80)), (int) (90 + (percentage * 80)), 90));
-					Utility.drawStringCenterTop(g, Fonts.mediumFont, ""+current+"/"+made, Main.getScreenWidth() * .975f, y - i * spacing + 45);
+					Utility.drawStringCenterTop(g, Fonts.mediumFont, current+"/"+made, Main.getScreenWidth() * .975f, y - i * spacing + 45);
 
 					// Count and Name
 					g.setColor(new Color(0, 0, 0));
-					Utility.drawStringRightTop(g, Fonts.bigFont, d.name + "", Main.getScreenWidth() * .925f+2, y - i * spacing + 40+2);
+					Utility.drawStringRightTop(g, Fonts.bigFont, d.name, Main.getScreenWidth() * .925f+2, y - i * spacing + 40+2);
 
 					g.setColor(Utility.blend(owner.getColorPrimary(), Color.gray));
-					Utility.drawStringRightTop(g, Fonts.bigFont, d.name+"", Main.getScreenWidth() * .925f, y - i * spacing + 40);
+					Utility.drawStringRightTop(g, Fonts.bigFont, d.name, Main.getScreenWidth() * .925f, y - i * spacing + 40);
 				}
 
 

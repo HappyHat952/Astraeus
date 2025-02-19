@@ -74,7 +74,7 @@ public class PlayerAnalysis {
             }
             //MINER units counted and put in list
             else if (u.hasComponent(Drillbeam.class)){
-                myFighterUnits.add(u);
+                myMinerUnits.add(u);
             }
             else if (u.hasComponent(Pullbeam.class))
             {

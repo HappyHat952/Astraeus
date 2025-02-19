@@ -10,7 +10,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 import player.Player;
-import teams.student.plotz.Plotz;
+import teams.student.myTeam.MyTeam;
 import ui.display.Fonts;
 import ui.display.Images;
 import ui.display.selector.Button;
@@ -66,9 +66,9 @@ public class Menu extends BasicGameState
 
 	public static void setPlayers()
 	{
-		addPlayer(Plotz.class);
+		addPlayer(MyTeam.class);
 		players.get(0).setDifficultyRating(100);
-		addPlayer(Plotz.class);
+		addPlayer(MyTeam.class);
 		players.get(1).setDifficultyRating(100);
 
 	}

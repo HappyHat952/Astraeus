@@ -10,7 +10,7 @@ public class MessageList
 	
 	public MessageList()
 	{
-		messages = new ArrayList<Message>();
+		messages = new ArrayList<>();
 	}
 	
 	public void render(Graphics g)
@@ -35,14 +35,7 @@ public class MessageList
 		for(int i = 0; i < messages.size(); i++)
 		{
 			Message m = messages.get(i);
-			
-			if(m.isDone())
-			{
-				messages.remove(m);
-				i--;
-			}
-			else
-			{
+
 				if(m instanceof ObjectMessage)
 				{
 					m.updateID(countObjectMessages);
@@ -50,9 +43,14 @@ public class MessageList
 				}
 
 				m.update();
-				
+
+			if(m.isDone())
+			{
+				messages.remove(m);
+				i--;
 			}
-		}		
+			}
+
 	}
 	
 	public void clear()

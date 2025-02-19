@@ -4,11 +4,11 @@ public class Missile extends ExplosiveWeapon
 {
 	public static final int SIZE = 1;
 	public static final int MAX_RANGE = 800;
-	public static final int DAMAGE = 25;
+	public static final int DAMAGE = 30;
 	public static final int RADIUS = 100;
 	public static final float ACCURACY = 0;
 	public static final int USE_TIME = 120;
-	public static final int COOLDOWN = 120;
+	public static final int COOLDOWN = 90;
 	public static final int MASS = 7;
 
 	public Missile()

@@ -1,15 +1,14 @@
 package teams.student.bartlebyFanClub.units;
-import java.util.ArrayList;
 
 import components.weapon.Weapon;
 import components.weapon.energy.Laser;
-import engine.states.Game;
 import objects.entity.unit.Frame;
 import objects.entity.unit.Style;
 import objects.entity.unit.Unit;
-import player.Player;
 import teams.student.bartlebyFanClub.BartlebyFanClub;
 import teams.student.bartlebyFanClub.MyTeamUnit;
+
+import java.util.ArrayList;
 
 public class GatherWarden extends MyTeamUnit 
 {

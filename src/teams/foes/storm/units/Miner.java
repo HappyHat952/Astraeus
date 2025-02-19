@@ -21,7 +21,7 @@ public class Miner extends TheStormUnit
 	public void design()
 	{
 		setFrame(Frame.LIGHT);
-		setModel(Model.ARTILLERY);
+		setModel(Model.DESTROYER);
 		setStyle(Style.BOXY);
 		add(Drillbeam.class);
 	}

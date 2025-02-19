@@ -5,13 +5,13 @@ public class Autocannon extends KineticWeapon
 	public static final int SIZE = 1;
 	public static final int MINERAL_COST = 1;
 	public static final int MAX_RANGE = 400;
-	public static final int DAMAGE = 16;
+	public static final int DAMAGE = 14;
 	public static final int NUM_SHOTS = 3;
 	public static final int USE_TIME = 60;
-	public static final int COOLDOWN = 180;
+	public static final int COOLDOWN = 150;
 	public static final int BULLET_DELAY = 3;
 	public static final int BULLET_TRAVEL_TIME_MAX = 15;
-	public static final float ACCURACY = .20f;
+	public static final float ACCURACY = .25f;
 	public static final int MASS = 3;
 
 	public Autocannon()

@@ -28,7 +28,7 @@ public class Drillbeam extends WeaponTargetEntity
 	public static final int COOLDOWN = 3;
 	public static final WeaponType WEAPON_TYPE = WeaponType.RESOURCE;
 	public static final DamageType DAMAGE_TYPE = DamageType.TRUE;
-	public static final int MASS = 20;
+	public static final int MASS = 16;
 	public static final float ACCURACY = 1.00f;
 
 	public static final int ANIM_BEAM_WIDTH = 4;

@@ -7,8 +7,7 @@ public class AthenaMod extends Mod
 	public static int SIZE = 1;
 	public static int MASS = 2;
 
-	public static final float AREA_INCREASE = .35f;
-
+	public static final float AREA_INCREASE = .50f;
 
 	public AthenaMod()
 	{

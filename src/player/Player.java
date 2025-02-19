@@ -18,6 +18,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import ui.display.DisplayManager;
 import ui.display.Images;
 import ui.display.message.PlayerMessage;
 import ui.sound.music.Song;
@@ -32,12 +33,14 @@ public abstract class Player
 	public final static int EXTREME_LATENCY = 1500;
 	public final static int HIGH_LATENCY = 1000;
 	public final static int MEDIUM_LATENCY = 500;
-	
+//	public final static int CHAT_COOLDOWN = 1 * 60;
+
 	/******* Data *******/
 	private CompositionData myComposition;
+	private ArrayList<String> pastChatMessages;
 
 	protected int timer;
-	
+	private int chatCooldown;
 	private float difficultyRating = 1.0f;
 	private float minerals;
 	private float mineralsMined;
@@ -73,7 +76,6 @@ public abstract class Player
 
 	public Player() 
 	{
-
 		teamImage = Images.defaultLogo;
 		name = getClass().getSimpleName();
 	}
@@ -88,6 +90,7 @@ public abstract class Player
 		latencies = new ArrayList<>();
 		messages = new ArrayList<>();
 		myComposition = new CompositionData();
+		pastChatMessages = new ArrayList<>();
 
 		setStartingValues();
 		setup();
@@ -155,6 +158,24 @@ public abstract class Player
 	}
 
 	public abstract void draw(Graphics g);
+
+	public void chat(String message)
+	{
+		if(!pastChatMessages.contains(message))
+		{
+			DisplayManager.chat(this, message);
+//			chatCooldown = CHAT_COOLDOWN;
+			pastChatMessages.add(message);
+		}
+	}
+
+	public void chat(String message, int time)
+	{
+		if(Game.getTime() == time)
+		{
+			chat(message);
+		}
+	}
 
 	public abstract void strategy() throws SlickException;
 

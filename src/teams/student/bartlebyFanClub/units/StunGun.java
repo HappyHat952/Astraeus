@@ -1,13 +1,8 @@
 package teams.student.bartlebyFanClub.units;
 
-import components.mod.Mod;
 import components.upgrade.Plating;
-import components.upgrade.Shield;
-import components.weapon.Weapon;
 import components.weapon.economy.Collector;
 import components.weapon.economy.Drillbeam;
-import components.weapon.energy.Laser;
-import components.weapon.kinetic.Autocannon;
 import components.weapon.utility.ElectromagneticPulse;
 import components.weapon.utility.Pullbeam;
 import objects.entity.unit.Frame;

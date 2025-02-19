@@ -15,7 +15,7 @@ public class MissileInferno extends MissileEntity
 	
 	public MissileInferno(objects.entity.unit.Unit owner, Entity target, boolean locked, int range, float damage, DamageType damageType, int radius, int burnDuration, float burnDamageOverDuration)
 	{
-		super(owner, target, locked, range, damage, damageType, radius);
+		super(owner, target, locked, range, damage, damageType, radius, 1);
 		this.burnDuration = burnDuration;
 		this.burnDamageOverDuration = burnDamageOverDuration;
 	}

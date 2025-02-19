@@ -196,5 +196,22 @@ public class Minimap extends HudElement
 		g.drawRect(camX - camW / 2, camY - camH / 2, camW, camH);
 		g.resetLineWidth();
 	}
+	
+	public boolean mousePressed(int mouseX, int mouseY)
+	{
+		float localX = mouseX - this.x;
+		float localY = mouseY - this.y;
+		
+		// Verify that mouse is within minimap
+		if (localX < 0 || localY < 0 || localX > this.w || localY > this.h)
+		{
+			return false;
+		}
 
+		float worldX = localX * ((float)Game.getMapWidth() / this.w) - ((float)Game.getMapWidth() / 2);
+		float worldY = localY * ((float)Game.getMapHeight() / this.h) - ((float)Game.getMapHeight() / 2);
+		
+		Camera.centerView(worldX, worldY);
+		return true;
+	}
 }

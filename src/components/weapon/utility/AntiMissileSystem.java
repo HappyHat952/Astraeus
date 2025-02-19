@@ -13,15 +13,14 @@ import org.newdawn.slick.Color;
 public class AntiMissileSystem extends WeaponTargetEntity
 {
 	public static final int SIZE = 1;
-	public static final int MAX_RANGE = 600;
-	public static final float DAMAGE = 1;
+	public static final int MAX_RANGE = 700;
+	public static final float DAMAGE = 3;
 	public static final int USE_TIME = 1;
-	public static final int COOLDOWN = 5;
+	public static final int COOLDOWN = 10;
 	public static final float ACCURACY = 1.0f;
 	public static final int BULLET_TRAVEL_TIME_MAX = 30;
-	public static final int BULLET_SIZE = 4;
+	public static final int BULLET_SIZE = 5;
 
-	
 	public static final WeaponType WEAPON_TYPE = WeaponType.UTILITY;
 	public static final DamageType DAMAGE_TYPE = DamageType.TRUE;
 	public static final int MASS = 10;
@@ -88,24 +87,12 @@ public class AntiMissileSystem extends WeaponTargetEntity
 	{
 		MissileEntity m;
 
-//		System.out.println("gonna fire ams");
-
 		if(canUse())
 		{
-
-//			System.out.println("ams rdy");
-
 			m = getOwner().getNearestEnemyMissile();
 			
 			if(canUse(m))
 			{
-
-//				System.out.println("missile in range, firing");
-				
-//				if(!(getOwner() instanceof BaseShip))
-//				{
-//					getOwner().turnTo(m);
-//				}
 
 				useLockTimer = getUseTime();
 				start(m);

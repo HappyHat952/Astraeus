@@ -1,12 +1,8 @@
 package teams.student.januaryPlotz.units;
 
 import components.upgrade.Munitions;
-import components.upgrade.Plating;
 import components.upgrade.Shield;
 import components.weapon.energy.HeavyLaser;
-import components.weapon.energy.Laser;
-import components.weapon.explosive.HeavyMissile;
-import components.weapon.kinetic.Autocannon;
 import objects.entity.unit.Frame;
 import objects.entity.unit.Model;
 import objects.entity.unit.Style;

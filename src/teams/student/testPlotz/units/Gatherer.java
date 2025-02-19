@@ -1,15 +1,15 @@
 package teams.student.testPlotz.units;
 
 
-import components.upgrade.Shield;
 import components.weapon.economy.Collector;
 import objects.entity.unit.Frame;
 import objects.entity.unit.Model;
 import objects.entity.unit.Style;
 import objects.resource.Resource;
+import org.newdawn.slick.geom.Point;
 import teams.student.testPlotz.TestPlotz;
-import teams.student.testPlotz.analysis.ResourceManager;
 import teams.student.testPlotz.TestPlotzUnit;
+import teams.student.testPlotz.analysis.ResourceManager;
 
 import java.util.ArrayList;
 
@@ -122,6 +122,14 @@ public class Gatherer extends TestPlotzUnit
 			}
 		}
 		return nearestResource;
+	}
+
+	public Point getDestination() {
+		if (myResource != null) {
+			return myResource.getPosition();
+		} else {
+			return getHomeBase().getPosition();
+		}
 	}
 
 }

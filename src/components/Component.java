@@ -6,7 +6,7 @@ import org.newdawn.slick.Graphics;
 
 public abstract class Component 
 {
-	public static float HEAVY_POWER_SCALAR = 2.2f;
+	public static float HEAVY_POWER_SCALAR = 2.4f;
 	public static float HEAVY_MASS_SCALAR = 3.0f;
 
 	private Unit owner;

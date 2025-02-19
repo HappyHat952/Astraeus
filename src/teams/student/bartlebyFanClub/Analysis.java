@@ -2,8 +2,6 @@ package teams.student.bartlebyFanClub;
 
 import components.weapon.utility.Pullbeam;
 import objects.entity.unit.Unit;
-import teams.student.bartlebyFanClub.BartlebyFanClub;
-import teams.student.bartlebyFanClub.MyTeamUnit;
 
 import java.util.ArrayList;
 

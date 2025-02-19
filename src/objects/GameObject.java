@@ -17,7 +17,7 @@ public abstract class GameObject
 	protected GameContainer gc;
 	private final int gameNumber;
 	
-	protected int scale = 1;
+	protected float scale = 1;
 
 	protected int timer = 0;
 	protected float x = 0;

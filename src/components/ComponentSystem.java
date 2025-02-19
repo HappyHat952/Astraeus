@@ -5,24 +5,23 @@ import components.weapon.Weapon;
 import components.weapon.WeaponType;
 import objects.entity.unit.Unit;
 import org.newdawn.slick.Graphics;
+import ui.display.DisplayManager;
 
 import java.util.ArrayList;
 
 public class ComponentSystem 
 {
-	Unit owner;
-	ArrayList<Component> components;
-	Mod mod;
-
-	int componentSlotsUsed;
-
+	private Unit owner;
+	private ArrayList<Component> components;
+	private Mod mod;
+	private int componentSlotsUsed;
 	private Weapon weaponOne;
 	private Weapon weaponTwo;
 	
 	public ComponentSystem(Unit owner)
 	{
 		this.owner = owner;
-		components = new ArrayList<Component>();
+		components = new ArrayList<>();
 	}
 
 	public Weapon getWeaponOne()			{		return weaponOne;	}
@@ -77,8 +76,6 @@ public class ComponentSystem
 		return c;
 	}
 
-
-
 	public Component get(int i)
 	{
 		return components.get(i);
@@ -118,13 +115,15 @@ public class ComponentSystem
 	{
 		if(c == null)
 		{
-			System.out.println("Error: " + "missing or invalid component type");
+			System.out.println("Error: " + owner.getName()  + " has missing or invalid component type");
+			DisplayManager.addMessage("Error: " + owner.getName()  + " has missing or invalid component type");
 			return false;
 		}
 
 		if(!canAdd(c))
 		{
-			System.out.println("Error: " + owner + " has insufficient component or mod slots remaining");
+			System.out.println("Error: " + owner.getName()  + " does not have enough component slots open.");
+			DisplayManager.addMessage("Error: " + owner.getName() + "  does not have enough component slots open.");
 			return false;
 		}
 
@@ -136,11 +135,10 @@ public class ComponentSystem
 			mod = (Mod) c;
 		}
 
-		if(c instanceof Weapon)
+		if(c instanceof Weapon w)
 		{
-			Weapon w = (Weapon) c;
 
-			if(weaponOne == null)
+            if(weaponOne == null)
 			{
 				weaponOne = w;
 			}

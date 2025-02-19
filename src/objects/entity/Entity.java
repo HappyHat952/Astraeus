@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class Entity extends GameObject
 {
-	public static final int SHIELD_RECOVERY_TIME_BASE = 320;
+	public static final int SHIELD_RECOVERY_TIME_BASE = 480;
 
 	protected int team = 0;
 	// Protected Data
@@ -25,7 +25,6 @@ public class Entity extends GameObject
 	private final Attribute plating;
 	private final Attribute shield;
 	private float hullRepairEfficiency = 1;
-	private final int shieldRecoveryTime = SHIELD_RECOVERY_TIME_BASE;
 	private int shieldRecoveryTimer = 0;
 	private int framesSinceLastHit = Integer.MAX_VALUE;
 	private boolean alive = true;
@@ -413,7 +412,7 @@ public class Entity extends GameObject
 		framesSinceLastHit = 0;	
 		
 		float starting = getCurEffectiveHealth();
-		shieldRecoveryTimer = shieldRecoveryTime;
+		shieldRecoveryTimer = SHIELD_RECOVERY_TIME_BASE;
 		
 		// Start with Shield Layer
 		amount = loseShield(amount, type);

@@ -18,7 +18,9 @@ public class Fighter extends TestPlotzUnit
 {
 
 	String weapon;
-	public Fighter(TestPlotz p) {super(p); }
+	boolean hasLeft;
+	public Fighter(TestPlotz p) {super(p);
+	hasLeft = false;}
 	
 
 	public void design()
@@ -34,10 +36,14 @@ public class Fighter extends TestPlotzUnit
 
 	}
 
-	public void movement()
-	{
-
-		if (getCurEffectiveHealth()/getMaxEffectiveHealth() >.2f)
+	public void movement() {
+		if (!hasLeft) {
+			moveTo(getHomeBase());
+			if (getAlliesInRadius(150, Fighter.class).size() >= ( (OverallAnalysis.getAlly().getMyUnits().size())) * .09f) {
+				hasLeft = true;
+			}
+		}
+		else if (getCurEffectiveHealth()/getMaxEffectiveHealth() >.2f)
 		{
 			Unit enemy = getNearestCriticalFighter(this, getMaxRange());
 

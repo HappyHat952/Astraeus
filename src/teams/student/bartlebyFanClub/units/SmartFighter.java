@@ -1,27 +1,18 @@
 package teams.student.bartlebyFanClub.units;
 
-import components.mod.Mod;
-import components.mod.offense.AresMod;
-import components.upgrade.HeavyShield;
 import components.upgrade.Munitions;
-import components.upgrade.Plating;
 import components.upgrade.Shield;
 import components.weapon.economy.Collector;
 import components.weapon.economy.Drillbeam;
-import components.weapon.energy.Laser;
-import components.weapon.kinetic.Autocannon;
 import components.weapon.kinetic.HeavyAutocannon;
 import components.weapon.utility.ElectromagneticPulse;
 import components.weapon.utility.HealingWeapon;
-import components.weapon.utility.Pullbeam;
 import objects.entity.unit.Frame;
 import objects.entity.unit.Model;
 import objects.entity.unit.Style;
 import objects.entity.unit.Unit;
 import teams.student.bartlebyFanClub.BartlebyFanClub;
 import teams.student.bartlebyFanClub.MyTeamUnit;
-
-import java.util.ArrayList;
 
 public class SmartFighter extends MyTeamUnit
 {

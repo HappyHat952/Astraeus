@@ -15,7 +15,7 @@ public class MissileDark extends MissileEntity
 
 	public MissileDark(objects.entity.unit.Unit owner, Entity target, boolean locked, int range, float damage, DamageType damageType, int radius, int duration)
 	{
-		super(owner, target, locked, range, damage, damageType, radius);
+		super(owner, target, locked, range, damage, damageType, radius, 1);
 		this.duration = duration;
 	}
 

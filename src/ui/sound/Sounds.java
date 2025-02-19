@@ -4,6 +4,7 @@ import engine.Utility;
 import org.newdawn.slick.SlickException;
 import ui.sound.music.Song;
 import ui.sound.sfx.SmartSound;
+import org.newdawn.slick.Sound;
 
 import java.util.ArrayList;
 
@@ -19,6 +20,7 @@ public class Sounds
 	public static SmartSound mining;
 	public static SmartSound boost;
 	public static SmartSound missileFire;
+	public static Sound message;
 
 	// Abilities
 	public static SmartSound aegis;
@@ -31,8 +33,8 @@ public class Sounds
 		return songs.get(Utility.random(0, songs.size()-1));	
 	}
 	
-	static void loadSFX()
-	{
+	static void loadSFX() throws SlickException
+    {
 		Sounds.boom = new SmartSound("general/boom", 3);
 
 		Sounds.laserSmall = new SmartSound("energy/laser_small", 4);
@@ -45,7 +47,9 @@ public class Sounds
 		Sounds.boost = new SmartSound("utility/boost");
 
 		Sounds.missileFire = new SmartSound("explosive/missile_fire");
-		
+
+		Sounds.message = new Sound("res/sfx/wavs/chat.wav");
+
 	}
 	
 	static void loadSongList()

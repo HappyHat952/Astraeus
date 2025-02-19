@@ -2,10 +2,6 @@ package teams.student.bartlebyFanClub.units;
 
 
 import components.weapon.economy.Collector;
-import components.weapon.economy.Drillbeam;
-import components.weapon.utility.ElectromagneticPulse;
-import components.weapon.utility.HealingWeapon;
-import engine.states.Game;
 import objects.entity.unit.Frame;
 import objects.entity.unit.Style;
 import objects.entity.unit.Unit;

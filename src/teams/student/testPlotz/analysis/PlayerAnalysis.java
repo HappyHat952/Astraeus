@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class PlayerAnalysis {
 
-    private static Player player;
+    private Player player;
 
     private int timer;
 
@@ -107,7 +107,7 @@ public class PlayerAnalysis {
         }
     }
 
-    public static String getPrimaryWeapon() {
+    public String getPrimaryWeapon() {
         ArrayList<Weapon> weapons = new ArrayList<>();
         int fighterCount = 0;
 

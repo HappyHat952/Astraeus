@@ -3,9 +3,9 @@ package components.upgrade;
 public class Plating extends Upgrade
 {
 	public static final int SIZE = 1;
-	public static final int PLATING = 500;
+	public static final int PLATING = 400;
 	public static final float DEFENSE = .08f;
-	public static final int MASS = 4;
+	public static final int MASS = 6;
 
 	public Plating()
 	{

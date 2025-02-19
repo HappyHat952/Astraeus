@@ -11,7 +11,7 @@ public class TitanCore extends Upgrade
 	public static final float SHIELD_REGEN_PER_SECOND = 5f;	
 	public static final float BLOCK = .4f;
 
-	public static final float POWER_BONUS = 3f;
+	public static final float POWER_BONUS = 2f;
 
 	public TitanCore()
 	{
@@ -21,6 +21,8 @@ public class TitanCore extends Upgrade
 	public void onAddition()
 	{
 		super.onAddition();
+
+		this.size = SIZE;
 		
 		getOwner().addBlock(BLOCK);
 		getOwner().increaseMaxPlating(PLATING);		

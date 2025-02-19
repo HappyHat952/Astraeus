@@ -6,6 +6,7 @@ import engine.states.Game;
 import objects.entity.Entity;
 import objects.entity.node.Node;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import ui.display.Fonts;
 import ui.input.InputManager;
 
@@ -85,4 +86,13 @@ public class Hud
 		mainbar.update();
 	}
 	
+	public static boolean mousePressed(int button, int x, int y)
+	{
+		if (button == Input.MOUSE_LEFT_BUTTON)
+		{
+			return minimap.mousePressed(x, y);
+		}
+		
+		return false;
+	}
 }

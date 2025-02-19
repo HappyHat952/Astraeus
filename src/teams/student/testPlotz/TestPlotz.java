@@ -25,6 +25,10 @@ public class TestPlotz extends Player
 	
 	public void strategy() 
 	{
+		if (!overall.getEnemy().getPlayer().equals(getOpponent()))
+		{
+			overall = new OverallAnalysis(this);
+		}
 		if (OverallAnalysis.getCurrentStage() == OverallAnalysis.BUILD)
 		{
 			buildUnits(.25f,.25f,.3f, .2f,0f);
@@ -46,9 +50,9 @@ public class TestPlotz extends Player
 		else if (getFleetValueUnit(Healer.class)< 2) {
 			buildUnit(new Healer(this));
 		}
-		else if (getFleetValueUnit(Commander.class)< 1) {
-			buildUnit(new Commander(this));
-		}
+//		else if (getFleetValueUnit(Commander.class)< 1) {
+//			buildUnit(new Commander(this));
+//		}
 		else if (getFleetValueUnitPercentage(Gatherer.class)< gather)
 		{
 			buildUnit(new Gatherer(this));

@@ -13,6 +13,7 @@ public class HeavyShield extends Upgrade
 	public HeavyShield()
 	{
 		super();
+		size = SIZE;
 		mass = MASS;
 	}
 	

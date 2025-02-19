@@ -47,7 +47,7 @@ public class Fighter extends TestPlotzUnit
 		}
 		else if (getCurEffectiveHealth()/getMaxEffectiveHealth() >.2f)
 		{
-			Unit enemy = getNearestCriticalFighter(this, getMaxRange());
+			Unit enemy = getNearestCriticalFighter(this, 300);
 
 			if (enemy == null)
 			{

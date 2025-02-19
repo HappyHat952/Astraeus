@@ -1,6 +1,9 @@
 package teams.student.testPlotz;
 
+import objects.entity.unit.Unit;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.geom.Point;
 import player.Player;
 import teams.student.testPlotz.analysis.OverallAnalysis;
 import teams.student.testPlotz.analysis.ResourceManager;
@@ -50,9 +53,9 @@ public class TestPlotz extends Player
 		else if (getFleetValueUnit(Healer.class)< 2) {
 			buildUnit(new Healer(this));
 		}
-//		else if (getFleetValueUnit(Commander.class)< 1) {
-//			buildUnit(new Commander(this));
-//		}
+		else if (getFleetValueUnit(Raider.class)< 24 && OverallAnalysis.getCurrentStage() ==OverallAnalysis.BUILD) {
+			buildUnit(new Raider(this));
+		}
 		else if (getFleetValueUnitPercentage(Gatherer.class)< gather)
 		{
 			buildUnit(new Gatherer(this));
@@ -82,11 +85,25 @@ public class TestPlotz extends Player
 		}
 		}
 
+
+
 			
 	public void draw(Graphics g) 
 	{
 		OverallAnalysis.draw(g);
 		ResourceManager.draw(g);
+		if (Raider.getRally() != null)
+		{
+			g.setColor(Color.orange);
+			g.drawString("rally pt", Raider.getRally().getX(),Raider.getRally().getY() );
+		}
+
+		for (Unit u: getAllUnits())
+		{
+			u.draw(g);
+		}
+
+
 	}
 	
 }

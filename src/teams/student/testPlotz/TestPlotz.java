@@ -1,7 +1,9 @@
 package teams.student.testPlotz;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import player.Player;
+import teams.student.testPlotz.analysis.BlockManager;
 import teams.student.testPlotz.analysis.OverallAnalysis;
 import teams.student.testPlotz.analysis.ResourceManager;
 import teams.student.testPlotz.units.*;
@@ -9,6 +11,7 @@ import teams.student.testPlotz.units.*;
 public class TestPlotz extends Player
 {
 	OverallAnalysis overall;
+	BlockManager blocks;
 	public void setup()
 	{		
 		setName("Plotz");
@@ -20,6 +23,7 @@ public class TestPlotz extends Player
 		setColorAccent(0, 0, 0);
 
 		overall = new OverallAnalysis(this);
+		blocks = new BlockManager();
 
 	}
 	
@@ -31,11 +35,11 @@ public class TestPlotz extends Player
 		}
 		if (OverallAnalysis.getCurrentStage() == OverallAnalysis.BUILD)
 		{
-			buildUnits(.25f,.25f,.3f, .2f,0f);
+			buildUnits(.25f,.25f,.4f, .1f,0f);
 		}
 		else if (OverallAnalysis.getCurrentStage() == OverallAnalysis.FIGHT)
 		{
-			buildUnits(.12f, .12f, .51f, .25f,0f);
+			buildUnits(.11f, .11f, .54f, .23f,0f);
 		}
 
 
@@ -47,8 +51,16 @@ public class TestPlotz extends Player
 		if (getFleetValueUnit(Distractor.class)< 1) {
 			buildUnit(new Distractor(this));
 		}
+		if (getFleetValueUnit(Raider.class)<15 && OverallAnalysis.getCurrentStage() == OverallAnalysis.BUILD)
+		{
+			buildUnit(new Raider(this));
+		}
 		else if (getFleetValueUnit(Healer.class)< 2) {
 			buildUnit(new Healer(this));
+		}
+		if (getFleetValueUnitPercentage(Tank.class)< tank)
+		{
+			buildUnit(new Tank(this));
 		}
 //		else if (getFleetValueUnit(Commander.class)< 1) {
 //			buildUnit(new Commander(this));
@@ -73,10 +85,7 @@ public class TestPlotz extends Player
 //			}
 
 		}
-		else if (getFleetValueUnitPercentage(Tank.class)< tank)
-		{
-			buildUnit(new Tank(this));
-		}
+
 		else {
 			buildUnit(new Fighter(this));
 		}
@@ -85,8 +94,14 @@ public class TestPlotz extends Player
 			
 	public void draw(Graphics g) 
 	{
+		blocks.draw(g);
 		OverallAnalysis.draw(g);
 		ResourceManager.draw(g);
+		if(getFleetValueUnit(Raider.class)>0 && Raider.getRally()!= null)
+		{
+			g.setColor(Color.orange);
+			g.drawString("Raider Rally", Raider.getRally().getX(), Raider.getRally().getY());
+		}
 	}
 	
 }

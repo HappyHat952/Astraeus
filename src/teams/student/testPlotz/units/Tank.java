@@ -68,20 +68,16 @@ public class Tank extends TestPlotzUnit {
         //moveTo(getRallyPoint());
         if (OverallAnalysis.getCurrentStage() == FIGHT)
         {
-            Unit enemy = getNearestEnemy();
+            Unit enemy = getNearestFighter(this);
             moveTo(enemy);
         }
-        else if (OverallAnalysis.getCurrentStage() == OverallAnalysis.BUILD)
-        {
+        else if (OverallAnalysis.getCurrentStage() == OverallAnalysis.BUILD) {
             Unit base = getHomeBase();
-            Unit enemy = getNearestEnemy();
+            Unit enemy = getNearestFighter(this);
 
-            if(enemy != null && getDistance(enemy) < 3000)
-            {
+            if (enemy != null && getDistance(enemy) < 3000) {
                 moveTo(enemy);
-            }
-            else if (base != null)
-            {
+            } else if (base != null) {
                 moveTo(base);
             }
 

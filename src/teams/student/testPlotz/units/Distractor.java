@@ -16,8 +16,8 @@ import java.util.ArrayList;
 
 public class Distractor extends TestPlotzUnit {
     private int offset;
-    private Unit nearAllEnmy;
-    private Unit nearResEnmy;
+    protected  Unit nearAllEnmy;
+    protected  Unit nearResEnmy;
     public Distractor(TestPlotz p) {
         super(p);
         if (Math.random() <= 0.5)

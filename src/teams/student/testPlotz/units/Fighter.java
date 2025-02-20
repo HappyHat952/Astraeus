@@ -1,8 +1,10 @@
 package teams.student.testPlotz.units;
 
+import components.upgrade.HeavyPlating;
 import components.upgrade.Munitions;
 import components.upgrade.Shield;
 import components.weapon.energy.HeavyLaser;
+import components.weapon.kinetic.HeavyAutocannon;
 import components.weapon.utility.AntiMissileSystem;
 import components.weapon.utility.CommandRelay;
 import objects.entity.unit.Frame;
@@ -30,7 +32,7 @@ public class Fighter extends TestPlotzUnit
 		setFrame(Frame.HEAVY);
 		setStyle(Style.WEDGE);
 
-		add(HeavyLaser.class);
+		add(HeavyAutocannon.class);
 		add(Munitions.class);
 		add(Shield.class);
 
@@ -96,13 +98,11 @@ public class Fighter extends TestPlotzUnit
 			Unit ally = getNearestAlly();
 			Point rally = getNearestRallyPoint();
 
-//			if (getDistance(rally)< getDistance(ally))
-//			{
-//				moveTo(rally);
-//			}
-//			else
-//
-			if(getDistance(ally) > getMaxRange())
+			if (getDistance(rally)< getDistance(ally))
+			{
+				moveTo(rally);
+			}
+			else if(getDistance(ally) > getMaxRange())
 			{
 				moveTo(ally);
 			}

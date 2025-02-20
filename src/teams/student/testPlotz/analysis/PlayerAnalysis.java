@@ -7,6 +7,7 @@ import components.weapon.explosive.Missile;
 import components.weapon.utility.CommandRelay;
 import components.weapon.utility.Pullbeam;
 import objects.entity.unit.Unit;
+import org.newdawn.slick.geom.Point;
 import player.Player;
 import teams.student.testPlotz.units.Commander;
 
@@ -27,6 +28,12 @@ public class PlayerAnalysis {
     private ArrayList<Unit> myGathererUnits = new ArrayList<>();
     private ArrayList<Unit> myMinerUnits = new ArrayList<>();
 
+    private Point unitAverage;
+    private Point fighterAverage;
+    private Point pullerAverage;
+    private Point gatherAverage;
+    private Point minerAverage;
+
     public Player getPlayer(){ return player;}
 
     public boolean hasRelay(){ return hasRelay;}
@@ -43,7 +50,11 @@ public class PlayerAnalysis {
     public int getNumGathererUnits() { return myGathererUnits.size();}
     public int getNumMinerUnits() { return myMinerUnits.size();}
 
-
+    public Point getUnitAveragePoint(){ return unitAverage;}
+    public Point getFighterAveragePoint(){ return fighterAverage;}
+    public Point getPullerAveragePoint(){ return pullerAverage;}
+    public Point getGatherAveragePoint(){ return gatherAverage;}
+    public Point getMinerAveragePoint(){ return minerAverage;}
 
     public PlayerAnalysis (Player p){
         player = p;
@@ -59,12 +70,22 @@ public class PlayerAnalysis {
         resetBooleans();
         resetUnitLists();
         loopUnits();
+        setAverages();
 //        timer = 0;
     }
 
     public void resetBooleans()
     {
         hasRelay = false;
+    }
+
+    public void setAverages()
+    {
+        unitAverage = getAveragePoint(myUnits);
+        fighterAverage = getAveragePoint(myFighterUnits);
+        pullerAverage = getAveragePoint(myPullerUnits);
+        gatherAverage = getAveragePoint(myGathererUnits);
+        minerAverage = getAveragePoint(myMinerUnits);
     }
 
     public void resetUnitLists()
@@ -136,5 +157,17 @@ public class PlayerAnalysis {
         return "other";
 
 
+    }
+
+    public Point getAveragePoint(ArrayList<Unit> list)
+    {
+        float xSum =0;
+        float ySum =0;
+        for (Unit u: list)
+        {
+            xSum+= u.getX();
+            ySum+= u.getY();
+        }
+        return new Point((int)(xSum/list.size()), (int)(ySum/list.size()));
     }
 }

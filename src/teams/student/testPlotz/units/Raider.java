@@ -81,7 +81,7 @@ public class Raider extends Distractor {
         }
         move();
 
-         Unit nearest = getLowestHealthGatherInRadius((int)(getMaxRange()*.95));
+        Unit nearest = getLowestHealthGatherInRadius((int)(getMaxRange()*.95));
 
         if (getDistance(gather)< getMaxRange()*1.4 && nearest != null)
         {
@@ -207,7 +207,7 @@ public class Raider extends Distractor {
     public GameObject getNearestThreat()
     {
 
-    //returns the nearest threat (enemy or missile) at any moment)
+        //returns the nearest threat (enemy or missile) at any moment)
         ArrayList<Unit> allEnemy = getEnemies();
         Unit nearestE = getEnemyBase();
         float nearestEDist = Float.MAX_VALUE;
@@ -276,4 +276,3 @@ public class Raider extends Distractor {
 
 
 }
-

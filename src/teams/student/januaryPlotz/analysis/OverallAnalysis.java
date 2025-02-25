@@ -4,9 +4,9 @@ import objects.entity.unit.Unit;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
-import teams.student.testPlotz.units.Gatherer;
+import teams.student.januaryPlotz.units.Gatherer;
 import teams.student.januaryPlotz.JanuaryPlotz;
-import teams.student.testPlotz.units.Miner;
+import teams.student.januaryPlotz.units.Miner;
 
 import java.util.ArrayList;
 
@@ -94,15 +94,15 @@ public class OverallAnalysis {
         }
 
 
-        for (Unit u: ally.getMyGathererUnts()) {
-           Point p = ((Gatherer) u).getDestination();
-            g.drawLine(u.getX(), u.getY(), p.getX(), p.getY());
-        }
-
-        for (Unit u: ally.getMyMinerUnits()) {
-            Point p = ((Miner) u).getDestination();
-            g.drawLine(u.getX(), u.getY(), p.getX(), p.getY());
-        }
+//        for (Unit u: ally.getMyGathererUnts()) {
+//           Point p = ((Gatherer) u).getDestination();
+//            g.drawLine(u.getX(), u.getY(), p.getX(), p.getY());
+//        }
+//
+//        for (Unit u: ally.getMyMinerUnits()) {
+//            Point p = ((Miner) u).getDestination();
+//            g.drawLine(u.getX(), u.getY(), p.getX(), p.getY());
+//        }
     }
 
     public void setRallyDetails()

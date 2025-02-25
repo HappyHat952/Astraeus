@@ -6,6 +6,7 @@ import objects.entity.unit.Frame;
 import objects.entity.unit.Model;
 import objects.entity.unit.Style;
 import objects.resource.Resource;
+import org.newdawn.slick.geom.Point;
 import teams.student.januaryPlotz.JanPlotzUnit;
 import teams.student.januaryPlotz.JanuaryPlotz;
 import teams.student.januaryPlotz.analysis.ResourceManager;
@@ -103,6 +104,16 @@ public class Gatherer extends JanPlotzUnit
 
 
 	}
+
+	public Point getDestination() {
+		if (myResource != null) {
+			return myResource.getPosition();
+		} else {
+			return getHomeBase().getPosition();
+		}
+	}
+
+
 
 	public Resource getNearestAvailable () {
 		float nearestDistance = Float.MAX_VALUE;

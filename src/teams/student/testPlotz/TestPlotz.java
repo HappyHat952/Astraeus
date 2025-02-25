@@ -1,10 +1,9 @@
 package teams.student.testPlotz;
 
-import objects.entity.unit.Unit;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.geom.Point;
 import player.Player;
+import teams.student.testPlotz.analysis.BlockManager;
 import teams.student.testPlotz.analysis.OverallAnalysis;
 import teams.student.testPlotz.analysis.ResourceManager;
 import teams.student.testPlotz.units.*;
@@ -12,6 +11,7 @@ import teams.student.testPlotz.units.*;
 public class TestPlotz extends Player
 {
 	OverallAnalysis overall;
+	BlockManager blocks;
 	public void setup()
 	{		
 		setName("Plotz");
@@ -23,6 +23,7 @@ public class TestPlotz extends Player
 		setColorAccent(0, 0, 0);
 
 		overall = new OverallAnalysis(this);
+		blocks = new BlockManager(this);
 
 	}
 	
@@ -43,6 +44,7 @@ public class TestPlotz extends Player
 
 
 		overall.update();
+		blocks.update();
 	}
 
 	private void buildUnits ( float gather, float miner, float fighter, float tank, float healer)
@@ -50,12 +52,20 @@ public class TestPlotz extends Player
 		if (getFleetValueUnit(Distractor.class)< 1) {
 			buildUnit(new Distractor(this));
 		}
+//		if (getFleetValueUnit(Raider.class)<15 && OverallAnalysis.getCurrentStage() == OverallAnalysis.BUILD)
+//		{
+//			buildUnit(new Raider(this));
+//		}
 		else if (getFleetValueUnit(Healer.class)< 2) {
 			buildUnit(new Healer(this));
 		}
-		else if (getFleetValueUnit(Raider.class)< 24 && OverallAnalysis.getCurrentStage() ==OverallAnalysis.BUILD) {
-			buildUnit(new Raider(this));
+		if (getFleetValueUnitPercentage(Tank.class)< tank)
+		{
+			buildUnit(new Tank(this));
 		}
+//		else if (getFleetValueUnit(Commander.class)< 1) {
+//			buildUnit(new Commander(this));
+//		}
 		else if (getFleetValueUnitPercentage(Gatherer.class)< gather)
 		{
 			buildUnit(new Gatherer(this));
@@ -76,34 +86,23 @@ public class TestPlotz extends Player
 //			}
 
 		}
-		else if (getFleetValueUnitPercentage(Tank.class)< tank)
-		{
-			buildUnit(new Tank(this));
-		}
+
 		else {
 			buildUnit(new Fighter(this));
 		}
 		}
 
-
-
 			
 	public void draw(Graphics g) 
 	{
+		blocks.draw(g);
 		OverallAnalysis.draw(g);
 		ResourceManager.draw(g);
-		if (Raider.getRally() != null)
+		if(getFleetValueUnit(Raider.class)>0 && Raider.getRally()!= null)
 		{
 			g.setColor(Color.orange);
-			g.drawString("rally pt", Raider.getRally().getX(),Raider.getRally().getY() );
+			g.drawString("Raider Rally", Raider.getRally().getX(), Raider.getRally().getY());
 		}
-
-		for (Unit u: getAllUnits())
-		{
-			u.draw(g);
-		}
-
-
 	}
 	
 }

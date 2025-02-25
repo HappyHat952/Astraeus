@@ -8,6 +8,7 @@ import objects.entity.unit.Frame;
 import objects.entity.unit.Model;
 import objects.entity.unit.Style;
 import objects.entity.unit.Unit;
+import org.newdawn.slick.geom.Point;
 import teams.student.januaryPlotz.JanPlotzUnit;
 import teams.student.januaryPlotz.JanuaryPlotz;
 import teams.student.januaryPlotz.analysis.ResourceManager;
@@ -31,6 +32,14 @@ public class Miner extends JanPlotzUnit
 		setStyle(Style.BOXY);
 		setModel(Model.ARTILLERY);
 		add(Drillbeam.class);
+	}
+
+	public Point getDestination() {
+		if (target != null) {
+			return target.getPosition();
+		} else {
+			return getHomeBase().getPosition();
+		}
 	}
 
 

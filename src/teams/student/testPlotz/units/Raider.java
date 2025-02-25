@@ -7,24 +7,18 @@ import components.weapon.utility.SpeedBoost;
 import objects.GameObject;
 import objects.entity.missile.MissileEntity;
 import objects.entity.unit.Frame;
-import objects.entity.unit.Model;
 import objects.entity.unit.Style;
 import objects.entity.unit.Unit;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Graphics;
 import teams.student.testPlotz.TestPlotz;
-import teams.student.testPlotz.TestPlotzUnit;
 import teams.student.testPlotz.analysis.OverallAnalysis;
 
 import java.util.ArrayList;
 import org.newdawn.slick.geom.Point;
 
-
-public class Raider extends TestPlotzUnit {
+public class Raider extends Distractor {
 
     private static Unit gather;
     private static Point rally;
-    private static Unit nearest;
     private Unit fighter;
     private Point rallyPoint;
 
@@ -35,7 +29,6 @@ public class Raider extends TestPlotzUnit {
     public void design() {
         setFrame(Frame.LIGHT);
         setStyle(Style.DRAGON);
-        setModel(Model.DESTROYER);
 
         add(Laser.class);
         add(SpeedBoost.class);
@@ -45,24 +38,25 @@ public class Raider extends TestPlotzUnit {
     }
 
     public static Point getRally(){ return rally;}
+    
 
     public void action() {
         //FIRST: establish all units!
-        if (gather == null || !getGatherIsVulnerable(gather) || gather.isDead())
+        if (gather == null || !getGatherIsVulnerable(gather))
         {
             gather = getGather();
         }
 
         // set a rally point safe and far from enemy ships. For now, in the middle top or bottom based on current gather.
         float rX = (getEnemyBase().getX() + getHomeBase().getX())/2;
-        float fighterY = OverallAnalysis.getEnemy().getAvgPtFighterUnits().getY();
-        if (gather != null &&gather.getY()> fighterY)
+        float fighterY = OverallAnalysis.getEnemy().getFighterAveragePoint().getY();
+        if (gather.getY()> fighterY)
         {
-            rally = new Point(rX, fighterY +180 );
+            rally = new Point(rX, fighterY +90 );
         }
         else;
         {
-            rally = new Point(rX, fighterY -180);
+            rally = new Point(rX, fighterY -90);
         }
 
         //NEXT: movement
@@ -70,7 +64,7 @@ public class Raider extends TestPlotzUnit {
         {
             turnTo(rally);
         }
-        else if (gather != null)
+        else
         {
             turnTo(gather);
         }
@@ -79,21 +73,21 @@ public class Raider extends TestPlotzUnit {
         {
             getWeaponTwo().use();
         }
-        else if (!getIfImSafe() && gather != null && getNearestThreat()!= null)
+        else if (!getIfImSafe())
         {
-            turnTo(getAvgPoint(gather.getPosition(), getOppositePoint(getNearestThreat().getPosition())));
+            turnTo(getNearestThreat());
             turnAround();
             getWeaponTwo().use();
         }
         move();
 
-        nearest = getLowestHealthGatherInRadius((int)(getMaxRange()*.95));
+         Unit nearest = getLowestHealthGatherInRadius((int)(getMaxRange()*.95));
 
-        if (gather != null && getDistance(gather)< getMaxRange()*1.4 && nearest != null)
+        if (getDistance(gather)< getMaxRange()*1.4 && nearest != null)
         {
             getWeaponOne().use(nearest);
         }
-        else if (gather != null && getDistance(gather)< getMaxRange()*.95)
+        else if (getDistance(gather)< getMaxRange()*.95)
         {
             getWeaponOne().use(gather);
         }
@@ -125,7 +119,7 @@ public class Raider extends TestPlotzUnit {
     public boolean getIfImSafe()
     {
         int fCount =0;
-        for (Unit f: this.getEnemiesInRadius(600))
+        for (Unit f: this.getEnemiesInRadius(400))
         {
             if (!isPassive(f))
             {
@@ -144,28 +138,6 @@ public class Raider extends TestPlotzUnit {
         ArrayList<Unit> allEnemy = getEnemiesInRadius(radius);
         if (allEnemy.size()>0)
         {
-            Unit lowestGather = null;
-            float lowHealth =Integer.MAX_VALUE;
-
-            for (Unit u: allEnemy)
-            {
-                if (u.hasComponent(Collector.class) && u.getCurEffectiveHealth()< lowHealth)// checks its a gatherer
-                {
-                    lowHealth = u.getCurEffectiveHealth();
-                    lowestGather = u;
-                }
-
-            }
-            return lowestGather;
-        }
-        return null;
-    }
-
-    public Unit getLowestHealthGather()
-    {
-        ArrayList<Unit> allEnemy = getEnemies();
-        if (allEnemy.size()>0)
-        {
             Unit lowestGather = allEnemy.get(0);
             float lowHealth =Integer.MAX_VALUE;
 
@@ -182,12 +154,14 @@ public class Raider extends TestPlotzUnit {
             return lowestGather;
         }
         return null;
+
+
     }
 
     public Unit getGather()
     {
         ArrayList<Unit> allEnemy = getEnemies();
-        Unit bestGather = null;
+        Unit bestGather = allEnemy.get(0);
         int highScore =Integer.MIN_VALUE;
 
 
@@ -254,30 +228,6 @@ public class Raider extends TestPlotzUnit {
         else {
             return nearestE;
         }
-    }
-
-    public Point getOppositePoint(Point a)
-    {
-        float ydiff = a.getY() - getY();
-        float xdiff = a.getX() - getX();
-        return new Point (getX() +xdiff, getY() + ydiff);
-    }
-
-    public void draw(Graphics g)
-    {
-        g.setLineWidth(3);
-        if (gather != null)
-        {
-            g.setColor(Color.cyan);
-            g.drawRect(gather.getX(), gather.getY(),20,20);
-        }
-        if (nearest != null)
-        {
-            g.setColor(Color.yellow);
-            g.fillOval(nearest.getX(), nearest.getY(),20,20);
-        }
-
-
     }
 
 

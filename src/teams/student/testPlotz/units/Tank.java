@@ -11,6 +11,8 @@ import teams.student.testPlotz.TestPlotz;
 import teams.student.testPlotz.TestPlotzUnit;
 import teams.student.testPlotz.analysis.OverallAnalysis;
 
+import java.util.ArrayList;
+
 import static teams.student.testPlotz.analysis.OverallAnalysis.FIGHT;
 
 public class Tank extends TestPlotzUnit {
@@ -68,8 +70,27 @@ public class Tank extends TestPlotzUnit {
         //moveTo(getRallyPoint());
         if (OverallAnalysis.getCurrentStage() == FIGHT)
         {
-            Unit enemy = getNearestEnemy();
-            moveTo(enemy);
+            Unit enemy = getNearestCriticalFighter(this, 10000);
+//            if(getDistance(enemy) > 100)
+//            {
+//                moveTo(enemy);
+//            }
+//            else
+//            {
+//                turnTo(enemy);
+//                turnAround();
+//                move();
+//            }
+
+            if (enemy!= null)
+            {
+
+                moveTo(enemy);
+            }
+            else {
+                moveTo(getHomeBase());
+            }
+
         }
         else if (OverallAnalysis.getCurrentStage() == OverallAnalysis.BUILD)
         {
@@ -103,6 +124,28 @@ public class Tank extends TestPlotzUnit {
 //            {
 //                moveTo(enemy);
 //            }
+
+    }
+
+    public Unit getNearestEnemyFighter()
+    {
+        ArrayList<Unit> allEnemy = getEnemies();
+        if (allEnemy.size()>0)
+        {
+            Unit closest = null;
+            float smallDist = Float.MAX_VALUE;
+
+            for (Unit e: allEnemy)
+            {
+                if (!isPassive(e) && getDistance(e)< smallDist)
+                {
+                    closest = e;
+                    smallDist = getDistance(e);
+                }
+            }
+            return closest;
+        }
+        return null;
 
     }
 

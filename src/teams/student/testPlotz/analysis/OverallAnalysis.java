@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class OverallAnalysis {
 
     private static TestPlotz plotz;
+    private int timer;
 
     public static final int BUILD = 0;
     public static final int FIGHT = 1;
@@ -47,22 +48,28 @@ public class OverallAnalysis {
     public static int getCurrentStage(){ return currentStage;}
 
     public void update() {
-        //setting rally points;
-        if (ally != null && enemy != null) {
-            ally.update();
-            enemy.update();
-            setRallyDetails();
-            setCoreRallyPoint();
-            setAllRallyPoint();
-        }
-
-        //determining the stage
-        if (ally.getPlayer().getMineralsMined() < 150) {
-            currentStage = BUILD;
-        } else
+        if (timer %60 == 0)
         {
-            currentStage = FIGHT;
+            //setting rally points;
+            if (ally != null && enemy != null) {
+                ally.update();
+                enemy.update();
+                setRallyDetails();
+                setCoreRallyPoint();
+                setAllRallyPoint();
+            }
+
+            //determining the stage
+            if (ally.getPlayer().getMineralsMined() < 150) {
+                currentStage = BUILD;
+            } else
+            {
+                currentStage = FIGHT;
+            }
+            timer = 1;
         }
+        timer ++;
+
 
     }
 

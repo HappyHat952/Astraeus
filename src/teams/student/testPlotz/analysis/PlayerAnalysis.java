@@ -28,11 +28,11 @@ public class PlayerAnalysis {
     private ArrayList<Unit> myGathererUnits = new ArrayList<>();
     private ArrayList<Unit> myMinerUnits = new ArrayList<>();
 
-    private Point avgUnits;
-    private Point avgFighterUnits;
-    private Point avgPullerUnits;
-    private Point avgGathererUnits;
-    private Point avgMinerUnits;
+    private Point unitAverage;
+    private Point fighterAverage;
+    private Point pullerAverage;
+    private Point gatherAverage;
+    private Point minerAverage;
 
     public Player getPlayer(){ return player;}
 
@@ -50,13 +50,11 @@ public class PlayerAnalysis {
     public int getNumGathererUnits() { return myGathererUnits.size();}
     public int getNumMinerUnits() { return myMinerUnits.size();}
 
-    public Point getAvgPtUnits(){ return avgUnits;}
-    public Point getAvgPtFighterUnits(){ return avgFighterUnits;}
-    public Point getAvgPtPullerUnits(){ return avgPullerUnits;}
-    public Point getAvgPtGathererUnits() { return avgMinerUnits;}
-    public Point getAvgPtMinerUnits() { return avgMinerUnits;}
-
-
+    public Point getUnitAveragePoint(){ return unitAverage;}
+    public Point getFighterAveragePoint(){ return fighterAverage;}
+    public Point getPullerAveragePoint(){ return pullerAverage;}
+    public Point getGatherAveragePoint(){ return gatherAverage;}
+    public Point getMinerAveragePoint(){ return minerAverage;}
 
     public PlayerAnalysis (Player p){
         player = p;
@@ -72,7 +70,7 @@ public class PlayerAnalysis {
         resetBooleans();
         resetUnitLists();
         loopUnits();
-        findAveragePts();
+        setAverages();
 //        timer = 0;
     }
 
@@ -81,14 +79,13 @@ public class PlayerAnalysis {
         hasRelay = false;
     }
 
-    public void findAveragePts()
+    public void setAverages()
     {
-        avgUnits = getAvgPoint(myUnits);
-       avgFighterUnits= getAvgPoint(myFighterUnits);
-       avgPullerUnits=getAvgPoint(myPullerUnits);
-        avgGathererUnits=getAvgPoint(myGathererUnits);
-      avgMinerUnits=getAvgPoint(myMinerUnits);
-
+        unitAverage = getAveragePoint(myUnits);
+        fighterAverage = getAveragePoint(myFighterUnits);
+        pullerAverage = getAveragePoint(myPullerUnits);
+        gatherAverage = getAveragePoint(myGathererUnits);
+        minerAverage = getAveragePoint(myMinerUnits);
     }
 
     public void resetUnitLists()
@@ -131,19 +128,6 @@ public class PlayerAnalysis {
         }
     }
 
-    public Point getAvgPoint(ArrayList<Unit> list)
-    {
-        float xSum =0;
-        float ySum=0;
-
-        for (Unit u: list)
-        {
-            xSum +=u.getX();
-            ySum += u.getY();
-        }
-        return new Point (xSum/list.size(), ySum/list.size());
-    }
-
     public String getPrimaryWeapon() {
         ArrayList<Weapon> weapons = new ArrayList<>();
         int fighterCount = 0;
@@ -173,5 +157,17 @@ public class PlayerAnalysis {
         return "other";
 
 
+    }
+
+    public Point getAveragePoint(ArrayList<Unit> list)
+    {
+        float xSum =0;
+        float ySum =0;
+        for (Unit u: list)
+        {
+            xSum+= u.getX();
+            ySum+= u.getY();
+        }
+        return new Point((int)(xSum/list.size()), (int)(ySum/list.size()));
     }
 }

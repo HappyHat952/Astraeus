@@ -32,7 +32,7 @@ public class Fighter extends TestPlotzUnit
 		setFrame(Frame.HEAVY);
 		setStyle(Style.WEDGE);
 
-		add(HeavyAutocannon.class);
+		add(HeavyLaser.class);
 		add(Munitions.class);
 		add(Shield.class);
 
@@ -50,10 +50,6 @@ public class Fighter extends TestPlotzUnit
 			{
 				enemy = getNearestEnemyUnit();
 			}
-//			if (enemy != null && enemy.getHomeBase().isDamaged())
-//			{
-//				moveTo(enemy.getHomeBase());
-//			}
 			if (getPlayer().getFleetValueUnit()> 4*getOpponent().getFleetValueUnit())
 			{
 				moveTo(getEnemyBase());

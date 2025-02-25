@@ -1,5 +1,6 @@
 package teams.student.testPlotz.analysis;
 
+import objects.entity.unit.Unit;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
@@ -58,7 +59,6 @@ public class OverallAnalysis {
                 setCoreRallyPoint();
                 setAllRallyPoint();
             }
-
             //determining the stage
             if (ally.getPlayer().getMineralsMined() < 150) {
                 currentStage = BUILD;
@@ -131,10 +131,5 @@ public class OverallAnalysis {
             rallyPts.add(new Point(coreRallyPoint.getX(), coreRallyPoint.getY() + length*.15f*i));
         }
     }
-
-
-
-
-
 
 }

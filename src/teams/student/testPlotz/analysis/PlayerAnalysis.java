@@ -35,6 +35,7 @@ public class PlayerAnalysis {
     private Point minerAverage;
 
     public Player getPlayer(){ return player;}
+    public int getValue(){ return player.getFleetValueUnit();}
 
     public boolean hasRelay(){ return hasRelay;}
 

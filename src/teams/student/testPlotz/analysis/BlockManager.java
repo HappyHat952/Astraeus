@@ -6,6 +6,7 @@ import engine.states.Game;
 import objects.entity.unit.Unit;
 import org.newdawn.slick.Graphics;
 import player.Player;
+import teams.student.testPlotz.units.Raider;
 
 import java.util.ArrayList;
 
@@ -19,6 +20,9 @@ public class BlockManager {
     int totalHeight;
 
     public Block[][] blocks;
+    public ArrayList<Block> enemyBlx;
+    public ArrayList<Block> allyBlx;
+    public ArrayList<Block> neutrBlx;
 
     public int cols;
     public int rows;
@@ -102,11 +106,18 @@ public class BlockManager {
 
         if (timer%90 == 0){
             timer = 0;
+
+            allyBlx = new ArrayList<>();
+            enemyBlx = new ArrayList<> ();
+            neutrBlx = new ArrayList<>();
+
+
             for (int r= 0; r< blocks.length; r++)
             {
                 for (int c= 0; c< blocks[0].length; c++)
                 {
                     blocks[r][c].update();
+                    neutrBlx.add(blocks[r][c]);
                 }
             }
 
@@ -118,11 +129,13 @@ public class BlockManager {
                 {
                     int c = (int)((e.getX()-leftEdge)/Block.SIZE);
                     int r = (int)((e.getY()-topEdge)/Block.SIZE);
-                    blocks[r][c].addEnemyCount();
 
                     if (inBounds(r,c))
                     {
-                        blocks[r][c].addAllyCount();
+                        blocks[r][c].addEnemyCount(e.getValue());
+                        blocks[r][c].addAdjacentEnemy(e.getValue());
+                        neutrBlx.remove(blocks[r][c]);
+                        enemyBlx.add(blocks[r][c]);
                     }
 
                 }
@@ -138,7 +151,15 @@ public class BlockManager {
                     int r = (int)((e.getY()-topEdge)/Block.SIZE);
                     if (inBounds(r,c))
                     {
-                        blocks[r][c].addAllyCount();
+                        blocks[r][c].addAllyCount(e.getValue());
+                        blocks[r][c].addAdjacentAlly(e.getValue());
+                        neutrBlx.remove(blocks[r][c]);
+                        allyBlx.add(blocks[r][c]);
+
+                        if (e instanceof Raider)
+                        {
+                            ((Raider)e).setBlock(blocks[r][c]);
+                        }
                     }
 
 
@@ -161,6 +182,70 @@ public class BlockManager {
     public boolean inBounds(int r, int c)
     {
         return (r>0 && r<blocks.length && c>0 && c<blocks[0].length);
+    }
+
+    public Block getNearestBlock(Unit u, int MinDiff)
+    {
+        Block block = null;
+
+        float distance = Float.MAX_VALUE;
+
+        for (Block[] blx: blocks) {
+            for (Block b : blx)
+            {
+                if (!b.isWithin(u.getPosition()) && b.getDifference()>=MinDiff && u.getDistance(b.getMidPoint())< distance)
+                {
+                    block = b;
+                    distance = u.getDistance(b.getMidPoint());
+                }
+            }
+        }
+
+        return block;
+
+    }
+
+    public Block getNearestBlock(Unit u, int MinDiff, Block mainB)
+    {
+        Block block = null;
+
+        float distance = Float.MAX_VALUE;
+
+        ArrayList<Block> blx = mainB.getAdjBlocks();
+
+
+            for (Block b : blx)
+            {
+                if (!b.equals(mainB) && b.getDifference()>= MinDiff && u.getDistance(b.getMidPoint())< distance)
+                {
+                    block = b;
+                    distance = u.getDistance(b.getMidPoint());
+                }
+            }
+
+        return block;
+
+    }
+
+
+    public Block getSafestAdjacentBlock(Block mainB)
+    {
+        Block block = mainB;
+
+        float diff = mainB.getDifference();
+
+
+        for (Block b : mainB.getAdjBlocks())
+        {
+            if ( b.getDifference()>=0 &&b.getDifference()> diff)
+            {
+                block = b;
+                diff = b.getDifference();
+            }
+        }
+
+        return block;
+
     }
 
 

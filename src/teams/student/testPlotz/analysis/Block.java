@@ -13,8 +13,8 @@ public class Block {
     private int id;
     private static int ID;
 
-    private int enemy;
-    private int ally;
+    private float enemy;
+    private float ally;
 
     private float x;
     private float y;
@@ -28,19 +28,43 @@ public class Block {
 
     public ArrayList<Block> adjBlocks;
 
+    public ArrayList<Block> getAdjBlocks(){ return adjBlocks;}
+
     public float getX() { return x;}
     public float getY() { return y;}
 
+
+    public Point getMidPoint() { return new Point(getMidX(), getMidY());}
     public float getMidX() { return (2*x+SIZE)/2;}
     public float getMidY() { return (2*y+SIZE)/2;}
 
     public float getId() { return id;}
 
-    public int getEnemy() { return enemy;}
-    public int getAlly() { return ally;}
+    public float getEnemy() { return enemy;}
+    public float getAlly() { return ally;}
+    public float getDifference() { return ally - enemy;}
 
     public void addEnemyCount(){enemy++;}
     public void addAllyCount(){ally++;}
+
+    public void addEnemyCount(float v ){enemy+=v;}
+    public void addAllyCount(float v){ally+=v;}
+
+    public void addAdjacentEnemy(float v)
+    {
+        for (Block b: adjBlocks)
+        {
+            b.addEnemyCount(v/3);
+        }
+    }
+
+    public void addAdjacentAlly(float v)
+    {
+        for (Block b: adjBlocks)
+        {
+            b.addAllyCount(v/3);
+        }
+    }
 
     public Block(int r, int c)
     {
@@ -107,7 +131,8 @@ public class Block {
     {
         if (enemy + ally>0)
         {
-            myColor = new Color((float)(enemy)/(enemy+ally), (float)(ally)/(ally+enemy),0, (float)(enemy+ally)/40);
+            myColor = new Color((float)(enemy)/(enemy+ally), (float)(ally)/(ally+enemy),0,
+                    (.9f)*(enemy+ally)/(OverallAnalysis.getAlly().getValue() + OverallAnalysis.getEnemy().getValue()));
         }
         else
         {

@@ -1,5 +1,6 @@
 package teams.student.testPlotz;
 
+import objects.entity.unit.Unit;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import player.Player;
@@ -10,8 +11,8 @@ import teams.student.testPlotz.units.*;
 
 public class TestPlotz extends Player
 {
-	OverallAnalysis overall;
-	BlockManager blocks;
+	private static OverallAnalysis overall;
+	private static BlockManager blocks;
 	public void setup()
 	{		
 		setName("Plotz");
@@ -26,6 +27,9 @@ public class TestPlotz extends Player
 		blocks = new BlockManager(this);
 
 	}
+
+	public static BlockManager getBlocks(){ return blocks;}
+	public static OverallAnalysis overall(){ return overall;}
 	
 	public void strategy() 
 	{
@@ -52,20 +56,13 @@ public class TestPlotz extends Player
 		if (getFleetValueUnit(Distractor.class)< 1) {
 			buildUnit(new Distractor(this));
 		}
-//		if (getFleetValueUnit(Raider.class)<15 && OverallAnalysis.getCurrentStage() == OverallAnalysis.BUILD)
-//		{
-//			buildUnit(new Raider(this));
-//		}
-		else if (getFleetValueUnit(Healer.class)< 2) {
-			buildUnit(new Healer(this));
+		else if (getFleetValueUnit(Raider.class)< 8) {
+			buildUnit(new Raider(this));
 		}
 		if (getFleetValueUnitPercentage(Tank.class)< tank)
 		{
 			buildUnit(new Tank(this));
 		}
-//		else if (getFleetValueUnit(Commander.class)< 1) {
-//			buildUnit(new Commander(this));
-//		}
 		else if (getFleetValueUnitPercentage(Gatherer.class)< gather)
 		{
 			buildUnit(new Gatherer(this));
@@ -76,15 +73,7 @@ public class TestPlotz extends Player
 		}
 		else if (getFleetValueUnitPercentage(Fighter.class)< fighter)
 		{
-//			if (OverallAnalysis.getAlly().hasRelay())
-//			{
 				buildUnit(new Fighter(this));
-//			}
-//			else
-//			{
-//				buildUnit(new Commander(this));
-//			}
-
 		}
 
 		else {
@@ -102,6 +91,11 @@ public class TestPlotz extends Player
 		{
 			g.setColor(Color.orange);
 			g.drawString("Raider Rally", Raider.getRally().getX(), Raider.getRally().getY());
+		}
+
+		for (Unit u: getMyUnits())
+		{
+			u.draw(g);
 		}
 	}
 	

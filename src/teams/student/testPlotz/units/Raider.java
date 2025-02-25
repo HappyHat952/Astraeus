@@ -9,7 +9,10 @@ import objects.entity.missile.MissileEntity;
 import objects.entity.unit.Frame;
 import objects.entity.unit.Style;
 import objects.entity.unit.Unit;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
 import teams.student.testPlotz.TestPlotz;
+import teams.student.testPlotz.analysis.Block;
 import teams.student.testPlotz.analysis.OverallAnalysis;
 
 import java.util.ArrayList;
@@ -21,6 +24,9 @@ public class Raider extends Distractor {
     private static Point rally;
     private Unit fighter;
     private Point rallyPoint;
+
+    private Block myBlock;
+    private Point p;
 
     public Raider(TestPlotz p) {
         super(p);
@@ -37,39 +43,101 @@ public class Raider extends Distractor {
 
     }
 
+    public void setBlock(Block block){ myBlock = block;}
+
     public static Point getRally(){ return rally;}
     
 
-    public void action() {
+//    public void action() {
+        //FIRST: establish all units!
+//        if (gather == null || !getGatherIsVulnerable(gather))
+//        {
+//            gather = getGather();
+//        }
+//
+//        // set a rally point safe and far from enemy ships. For now, in the middle top or bottom based on current gather.
+//        float rX = (getEnemyBase().getX() + getHomeBase().getX())/2;
+//        float fighterY = OverallAnalysis.getEnemy().getFighterAveragePoint().getY();
+//        if (gather.getY()> fighterY)
+//        {
+//            rally = new Point(rX, fighterY +90 );
+//        }
+//        else;
+//        {
+//            rally = new Point(rX, fighterY -90);
+//        }
+//
+//        //NEXT: movement
+//        if (x< rally.getX())
+//        {
+//            turnTo(rally);
+//        }
+//        else
+//        {
+//            turnTo(gather);
+//        }
+//
+//        if (getEnemiesInRadius(950).size()<2)
+//        {
+//            getWeaponTwo().use();
+//        }
+//        else if (!getIfImSafe())
+//        {
+//            turnTo(getNearestThreat());
+//            turnAround();
+//            getWeaponTwo().use();
+//        }
+//        move();
+//
+//         Unit nearest = getLowestHealthGatherInRadius((int)(getMaxRange()*.95));
+//
+//        if (getDistance(gather)< getMaxRange()*1.4 && nearest != null)
+//        {
+//            getWeaponOne().use(nearest);
+//        }
+//        else if (getDistance(gather)< getMaxRange()*.95)
+//        {
+//            getWeaponOne().use(gather);
+//        }
+//
+//    }
+
+    public void draw(Graphics g)
+    {
+        if (p!= null)
+        {
+            g.setColor(Color.gray);
+            g.drawLine(p.getX(), p.getY(), getX(), getY());
+        }
+    }
+
+
+    public void action()
+    {
+        Block b = null;
+
         //FIRST: establish all units!
         if (gather == null || !getGatherIsVulnerable(gather))
         {
             gather = getGather();
         }
 
-        // set a rally point safe and far from enemy ships. For now, in the middle top or bottom based on current gather.
-        float rX = (getEnemyBase().getX() + getHomeBase().getX())/2;
-        float fighterY = OverallAnalysis.getEnemy().getFighterAveragePoint().getY();
-        if (gather.getY()> fighterY)
+
+        if (myBlock != null)
         {
-            rally = new Point(rX, fighterY +90 );
-        }
-        else;
-        {
-            rally = new Point(rX, fighterY -90);
+            b = TestPlotz.getBlocks().getNearestBlock(gather, -3, myBlock);
         }
 
-        //NEXT: movement
-        if (x< rally.getX())
+        if (b == null)
         {
-            turnTo(rally);
+            p = getHomeBase().getPosition();
         }
-        else
-        {
-            turnTo(gather);
+        else {
+            p = b.getMidPoint();
         }
+        moveTo(p);
 
-        if (getEnemiesInRadius(950).size()<2)
+        if (myBlock != null && myBlock.getDifference()>= -3 || getNearestMissileLockedOnMe()!= null )
         {
             getWeaponTwo().use();
         }
@@ -81,15 +149,11 @@ public class Raider extends Distractor {
         }
         move();
 
-        Unit nearest = getLowestHealthGatherInRadius((int)(getMaxRange()*.95));
+         Unit nearest = getLowestHealthGatherInRadius((int)(getMaxRange()*.95));
 
-        if (getDistance(gather)< getMaxRange()*1.4 && nearest != null)
+        if (getLowestHealthGatherInRadius((int)(getMaxRange()*.9f))!= null)
         {
-            getWeaponOne().use(nearest);
-        }
-        else if (getDistance(gather)< getMaxRange()*.95)
-        {
-            getWeaponOne().use(gather);
+            getWeaponOne().use(getLowestHealthGatherInRadius((int)(getMaxRange()*.9f)));
         }
 
 
@@ -207,7 +271,7 @@ public class Raider extends Distractor {
     public GameObject getNearestThreat()
     {
 
-        //returns the nearest threat (enemy or missile) at any moment)
+    //returns the nearest threat (enemy or missile) at any moment)
         ArrayList<Unit> allEnemy = getEnemies();
         Unit nearestE = getEnemyBase();
         float nearestEDist = Float.MAX_VALUE;
@@ -276,3 +340,4 @@ public class Raider extends Distractor {
 
 
 }
+

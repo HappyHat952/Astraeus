@@ -32,7 +32,7 @@ public class Fighter extends TestPlotzUnit
 		setFrame(Frame.HEAVY);
 		setStyle(Style.WEDGE);
 
-		add(HeavyLaser.class);
+		add(HeavyAutocannon.class);
 		add(Munitions.class);
 		add(Shield.class);
 
@@ -105,13 +105,11 @@ public class Fighter extends TestPlotzUnit
 			Unit ally = getNearestAlly();
 			Point rally = getNearestRallyPoint();
 
-//			if (getDistance(rally)< getDistance(ally))
-//			{
-//				moveTo(rally);
-//			}
-//			else
-//
-			if(getDistance(ally) > getMaxRange())
+			if (getDistance(rally)< getDistance(ally))
+			{
+				moveTo(rally);
+			}
+			else if(getDistance(ally) > getMaxRange())
 			{
 				moveTo(ally);
 			}

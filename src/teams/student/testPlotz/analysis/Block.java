@@ -113,7 +113,7 @@ public class Block {
 
     public boolean isWithin(Point p)
     {
-        if (p.getX() > x && p.getY()>y && p.getX()<x+SIZE && p.getY()<y+SIZE)
+        if (p.getX() >= x && p.getY()>=y && p.getX()<=x+SIZE && p.getY()<=y+SIZE)
         {
             return true;
         }

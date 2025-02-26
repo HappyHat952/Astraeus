@@ -5,6 +5,7 @@ import components.weapon.economy.Drillbeam;
 import engine.states.Game;
 import objects.entity.unit.Unit;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.geom.Point;
 import player.Player;
 import teams.student.testPlotz.units.Raider;
 
@@ -205,14 +206,31 @@ public class BlockManager {
 
     }
 
+    public Block getBlock(Unit u){ return getBlock(u.getPosition());}
+
+    public Block getBlock(Point p)
+    {
+        for (Block[] blx: blocks)
+        {
+            for (Block b: blx)
+            {
+                if (b.isWithin(p))
+                {
+                    return b;
+                }
+            }
+        }
+        //shouldn't ever be reached.
+        return null;
+    }
+
     public Block getNearestBlock(Unit u, int MinDiff, Block mainB)
     {
-        Block block = null;
+        Block block = mainB;
 
         float distance = Float.MAX_VALUE;
 
         ArrayList<Block> blx = mainB.getAdjBlocks();
-
 
             for (Block b : blx)
             {

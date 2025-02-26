@@ -4,6 +4,7 @@ import components.weapon.economy.Collector;
 import components.weapon.energy.Laser;
 import components.weapon.explosive.Missile;
 import components.weapon.utility.SpeedBoost;
+import engine.states.Game;
 import objects.GameObject;
 import objects.entity.missile.MissileEntity;
 import objects.entity.unit.Frame;
@@ -46,6 +47,7 @@ public class Raider extends Distractor {
     public void setBlock(Block block){ myBlock = block;}
 
     public static Point getRally(){ return rally;}
+    public static Unit getGatherer(){ return gather;}
     
 
 //    public void action() {
@@ -55,7 +57,7 @@ public class Raider extends Distractor {
 //            gather = getGather();
 //        }
 //
-//        // set a rally point safe and far from enemy ships. For now, in the middle top or bottom based on current gather.
+        // set a rally point safe and far from enemy ships. For now, in the middle top or bottom based on current gather.
 //        float rX = (getEnemyBase().getX() + getHomeBase().getX())/2;
 //        float fighterY = OverallAnalysis.getEnemy().getFighterAveragePoint().getY();
 //        if (gather.getY()> fighterY)
@@ -109,6 +111,13 @@ public class Raider extends Distractor {
             g.setColor(Color.gray);
             g.drawLine(p.getX(), p.getY(), getX(), getY());
         }
+        if (gather!= null)
+        {
+            g.setColor(Color.orange);
+            g.setLineWidth(3);
+            g.drawRect(gather.getX(),gather.getY(),gather.getWidth(), gather.getHeight());
+            g.resetLineWidth();
+        }
     }
 
 
@@ -117,27 +126,47 @@ public class Raider extends Distractor {
         Block b = null;
 
         //FIRST: establish all units!
-        if (gather == null || !getGatherIsVulnerable(gather))
+        if ((gather == null || !getGatherIsVulnerable(gather) || gather.isDead()|| getBlock(gather) == null ||
+                getBlock(gather).getDifference()<=-2))
         {
             gather = getGather();
         }
 
+        // set a rally point safe and far from enemy ships. For now, in the middle top or bottom based on current gather.
+        float rX = (getEnemyBase().getX() + getHomeBase().getX())/2;
+        float fighterY = OverallAnalysis.getEnemy().getFighterAveragePoint().getY();
+        if ( gather != null && gather.getY()> fighterY)
+        {
+            rally = new Point(rX, (fighterY + Game.getMapTopEdge())/2 );
+        }
+        else
+        {
+            rally = new Point(rX, (fighterY +Game.getMapBottomEdge())/2);
+        }
 
-        if (myBlock != null)
+        //NEXT: movement
+        if (x< rally.getX())
+        {
+            turnTo(rally);
+            getWeaponTwo().use();
+        } else if (myBlock != null && gather != null)
         {
             b = TestPlotz.getBlocks().getNearestBlock(gather, -3, myBlock);
+
+            if (b == null)
+            {
+
+                p = getRally();
+            }
+            else {
+                p = b.getMidPoint();
+            }
+            moveTo(p);
         }
 
-        if (b == null)
-        {
-            p = getHomeBase().getPosition();
-        }
-        else {
-            p = b.getMidPoint();
-        }
-        moveTo(p);
 
-        if (myBlock != null && myBlock.getDifference()>= -3 || getNearestMissileLockedOnMe()!= null )
+
+        if (myBlock != null && myBlock.getDifference()>= -2 || getNearestMissileLockedOnMe()!= null )
         {
             getWeaponTwo().use();
         }
@@ -150,10 +179,14 @@ public class Raider extends Distractor {
         move();
 
          Unit nearest = getLowestHealthGatherInRadius((int)(getMaxRange()*.95));
+         if (gather != null && getDistance(gather)< getMaxRange()*.95)
+         {
+             getWeaponOne().use(gather);
+         }
 
-        if (getLowestHealthGatherInRadius((int)(getMaxRange()*.9f))!= null)
+        if (nearest != null && gather != null && getDistance(gather)>getMaxRange()*1.1f)
         {
-            getWeaponOne().use(getLowestHealthGatherInRadius((int)(getMaxRange()*.9f)));
+            getWeaponOne().use(nearest);
         }
 
 
@@ -208,7 +241,7 @@ public class Raider extends Distractor {
 
             for (Unit u: allEnemy)
             {
-                if (u.hasComponent(Collector.class) && u.getCurEffectiveHealth()< lowHealth)// checks its a gatherer
+                if (isPassive(u) && u.getCurEffectiveHealth()< lowHealth)// checks its a gatherer
                 {
                     lowHealth = u.getCurEffectiveHealth();
                     lowestGather = u;
@@ -225,13 +258,17 @@ public class Raider extends Distractor {
     public Unit getGather()
     {
         ArrayList<Unit> allEnemy = getEnemies();
-        Unit bestGather = allEnemy.get(0);
+        Unit bestGather = null;
+        if (!allEnemy.isEmpty())
+        {
+            bestGather = allEnemy.get(0);
+        }
         int highScore =Integer.MIN_VALUE;
 
 
         for (Unit u: allEnemy)
         {
-            if (u.hasComponent(Collector.class))// checks its a gatherer
+            if (isPassive(u))// checks its a gatherer
             {
                 int score=0;
                 int radius = 750;
@@ -240,10 +277,11 @@ public class Raider extends Distractor {
                     if (!isPassive(e)) {
                         score -= (radius - u.getDistance(e));
                     }
-                    else if (hasComponent(Collector.class))
+                    else if (isPassive(u))
                     {
                         score += (radius - u.getDistance(e));
                     }
+                    score -= u.getDistance(this);
                 }
                 if (score >highScore)
                 {
@@ -268,6 +306,16 @@ public class Raider extends Distractor {
         }
         return raiders;
     }
+
+    public Block getBlock(Unit u)
+    {
+        return TestPlotz.getBlocks().getBlock(u);
+    }
+    public Block getBlock(Point p)
+    {
+        return TestPlotz.getBlocks().getBlock(p);
+    }
+
     public GameObject getNearestThreat()
     {
 

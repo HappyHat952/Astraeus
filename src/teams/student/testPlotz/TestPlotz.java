@@ -39,7 +39,8 @@ public class TestPlotz extends Player
 		}
 		if (OverallAnalysis.getCurrentStage() == OverallAnalysis.BUILD)
 		{
-			buildUnits(.25f,.25f,.3f, .2f,0f);
+			//buildUnits(.25f,.25f,.3f, .2f,0f);
+			buildUnits(.3f,.3f,.2f,.2f,0f);
 		}
 		else if (OverallAnalysis.getCurrentStage() == OverallAnalysis.FIGHT)
 		{
@@ -56,7 +57,7 @@ public class TestPlotz extends Player
 		if (getFleetValueUnit(Distractor.class)< 1) {
 			buildUnit(new Distractor(this));
 		}
-		else if (getFleetValueUnit(Raider.class)< 8) {
+		else if (getFleetValueUnit(Raider.class)< 20) {
 			buildUnit(new Raider(this));
 		}
 		if (getFleetValueUnitPercentage(Tank.class)< tank)
@@ -87,16 +88,12 @@ public class TestPlotz extends Player
 		blocks.draw(g);
 		OverallAnalysis.draw(g);
 		ResourceManager.draw(g);
-		if(getFleetValueUnit(Raider.class)>0 && Raider.getRally()!= null)
-		{
-			g.setColor(Color.orange);
-			g.drawString("Raider Rally", Raider.getRally().getX(), Raider.getRally().getY());
-		}
 
 		for (Unit u: getMyUnits())
 		{
 			u.draw(g);
 		}
+		addMessage(""+Raider.getGatherer());
 	}
 	
 }

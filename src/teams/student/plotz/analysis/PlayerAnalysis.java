@@ -1,15 +1,14 @@
-package teams.student.testPlotz.analysis;
+package teams.student.plotz.analysis;
 
 import components.weapon.Weapon;
 import components.weapon.economy.Collector;
 import components.weapon.economy.Drillbeam;
 import components.weapon.explosive.Missile;
-import components.weapon.utility.CommandRelay;
 import components.weapon.utility.Pullbeam;
 import objects.entity.unit.Unit;
 import org.newdawn.slick.geom.Point;
 import player.Player;
-import teams.student.testPlotz.units.Commander;
+import teams.student.plotz.units.Commander;
 
 import java.util.ArrayList;
 

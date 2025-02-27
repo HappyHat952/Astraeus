@@ -1,18 +1,18 @@
-package teams.student.plotz.units;
+package teams.student.oldPlotz.units;
 import components.weapon.economy.Collector;
 import objects.entity.unit.Frame;
 import objects.entity.unit.Model;
 import objects.entity.unit.Style;
 import objects.resource.Resource;
-import teams.student.plotz.Plotz;
-import teams.student.plotz.PlotzUnit;
+import teams.student.oldPlotz.OldPlotz;
+import teams.student.oldPlotz.PlotzUnit;
 
 
 public class Catcher extends PlotzUnit
 {
 
 
-    public Catcher(Plotz p)
+    public Catcher(OldPlotz p)
     {
         super(p);
     }

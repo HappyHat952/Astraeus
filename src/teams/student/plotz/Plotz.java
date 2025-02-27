@@ -1,208 +1,99 @@
 package teams.student.plotz;
 
-import engine.states.Game;
-import objects.entity.node.Node;
 import objects.entity.unit.Unit;
-import objects.resource.Resource;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.geom.Point;
 import player.Player;
-import teams.student.plotz.units.Fighter;
-import teams.student.plotz.units.Gatherer;
-import teams.student.plotz.units.Miner;
-
-import java.util.ArrayList;
-
-import static teams.student.plotz.AllyAnalysis.getGatherers;
-import static teams.student.plotz.ResourceManager.*;
+import teams.student.plotz.analysis.BlockManager;
+import teams.student.plotz.analysis.OverallAnalysis;
+import teams.student.plotz.analysis.ResourceManager;
+import teams.student.plotz.units.*;
 
 public class Plotz extends Player
 {
-
-	private ArrayList<Resource> safeResources;
-	private ArrayList<Node> safeNodes;
-	public static String strategy;
-	public boolean start;
-
+	private static OverallAnalysis overall;
+	private static BlockManager blocks;
 	public void setup()
 	{		
 		setName("Plotz");
-        setTeamImage("src/teams/student/plotz/plotz.png");
-		setTitle("plotzing to success");
+		setTeamImage("src/teams/student/plotz/plotzLogo.png");
+		setTitle("The Plotzful Four");
 
 		setColorPrimary(96, 130, 182);
 		setColorSecondary(201, 15, 2);
 		setColorAccent(0, 0, 0);
 
-		start = true;
+		overall = new OverallAnalysis(this);
+		blocks = new BlockManager(this);
 
-		safeResources = getSafeResources();
-		safeNodes = getSafeNodes();
 
-		AllyAnalysis.resetVariables();
-		EnemyAnalysis.resetVariables();
-
-		AllyAnalysis.setPlayer(this);
-		EnemyAnalysis.setPlayer(getOpponent());
-
-		Analysis.analyzePlayers(this);
-		Analysis.analyzePlayers();
 	}
 
-
-	public static String getStrategy()
+	public static BlockManager getBlocks(){ return blocks;}
+	public static OverallAnalysis overall(){ return overall;}
+	
+	public void strategy() 
 	{
-		return strategy;
+		if (!overall.getEnemy().getPlayer().equals(getOpponent()))
+		{
+			overall = new OverallAnalysis(this);
+		}
+		if (OverallAnalysis.getCurrentStage() == OverallAnalysis.BUILD)
+		{
+			//buildUnits(.25f,.25f,.3f, .2f,0f);
+			buildUnits(.3f,.3f,.2f,.2f,0f);
+		}
+		else if (OverallAnalysis.getCurrentStage() == OverallAnalysis.FIGHT)
+		{
+			buildUnits(.12f, .12f, .51f, .25f,0f);
+		}
+
+
+		overall.update();
+		blocks.update();
 	}
 
-	public void strategy()
+	private void buildUnits ( float gather, float miner, float fighter, float tank, float healer)
 	{
-//
-//		if(countMyUnits(Catcher.class)<2) {
-//			buildUnit(new Catcher(this));
-//		} else
-
-//		if (getFleetValueUnitPercentage(Gatherer.class) < .20f) {
-
-			if (getFleetValueUnitPercentage(Gatherer.class) < .20f) {
-				buildUnit(new Gatherer(this));
-			} else if (getFleetValueUnitPercentage(Miner.class) < .20f) {
-
-				buildUnit(new Miner(this));
-			} else {
+		if (getFleetValueUnit(Distractor.class)< 1) {
+			buildUnit(new Distractor(this));
+		}
+//		else if (getFleetValueUnit(Raider.class)< 20) {
+//			buildUnit(new Raider(this));
+//		}
+		if (getFleetValueUnitPercentage(Tank.class)< tank)
+		{
+			buildUnit(new Tank(this));
+		}
+		else if (getFleetValueUnitPercentage(Gatherer.class)< gather)
+		{
+			buildUnit(new Gatherer(this));
+		}
+		else if (getFleetValueUnitPercentage(Miner.class)< miner && !getAllNodes().isEmpty())
+		{
+			buildUnit(new Miner(this));
+		}
+		else if (getFleetValueUnitPercentage(Fighter.class)< fighter)
+		{
 				buildUnit(new Fighter(this));
-			}
-			// AGAINST SMALL ATTACK
-			// identify where attack is happening
-			// pool up there
+		}
 
-			Analysis.setGroupSize(7);
-//		BUILD RESOURCES:
-//		 when we have fewer resources
-//		 when we are going against healer
-//		 at the very beginning
-//		if (Game.getTime() > 600*60 )
-//		{
-//			strategy = "tooLateToBuild";
-//			PlotzUnit.setRallyPoint((float) 1f);
-//			buildUnits(0f,0f,0.85f, 0.1f, 0f);
-//		}
-//
-//		else if (Game.getTime() <200*60)
-//		{
-//			strategy = "build";
-//			PlotzUnit.setRallyPoint((float) 0.1);
-//			buildUnits(0.4f,0.4f,0.1f,0.1f,0);
-//		}
-//		else {
-//			strategy = "general fight";
-//			PlotzUnit.setRallyPoint(1f);
-//			buildUnits(0.2f, 0.2f, 0.4f, 0.2f, 0.f);
-//		}
-			//DEFEND MINERS AND GATHERERS:
-			// when skirmishers are coming
-			// also heavily protect the base
+		else {
+			buildUnit(new Fighter(this));
+		}
+		}
 
-			// AGAINST BIG ARMY
-			// need skirmishers (break their economy)
-			// bigger enemies and mods (determine later
-			// few baits
+			
+	public void draw(Graphics g) 
+	{
+		blocks.draw(g);
+		OverallAnalysis.draw(g);
+		ResourceManager.draw(g);
 
-			// AGAINST PULLERS
-//		if (EnemyAnalysis.hasPullers() && strategy.equals("generalFight"))
-//		{
-//			Analysis.setGroupSize(10);
-//		}
-//		else if (getMineralsMined()> getOpponent().getMineralsMined()*1.2f)
-//		{
-//			Analysis.setGroupSize(8);
-//		}
-//		else
-//		{
-//			Analysis.setGroupSize(7);
-//		}
-//		manageHealers.assign();
-//		}
+		for (Unit u: getMyUnits())
+		{
+			u.draw(g);
+		}
+		addMessage(""+Raider.getGatherer());
 	}
-
-
-
-	public void draw(Graphics g) {
-		// Displays math method information (not fully finished yet)
-
-		Analysis.analyzePlayers();
-		Analysis.printNewAnalysis(this, 5);
-
-		addMessage(String.valueOf(takenResources.size()));
-		if (Game.getTime() % 120 == 0) {
-			Analysis.analyzePlayers();
-			safeResources = getSafeResources();
-			safeNodes = getSafeNodes();
-		}
-		if (!takenResources.isEmpty()) {
-			for (Resource r: takenResources) {
-				if (r != null && !r.isPickedUp()) {
-					g.setColor(Color.yellow);
-					g.fillOval(r.getCenterX(), r.getCenterY(), 10, 10);
-				}
-			}
-		}
-		if (safeResources != null) {
-			this.addMessage("Safe resources " + safeResources.size(), Color.blue);
-			for (Resource r : safeResources) {
-				g.setColor(Color.green);
-				g.fillOval(r.getCenterX(), r.getCenterY(), 30, 30);
-			}
-		}
-		if (safeNodes != null) {
-			this.addMessage("Safe nodes " + safeNodes.size(), Color.blue);
-			for (Node n : safeNodes) {
-				g.setColor(Color.green);
-				g.drawOval(n.getCenterX(), n.getCenterY(), 80, 80);
-			}
-		}
-		// NEW STUFF
-		for (Unit gatherer : getGatherers()) {
-			Point futurePosition = ((Gatherer) (gatherer)).getFutureHomeBasePosition();
-
-
-			g.setColor(Color.red);
-			g.drawLine(gatherer.getX(), gatherer.getY(), futurePosition.getX(), futurePosition.getY());
-
-
-			g.setColor(Color.blue);
-			g.fillOval(futurePosition.getX() - 3, futurePosition.getY() - 3, 6, 6);
-		}
-//		if (EnemyAnalysis.getAvgFighterLocation()!= null && PlotzUnit.getEnemyFighter() != null && PlotzUnit.getAllyBuilder() != null)
-//		{
-//			g.drawLine(PlotzUnit.getEnemyFighter().getX(), PlotzUnit.getEnemyFighter().getY(), PlotzUnit.getAllyBuilder().getX(), PlotzUnit.getAllyBuilder().getY());
-//			g.setColor( Color.green);
-//			g.fillOval(PlotzUnit.getRallyPoint().getX(), PlotzUnit.getRallyPoint().getY(), 40, 40);
-//		}
-
-//		this.addMessage("Average Fleet Size: " + (int) Analysis.getAverageFleetSize(this));
-//		this.addMessage("PREDICTED WIN: "+Analysis.getStateOfGame(this));
-//		this.addMessage("OPPONENT STATS", Color.white);
-//		this.addMessage("Strategy: " + Analysis.getEnemyStrategy(getOpponent()), Color.magenta);
-//		this.addMessage("Average Speed: " + (int) Analysis.getAverageMaxSpeed(getOpponent()), Color.red);
-//		this.addMessage("Fighter Percentage: " + (int)Analysis.getFighterPercentage(getOpponent()) + "%", Color.red);
-//		this.addMessage("Team Concentration: " + (int) Analysis.getShipConcentration(getOpponent()), Color.red);
-//		this.addMessage("Damage: "+ (int) getDamageTaken(), Color.blue);
-//		this.addMessage("resources: "+ getMineralsMined() , Color.blue);
-
-
-		//lines on graph.
-
-		//draws average FIGHTING enemy location
-		/*float Oppx = Analysis.getAverageFighterX(getOpponent());
-		g.setColor( getOpponent().getColorPrimary());
-		g.drawLine(Oppx, Game.getMapTopEdge(), Oppx, Game.getMapBottomEdge());
-
-		//draws NEAREST enemy location
-		Oppx = Analysis.getNearestX(getOpponent());
-		g.setColor( getOpponent().getColorPrimary());
-		g.drawLine(Oppx, Game.getMapTopEdge(), Oppx, Game.getMapBottomEdge());*/
-	}
-
+	
 }

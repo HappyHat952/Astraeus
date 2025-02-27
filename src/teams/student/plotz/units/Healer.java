@@ -1,4 +1,4 @@
-package teams.student.testPlotz.units;
+package teams.student.plotz.units;
 
 import components.upgrade.Plating;
 import components.upgrade.Shield;
@@ -11,13 +11,13 @@ import objects.entity.unit.Frame;
 import objects.entity.unit.Model;
 import objects.entity.unit.Style;
 import objects.entity.unit.Unit;
-import teams.student.testPlotz.TestPlotz;
-import teams.student.testPlotz.TestPlotzUnit;
+import teams.student.plotz.Plotz;
+import teams.student.plotz.PlotzUnit;
 
 import java.util.ArrayList;
 
-public class Healer extends TestPlotzUnit {
-    public Healer(TestPlotz p) {
+public class Healer extends PlotzUnit {
+    public Healer(Plotz p) {
         super(p);
     }
 

@@ -1,4 +1,4 @@
-package teams.student.plotz;
+package teams.student.oldPlotz;
 
 import components.weapon.economy.Collector;
 import components.weapon.economy.Drillbeam;

@@ -1,24 +1,15 @@
-package teams.student.testPlotz.units;
+package teams.student.plotz.units;
 
 import components.upgrade.Shield;
-import components.weapon.utility.AntiMissileSystem;
 import components.weapon.utility.CommandRelay;
 import objects.entity.unit.Frame;
 import objects.entity.unit.Model;
 import objects.entity.unit.Style;
-import objects.entity.unit.Unit;
-import org.newdawn.slick.geom.Point;
-import teams.student.testPlotz.TestPlotz;
-import teams.student.testPlotz.analysis.OverallAnalysis;
-import teams.student.testPlotz.analysis.PlayerAnalysis;
-
-import java.util.ArrayList;
-
-import static teams.student.testPlotz.analysis.OverallAnalysis.getEnemy;
+import teams.student.plotz.Plotz;
 
 public class Commander extends Fighter{
 
-    public Commander(TestPlotz p) {
+    public Commander(Plotz p) {
         super(p);
     }
 

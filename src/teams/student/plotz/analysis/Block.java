@@ -1,10 +1,9 @@
-package teams.student.testPlotz.analysis;
+package teams.student.plotz.analysis;
 
 import engine.states.Game;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
-import ui.display.Fonts;
 
 import java.util.ArrayList;
 
@@ -84,20 +83,10 @@ public class Block {
         g.setLineWidth(3);
         g.setColor(myColor);
         g.fillRect(x,y,SIZE,SIZE);
-        g.setColor(Color.white);
-        g.drawRect(x,y,SIZE, SIZE);
-        g.setFont(Fonts.mediumFont);
+//        g.setColor(Color.white);
+//        g.drawRect(x,y,SIZE, SIZE);
+//        g.setFont(Fonts.mediumFont);
         g.drawString("enemy: "+enemy +"| ally: "+ally, getMidX(), getMidY());
-        if (adjBlocks!= null)
-        {
-            int i =1;
-            for (Block b: adjBlocks)
-            {
-
-                g.drawString(b.toString(), getMidX(), getMidY() + 19 *i);
-                i++;
-            }
-        }
 
     }
 

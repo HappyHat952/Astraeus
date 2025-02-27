@@ -11,7 +11,7 @@ import teams.student.januaryPlotz.JanPlotzUnit;
 import teams.student.januaryPlotz.JanuaryPlotz;
 import teams.student.januaryPlotz.analysis.OverallAnalysis;
 
-import static teams.student.testPlotz.analysis.OverallAnalysis.FIGHT;
+import static teams.student.plotz.analysis.OverallAnalysis.FIGHT;
 
 public class Tank extends JanPlotzUnit {
 

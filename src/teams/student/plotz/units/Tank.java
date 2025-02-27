@@ -1,4 +1,4 @@
-package teams.student.testPlotz.units;
+package teams.student.plotz.units;
 
 import components.upgrade.HeavyPlating;
 import components.upgrade.Plating;
@@ -7,17 +7,17 @@ import objects.entity.unit.Frame;
 import objects.entity.unit.Model;
 import objects.entity.unit.Style;
 import objects.entity.unit.Unit;
-import teams.student.testPlotz.TestPlotz;
-import teams.student.testPlotz.TestPlotzUnit;
-import teams.student.testPlotz.analysis.OverallAnalysis;
+import teams.student.plotz.Plotz;
+import teams.student.plotz.PlotzUnit;
+import teams.student.plotz.analysis.OverallAnalysis;
 
 import java.util.ArrayList;
 
-import static teams.student.testPlotz.analysis.OverallAnalysis.FIGHT;
+import static teams.student.plotz.analysis.OverallAnalysis.FIGHT;
 
-public class Tank extends TestPlotzUnit {
+public class Tank extends PlotzUnit {
 
-    public Tank(TestPlotz p) {
+    public Tank(Plotz p) {
 
         super(p);
 

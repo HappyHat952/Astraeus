@@ -1,4 +1,4 @@
-package teams.student.testPlotz.units;
+package teams.student.plotz.units;
 
 import components.upgrade.Shield;
 import components.weapon.economy.Collector;
@@ -9,16 +9,16 @@ import objects.entity.unit.Frame;
 import objects.entity.unit.Model;
 import objects.entity.unit.Style;
 import objects.entity.unit.Unit;
-import teams.student.testPlotz.TestPlotz;
-import teams.student.testPlotz.TestPlotzUnit;
+import teams.student.plotz.Plotz;
+import teams.student.plotz.PlotzUnit;
 
 import java.util.ArrayList;
 
-public class Distractor extends TestPlotzUnit {
+public class Distractor extends PlotzUnit {
     private int offset;
     protected  Unit nearAllEnmy;
     protected  Unit nearResEnmy;
-    public Distractor(TestPlotz p) {
+    public Distractor(Plotz p) {
         super(p);
         if (Math.random() <= 0.5)
         {

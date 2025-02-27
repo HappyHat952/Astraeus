@@ -1,4 +1,4 @@
-teams.student.testPlotz.TestPlotz
+teams.student.plotz.Plotz
 100
-teams.foes.vanguard.TheVanguard
-120
+teams.student.januaryPlotz.JanuaryPlotz
+100

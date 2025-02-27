@@ -1,4 +1,7 @@
+// NEW GATHERER
+
 package teams.student.plotz.units;
+
 import components.weapon.economy.Collector;
 import objects.entity.unit.Frame;
 import objects.entity.unit.Model;
@@ -7,17 +10,21 @@ import objects.resource.Resource;
 import org.newdawn.slick.geom.Point;
 import teams.student.plotz.Plotz;
 import teams.student.plotz.PlotzUnit;
-import teams.student.plotz.ResourceManager;
+import teams.student.plotz.analysis.ResourceManager;
 
 import java.util.ArrayList;
 
-public class Gatherer extends PlotzUnit {
+import teams.student.plotz.analysis.ResourceManager;
+
+public class Gatherer extends PlotzUnit
+{
+
 	public int timer = 0;
 	public int dumpTimer;
-	final private int TIME = 500;
 	public Resource myResource;
+	private ArrayList<Resource> myResources;
 	public boolean isAssigned;
-	private boolean a;
+
 	public Gatherer(Plotz p) {
 		super(p);
 	}
@@ -27,12 +34,27 @@ public class Gatherer extends PlotzUnit {
 		setModel(Model.TRANSPORT);
 		setStyle(Style.BUBBLE);
 		add(Collector.class);
+
 		myResource = null;
+		myResources = new ArrayList<>();
 		isAssigned = false;
 		dumpTimer = 0;
-		a = false;
 	}
 
+	public void throwResources() {
+		float xVelocity = getSpeedX();
+		float yVelocity = getSpeedY();
+
+		float baseXVelocity = getHomeBase().getSpeedX();
+		float baseYVelocity = getHomeBase().getSpeedY();
+
+		float distance = getDistance(getHomeBase());
+
+		float time = distance/yVelocity;
+
+
+
+	}
 
 	public void action() {
 		if (isFull()) {
@@ -43,108 +65,96 @@ public class Gatherer extends PlotzUnit {
 
 	}
 
-	public Point getFutureHomeBasePosition() {
-
-		float distance = Math.abs(getHomeBase().getCenterX() - getX());
-
-
-		float timeToBase = distance / getCurSpeed();
-
-
-		float futureX = getHomeBase().getCenterX() + (getHomeBase().getSpeedX() * timeToBase);
-		float futureY = getHomeBase().getCenterY();
-
-		return new Point((int) futureX, (int) futureY);
-	}
-
 
 	public void returnResources() {
-//		fix dump logic
-
-//        turnTo(getHomeBase());
+//        moveTo(getHomeBase());
 //        if (getDistance(getHomeBase()) < 3000) {
 //            timer++;
-//            if (timer > TIME) {
-//				turnTo(getHomeBase());
-//				dump();
-//                dumpTimer = TIME;
+//            if (timer > 240) {
+//                dump();
+//                dumpTimer = 500;
 //                timer = 0;
 //
-//            } else {
-//				if (a) {
-//					turnTo(getHomeBase());
-//					a = false;
-//				} else {
-//					turnAround();
-//					a = true;
-//				}
-//			}
+//            }
+//        }
+		throwResources();
 
-
-
-		timer++;
-            if (timer > TIME) {
-				turnTo(getFutureHomeBasePosition());
-				dump();
-                dumpTimer = TIME;
-                timer = 0;
-
-
-            } else {
-//				if (a) {
-					moveTo(getFutureHomeBasePosition());
-//					a = false;
-//				} else {
-//					turnAround();
-//					move();
-//					a = true;
-//				}
-//			}
-        }
-
-//		if(isFull())
-//		{
-//			moveTo(getHomeBase());
-//			deposit();
-//		}
-
+		if (isFull()) {
+			moveTo(getHomeBase());
+			deposit();
+		}
 
 	}
 
 
+	// ADD A CHECK FOR NULL< IF THERES NOT ENOUGH RESOURCES
 	public void gatherResources() {
 		if (hasCapacity()) {
 			if (dumpTimer > 0) {
 				moveTo(getEnemyBase());
 				dumpTimer--;
 			} else {
-				if (!isAssigned) {
-					myResource = getNearestAvailable();
-					ResourceManager.takenResources.add(myResource);
-					isAssigned = true;
-				}
-
-				if (myResource == null) {
+				if (myResource == null || myResources.isEmpty() || !ResourceManager.isSafe(myResource))
+				{
+					isAssigned = false;
 					moveTo(getHomeBase());
 					destinationX = getHomeBase().getCenterX();
 					destinationY = getHomeBase().getCenterY();
-					myResource = getNearestAvailable();
-				} else {
-//                    if (!ResourceManager.isSafe(myResource)) {
-//                        myResource = getNearestAvailable();
-//                        ResourceManager.takenResources.remove(myResource);
-//                    } else
-//                    {
-					moveTo(myResource);
-					destinationX = myResource.getCenterX();
-					destinationY = myResource.getCenterY();
-					if (getDistance(myResource) <= getMaxRange() * .65f) {
-						((Collector) getWeaponOne()).use(myResource);
+				}
+				if (!isAssigned) {
+
+					if (getNearestAvailable()!= null)
+					{
+						myResource = getNearestAvailable();
+						myResources.add(myResource);
+						ResourceManager.takenResources.add(myResource);
 					}
-					if (myResource.isPickedUp()) {
-						isAssigned = false;
-//                        }
+
+					// changed loop:
+					int i = 0;
+					Resource newBud = getBuddy(myResource);
+					while ( i< 3 && newBud != null && myResource!= null)
+					{
+						myResources.add(newBud);
+						ResourceManager.takenResources.add(newBud);
+						newBud = getBuddy(myResource);
+						i++;
 					}
+
+
+					isAssigned = true;
+				}
+
+				else {
+
+						Resource currentDestinationResource;
+
+						float nearestDistance = Float.MAX_VALUE;
+						Resource nearestResource = null;
+						for (Resource r : myResources) {
+							if (r.isInBounds() && !r.isPickedUp() && getDistance(r.getPosition()) < nearestDistance) {
+								nearestResource = r;
+								nearestDistance = getDistance(r.getPosition());
+								destinationX = r.getCenterX();
+								destinationY = r.getCenterY();
+							}
+						}
+						currentDestinationResource = nearestResource;
+						if (currentDestinationResource == null) {
+							currentDestinationResource = myResources.getFirst();
+						}
+						moveTo(currentDestinationResource);
+						destinationX = currentDestinationResource.getCenterX();
+						destinationY = currentDestinationResource.getCenterY();
+						((Collector) getWeaponOne()).use(currentDestinationResource);
+						if (currentDestinationResource.isPickedUp()) {
+							myResources.remove(currentDestinationResource);
+						}
+						if (myResources.isEmpty()) {
+							isAssigned = false;
+						}
+
+
 				}
 			}
 		}
@@ -152,20 +162,15 @@ public class Gatherer extends PlotzUnit {
 
 	}
 
-	public Resource getNearestAvailable() {
+	public Resource getNearestAvailable () {
 		float nearestDistance = Float.MAX_VALUE;
 		Resource nearestResource = null;
 		ArrayList<Resource> resources = ResourceManager.getSafeResources();
-//      ArrayList<Resource> resources = objects.resource.ResourceManager.getResources();
-
-
 		if (resources == null) {
 			return null;
 		}
-		for(Resource r : resources)
-		{
-			if(r.isInBounds() && !r.isPickedUp() && getDistance(r.getPosition()) < nearestDistance && !ResourceManager.takenResources.contains(r))
-			{
+		for (Resource r : resources) {
+			if (r.isInBounds() && !r.isPickedUp() && getDistance(r.getPosition()) < nearestDistance && !ResourceManager.takenResources.contains(r)) {
 				nearestResource = r;
 				nearestDistance = getDistance(r.getPosition());
 				destinationX = r.getCenterX();
@@ -175,11 +180,34 @@ public class Gatherer extends PlotzUnit {
 		return nearestResource;
 	}
 
+	public Resource getBuddy(Resource re){
+		float nearestDistance = Float.MAX_VALUE;
+		Resource nearestResource = null;
+		ArrayList<Resource> resources = ResourceManager.getSafeResources();
+		if (resources == null) {
+			return null;
+		}
+		for (Resource r: resources) {
+			if (r.isInBounds() && !r.isPickedUp() && re.getDistance(r.getPosition()) < nearestDistance && !ResourceManager.takenResources.contains(r)) {
+				nearestResource = r;
+				nearestDistance = re.getDistance(r.getPosition());
+				destinationX = r.getCenterX();
+				destinationY = r.getCenterY();
+			}
+		}
+		return nearestResource;
+	}
+
+	public Point getDestination() {
+		if (myResource != null) {
+			return myResource.getPosition();
+		} else {
+			return getHomeBase().getPosition();
+		}
+	}
 
 
 }
-
-
 
 
 

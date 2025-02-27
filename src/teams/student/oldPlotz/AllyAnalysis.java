@@ -1,4 +1,4 @@
-package teams.student.plotz;
+package teams.student.oldPlotz;
 
 import components.weapon.economy.Collector;
 import components.weapon.economy.Drillbeam;
@@ -6,7 +6,7 @@ import engine.Values;
 import objects.entity.unit.Unit;
 import org.newdawn.slick.geom.Point;
 import player.Player;
-import teams.student.plotz.units.Catcher;
+import teams.student.oldPlotz.units.Catcher;
 
 import java.util.ArrayList;
 

@@ -1,16 +1,16 @@
-package teams.student.testPlotz.analysis;
+package teams.student.plotz.analysis;
 
-import objects.entity.unit.Unit;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
-import teams.student.testPlotz.TestPlotz;
+import player.Player;
+import teams.student.plotz.Plotz;
 
 import java.util.ArrayList;
 
 public class OverallAnalysis {
 
-    private static TestPlotz plotz;
+    private static Plotz plotz;
     private int timer;
 
     public static final int BUILD = 0;
@@ -31,7 +31,7 @@ public class OverallAnalysis {
     private int numRallyPoint;
     private int clusterSize;
 
-    public OverallAnalysis(TestPlotz p)
+    public OverallAnalysis(Plotz p)
     {
         enemy = new PlayerAnalysis(p.getOpponent());
         ally = new PlayerAnalysis(p);
@@ -43,6 +43,20 @@ public class OverallAnalysis {
 
     public static PlayerAnalysis getAlly(){ return ally;}
     public static PlayerAnalysis getEnemy(){ return enemy;}
+    public static PlayerAnalysis getPlayerAnalysis(Player p )
+    {
+        if (p.equals(enemy.getPlayer()))
+        {
+            return enemy;
+        }
+        else if (p.equals(ally.getPlayer()))
+        {
+            return ally;
+        }
+
+        //shouldn't be reached if overall is being updated
+        return ally;
+    }
     public static Point getCoreRallyPoint(){ return coreRallyPoint;}
     public static ArrayList<Point> getAllRallyPoints(){ return rallyPts;}
     public static float getRallyPercent(){ return rallyPercent;}

@@ -1,4 +1,4 @@
-package teams.student.testPlotz.analysis;
+package teams.student.plotz.analysis;
 
 import objects.entity.node.Node;
 import objects.entity.unit.Unit;
@@ -8,8 +8,6 @@ import org.newdawn.slick.Graphics;
 
 import java.util.ArrayList;
 import java.util.Objects;
-
-import static objects.resource.ResourceManager.getResources;
 
 public class ResourceManager {
 

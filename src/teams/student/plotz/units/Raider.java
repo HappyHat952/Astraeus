@@ -1,8 +1,6 @@
-package teams.student.testPlotz.units;
+package teams.student.plotz.units;
 
-import components.weapon.economy.Collector;
 import components.weapon.energy.Laser;
-import components.weapon.explosive.Missile;
 import components.weapon.utility.SpeedBoost;
 import engine.states.Game;
 import objects.GameObject;
@@ -12,9 +10,9 @@ import objects.entity.unit.Style;
 import objects.entity.unit.Unit;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
-import teams.student.testPlotz.TestPlotz;
-import teams.student.testPlotz.analysis.Block;
-import teams.student.testPlotz.analysis.OverallAnalysis;
+import teams.student.plotz.Plotz;
+import teams.student.plotz.analysis.Block;
+import teams.student.plotz.analysis.OverallAnalysis;
 
 import java.util.ArrayList;
 import org.newdawn.slick.geom.Point;
@@ -29,7 +27,7 @@ public class Raider extends Distractor {
     private Block myBlock;
     private Point p;
 
-    public Raider(TestPlotz p) {
+    public Raider(Plotz p) {
         super(p);
     }
 
@@ -151,7 +149,7 @@ public class Raider extends Distractor {
             getWeaponTwo().use();
         } else if (myBlock != null && gather != null)
         {
-            b = TestPlotz.getBlocks().getNearestBlock(gather, -3, myBlock);
+            b = Plotz.getBlocks().getNearestBlock(gather, -3, myBlock);
 
             if (b == null)
             {
@@ -188,11 +186,6 @@ public class Raider extends Distractor {
         {
             getWeaponOne().use(nearest);
         }
-
-
-
-
-
 
 
     }
@@ -309,11 +302,11 @@ public class Raider extends Distractor {
 
     public Block getBlock(Unit u)
     {
-        return TestPlotz.getBlocks().getBlock(u);
+        return Plotz.getBlocks().getBlock(u);
     }
     public Block getBlock(Point p)
     {
-        return TestPlotz.getBlocks().getBlock(p);
+        return Plotz.getBlocks().getBlock(p);
     }
 
     public GameObject getNearestThreat()

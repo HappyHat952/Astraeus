@@ -28,18 +28,18 @@ public class ResourceManager {
         if (OverallAnalysis.getEnemy().getFighters().isEmpty() || allResources.isEmpty()) {
             return null;
         }
-        if (takenResources.isEmpty()) {
+//        if (takenResources.isEmpty()) {
+//            for (Resource r : allResources) {
+//                if (isSafe(r)) {
+//                    safeResources.add(r);
+//                }
+//            }
+//        } else {
             for (Resource r : allResources) {
-                if (isSafe(r)) {
+                if (isSafe(r) && !takenResources.contains(r) && r.getCurSpeed() < 20) {
                     safeResources.add(r);
                 }
-            }
-        } else {
-            for (Resource r : allResources) {
-                if (isSafe(r) && !takenResources.contains(r)) {
-                    safeResources.add(r);
-                }
-            }
+//            }
         }
 
         return safeResources;

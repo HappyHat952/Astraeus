@@ -1,7 +1,10 @@
 package teams.student.plotz;
 
 import objects.entity.unit.Unit;
+import objects.resource.Resource;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.geom.Point;
 import player.Player;
 import teams.student.plotz.analysis.BlockManager;
 import teams.student.plotz.analysis.OverallAnalysis;
@@ -94,6 +97,25 @@ public class Plotz extends Player
 			u.draw(g);
 		}
 		addMessage(""+Raider.getGatherer());
+
+		for (Unit gatherer : OverallAnalysis.getAlly().getMyGathererUnts()) {
+			Point futurePosition = ((Gatherer) gatherer).getFutureHomeBasePosition();
+
+			// line
+			g.setColor(Color.red);
+			g.drawLine(gatherer.getX(), gatherer.getY(), futurePosition.getX(), futurePosition.getY());
+
+			// future pos
+			g.setColor(Color.blue);
+			g.fillOval(futurePosition.getX(), futurePosition.getY(), 6, 6);
+		}
+
+		for (Resource r: ResourceManager.takenResources) {
+			g.setColor(Color.pink);
+			g.fillOval(r.getX(), r.getY(), 50, 50);
+		}
+		addMessage(String.valueOf(ResourceManager.takenResources.size()));
+
 	}
 	
 }

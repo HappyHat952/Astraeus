@@ -21,6 +21,7 @@ public class Gatherer extends PlotzUnit
 
 	public int timer = 0;
 	public int dumpTimer;
+	private final int TIME = 180;
 	public Resource myResource;
 	private ArrayList<Resource> myResources;
 	public boolean isAssigned;
@@ -42,17 +43,52 @@ public class Gatherer extends PlotzUnit
 	}
 
 	public void throwResources() {
-		float xVelocity = getSpeedX();
-		float yVelocity = getSpeedY();
+		float xVel = getSpeedX();
+		float yVel = getSpeedY();
 
-		float baseXVelocity = getHomeBase().getSpeedX();
-		float baseYVelocity = getHomeBase().getSpeedY();
+		Point futureBase = getFutureHomeBasePosition();
+		float futureBaseX = futureBase.getX();
+		float futureBaseY = futureBase.getY();
 
-		float distance = getDistance(getHomeBase());
-
-		float time = distance/yVelocity;
+		moveTo(futureBase);
 
 
+		float gathererX = getCenterX();
+		float gathererY = getCenterY();
+
+		// gets direcion from the gatherer to the base
+		float directionX = futureBaseX - gathererX;
+		float directionY = futureBaseY - gathererY;
+
+		// pythagorean to get magnitude of direction
+		float magnitude = (float) Math.sqrt(directionX * directionX + directionY * directionY);
+		if (magnitude != 0) {
+			directionX /= magnitude;
+			directionY /= magnitude;
+		}
+
+		// same thing but for velocity vector
+		float velocityMagnitude = (float) Math.sqrt(xVel * xVel + yVel * yVel);
+		float velocityDirX = 0;
+		float velocityDirY = 0;
+		if (velocityMagnitude != 0) {
+			velocityDirX = xVel / velocityMagnitude;
+			velocityDirY = yVel / velocityMagnitude;
+		}
+
+
+		// multiply each vector component, gets the amount of similarity there is (1 is completely aligned)
+		float alignment = (directionX * velocityDirX) + (directionY * velocityDirY);
+
+		if (alignment > 0.98) {
+
+			dump();
+			myResources.clear();
+			myResource = null;
+			isAssigned = false;
+		}
+
+		dumpTimer = 120; // 2 second delay, shows that resources get picked up when reassigned
 
 	}
 
@@ -65,25 +101,19 @@ public class Gatherer extends PlotzUnit
 
 	}
 
+	public Point getFutureHomeBasePosition() {
+		float distance = getDistance(getHomeBase());
+		float timeToBase = distance / getCurSpeed();
+
+
+		float futureX = getHomeBase().getCenterX() + (getHomeBase().getSpeedX() * timeToBase);
+		float futureY = getHomeBase().getCenterY() + (getHomeBase().getSpeedY() * timeToBase);
+
+		return new Point((int) futureX, (int) futureY);
+	}
 
 	public void returnResources() {
-//        moveTo(getHomeBase());
-//        if (getDistance(getHomeBase()) < 3000) {
-//            timer++;
-//            if (timer > 240) {
-//                dump();
-//                dumpTimer = 500;
-//                timer = 0;
-//
-//            }
-//        }
 		throwResources();
-
-		if (isFull()) {
-			moveTo(getHomeBase());
-			deposit();
-		}
-
 	}
 
 
@@ -91,7 +121,6 @@ public class Gatherer extends PlotzUnit
 	public void gatherResources() {
 		if (hasCapacity()) {
 			if (dumpTimer > 0) {
-				moveTo(getEnemyBase());
 				dumpTimer--;
 			} else {
 				if (myResource == null || myResources.isEmpty() || !ResourceManager.isSafe(myResource))
@@ -106,6 +135,7 @@ public class Gatherer extends PlotzUnit
 					if (getNearestAvailable()!= null)
 					{
 						myResource = getNearestAvailable();
+						System.out.print("get nearest available" + ResourceManager.takenResources.contains(myResource));
 						myResources.add(myResource);
 						ResourceManager.takenResources.add(myResource);
 					}
@@ -116,6 +146,7 @@ public class Gatherer extends PlotzUnit
 					while ( i< 3 && newBud != null && myResource!= null)
 					{
 						myResources.add(newBud);
+						System.out.print("get buddy" + ResourceManager.takenResources.contains(newBud));
 						ResourceManager.takenResources.add(newBud);
 						newBud = getBuddy(myResource);
 						i++;

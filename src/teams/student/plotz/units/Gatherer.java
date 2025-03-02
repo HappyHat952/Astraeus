@@ -24,10 +24,16 @@ public class Gatherer extends PlotzUnit
 	private final int TIME = 180;
 	public Resource myResource;
 	private ArrayList<Resource> myResources;
+	public static ArrayList<Resource> thrown;
 	public boolean isAssigned;
 
 	public Gatherer(Plotz p) {
 		super(p);
+	}
+
+	public static void setThrown()
+	{
+		thrown = new ArrayList<>();
 	}
 
 	public void design() {
@@ -40,6 +46,7 @@ public class Gatherer extends PlotzUnit
 		myResources = new ArrayList<>();
 		isAssigned = false;
 		dumpTimer = 0;
+
 	}
 
 	public void throwResources() {
@@ -79,17 +86,53 @@ public class Gatherer extends PlotzUnit
 
 		// multiply each vector component, gets the amount of similarity there is (1 is completely aligned)
 		float alignment = (directionX * velocityDirX) + (directionY * velocityDirY);
+		int num = getCargo();
 
 		if (alignment > 0.98) {
 
 			dump();
 			myResources.clear();
+			for (Resource r: getNearestResources(num, new ArrayList<Resource>()))
+			{
+				thrown.add(r);
+			}
 			myResource = null;
 			isAssigned = false;
 		}
 
 		dumpTimer = 120; // 2 second delay, shows that resources get picked up when reassigned
 
+	}
+
+	private ArrayList<Resource> getNearestResources( int num, ArrayList<Resource> res)
+	{
+		//first, get the current nearest resource (do loop)
+		int dist = Integer.MAX_VALUE;
+		Resource near = null;
+		for (Resource r: getPlayer().getAllResources())
+		{
+			if (res!= null && !res.contains(r) && getDistance(r)<dist)
+			{
+				dist = (int)getDistance(r);
+				near = r;
+			}
+		}
+		if (res!= null)
+		{
+			res.add(near);
+		}
+
+
+		if (num>0)
+		{
+			return getNearestResources(num - 1, res);
+		}
+		else {
+			return res;
+		}
+
+
+		// if the number isn't 0, call itself and add nearest to loop.
 	}
 
 	public void action() {
@@ -201,7 +244,7 @@ public class Gatherer extends PlotzUnit
 			return null;
 		}
 		for (Resource r : resources) {
-			if (r.isInBounds() && !r.isPickedUp() && getDistance(r.getPosition()) < nearestDistance && !ResourceManager.takenResources.contains(r)) {
+			if (r.isInBounds() && !r.isPickedUp() && getDistance(r.getPosition()) < nearestDistance &&!thrown.contains(r) && !ResourceManager.takenResources.contains(r)) {
 				nearestResource = r;
 				nearestDistance = getDistance(r.getPosition());
 				destinationX = r.getCenterX();
@@ -219,7 +262,7 @@ public class Gatherer extends PlotzUnit
 			return null;
 		}
 		for (Resource r: resources) {
-			if (r.isInBounds() && !r.isPickedUp() && re.getDistance(r.getPosition()) < nearestDistance && !ResourceManager.takenResources.contains(r)) {
+			if (r.isInBounds() && !r.isPickedUp() && re!=null && re.getDistance(r.getPosition()) < nearestDistance && !thrown.contains(r)&& !ResourceManager.takenResources.contains(r)) {
 				nearestResource = r;
 				nearestDistance = re.getDistance(r.getPosition());
 				destinationX = r.getCenterX();

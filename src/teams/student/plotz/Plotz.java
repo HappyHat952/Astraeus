@@ -11,6 +11,8 @@ import teams.student.plotz.analysis.OverallAnalysis;
 import teams.student.plotz.analysis.ResourceManager;
 import teams.student.plotz.units.*;
 
+import java.util.ArrayList;
+
 public class Plotz extends Player
 {
 	private static OverallAnalysis overall;
@@ -28,6 +30,8 @@ public class Plotz extends Player
 		overall = new OverallAnalysis(this);
 		blocks = new BlockManager(this);
 
+		Raider.setGatherer();
+		Gatherer.setThrown();
 
 	}
 
@@ -43,11 +47,15 @@ public class Plotz extends Player
 		if (OverallAnalysis.getCurrentStage() == OverallAnalysis.BUILD)
 		{
 			//buildUnits(.25f,.25f,.3f, .2f,0f);
-			buildUnits(.3f,.3f,.2f,.2f,0f);
+			buildUnits(.3f,.3f,.3f,.2f,0f);
 		}
 		else if (OverallAnalysis.getCurrentStage() == OverallAnalysis.FIGHT)
 		{
 			buildUnits(.12f, .12f, .51f, .25f,0f);
+		}
+		else if (OverallAnalysis.getCurrentStage() == OverallAnalysis.FINAL)
+		{
+			buildUnits(0f,0f, .9f, .1f, 0);
 		}
 
 
@@ -60,9 +68,9 @@ public class Plotz extends Player
 		if (getFleetValueUnit(Distractor.class)< 1) {
 			buildUnit(new Distractor(this));
 		}
-//		else if (getFleetValueUnit(Raider.class)< 20) {
-//			buildUnit(new Raider(this));
-//		}
+		else if (getFleetValueUnit(Raider.class)< 20 && OverallAnalysis.getCurrentStage() == OverallAnalysis.BUILD) {
+			buildUnit(new Raider(this));
+		}
 		if (getFleetValueUnitPercentage(Tank.class)< tank)
 		{
 			buildUnit(new Tank(this));
@@ -110,11 +118,11 @@ public class Plotz extends Player
 			g.fillOval(futurePosition.getX(), futurePosition.getY(), 6, 6);
 		}
 
-		for (Resource r: ResourceManager.takenResources) {
+		for (Resource r: Gatherer.thrown) {
 			g.setColor(Color.pink);
 			g.fillOval(r.getX(), r.getY(), 50, 50);
 		}
-		addMessage(String.valueOf(ResourceManager.takenResources.size()));
+		addMessage(String.valueOf(Gatherer.thrown.size()));
 
 	}
 	

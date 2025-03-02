@@ -5,6 +5,7 @@ import objects.entity.unit.Unit;
 import objects.resource.Resource;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import teams.student.plotz.units.Gatherer;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -82,36 +83,44 @@ public class ResourceManager {
     }
 
     public static void draw(Graphics g) {
-        if (getSafeResources() != null) {
-
-            for (Resource r : getSafeResources()) {
-                if (!r.isPickedUp()) {
-                    g.setColor(Color.green);
-                    g.fillOval(r.getX(), r.getY(), 20, 20);
-                }
-                g.setColor(Color.orange);
-                g.drawRect(r.getX(), r.getY(), 40, 40);
-            }
-        }
-
-        for (Resource r : Objects.requireNonNull(takenResources)) {
-            if (r != null && !r.isPickedUp()) {
-                g.setColor(Color.yellow);
-                g.fillOval(r.getX(), r.getY(), 20, 20);
-            }
-        }
-        if (getSafeNodes() != null) {
-            for (Resource r : getSafeResources()) {
-//                if (isSafe(r))
-//                {
-//                    g.setColor(Color.cyan);
+//        if (getSafeResources() != null) {
+//
+//            for (Resource r : getSafeResources()) {
+//                if (!r.isPickedUp()) {
+//                    g.setColor(Color.green);
+//                    g.fillOval(r.getX(), r.getY(), 20, 20);
 //                }
-//                else {
-                g.setColor(Color.red);
-//                }
-                g.fillRect(r.getX(), r.getY(), 5, 5);
-            }
-        }
+//                g.setColor(Color.orange);
+//                g.drawRect(r.getX(), r.getY(), 40, 40);
+//            }
+//        }
+//
+//        for (Resource r : Objects.requireNonNull(Gatherer.thrown)) {
+//            if (r != null && !r.isPickedUp()) {
+//                g.setColor(Color.yellow);
+//                g.fillOval(r.getX(), r.getY(), 20, 20);
+//            }
+//        }
+//        if (getSafeNodes() != null) {
+//            for (Resource r : getSafeResources()) {
+////                if (isSafe(r))
+////                {
+////                    g.setColor(Color.cyan);
+////                }
+////                else {
+//                g.setColor(Color.red);
+////                }
+//                g.fillRect(r.getX(), r.getY(), 5, 5);
+//            }
+//        }
+//        if (Gatherer.thrown != null)
+//        {
+//            for (Resource r: Gatherer.thrown)
+//            {
+//                g.drawString("thrown", r.getX(),r.getY());
+//            }
+//        }
+
     }
 
 //        if (getSafeNodes() != null)

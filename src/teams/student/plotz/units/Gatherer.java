@@ -57,8 +57,6 @@ public class Gatherer extends PlotzUnit
 		float futureBaseX = futureBase.getX();
 		float futureBaseY = futureBase.getY();
 
-		moveTo(futureBase);
-
 
 		float gathererX = getCenterX();
 		float gathererY = getCenterY();
@@ -88,19 +86,20 @@ public class Gatherer extends PlotzUnit
 		float alignment = (directionX * velocityDirX) + (directionY * velocityDirY);
 		int num = getCargo();
 
-		if (alignment > 0.98) {
+		moveTo(futureBase);
+
+		if (getDistance(getHomeBase()) < 1800) {
+			deposit();
+		} else if (alignment > 0.98 && getDistance(getHomeBase()) < 2200 && getDistance(getHomeBase()) > 1800) {
 
 			dump();
 			myResources.clear();
-			for (Resource r: getNearestResources(num, new ArrayList<Resource>()))
-			{
+			for (Resource r : getNearestResources(num, new ArrayList<Resource>())) {
 				thrown.add(r);
 			}
 			myResource = null;
 			isAssigned = false;
 		}
-
-		dumpTimer = 120; // 2 second delay, shows that resources get picked up when reassigned
 
 	}
 
@@ -178,7 +177,6 @@ public class Gatherer extends PlotzUnit
 					if (getNearestAvailable()!= null)
 					{
 						myResource = getNearestAvailable();
-						System.out.print("get nearest available" + ResourceManager.takenResources.contains(myResource));
 						myResources.add(myResource);
 						ResourceManager.takenResources.add(myResource);
 					}
@@ -189,7 +187,6 @@ public class Gatherer extends PlotzUnit
 					while ( i< 3 && newBud != null && myResource!= null)
 					{
 						myResources.add(newBud);
-						System.out.print("get buddy" + ResourceManager.takenResources.contains(newBud));
 						ResourceManager.takenResources.add(newBud);
 						newBud = getBuddy(myResource);
 						i++;

@@ -1,4 +1,4 @@
 teams.student.plotz.Plotz
 100
-teams.student.januaryPlotz.JanuaryPlotz
+teams.foes.dummy.Dummy
 100

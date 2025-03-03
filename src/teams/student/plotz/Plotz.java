@@ -30,7 +30,6 @@ public class Plotz extends Player
 		overall = new OverallAnalysis(this);
 		blocks = new BlockManager(this);
 
-		Raider.setGatherer();
 		Gatherer.setThrown();
 
 	}
@@ -67,6 +66,8 @@ public class Plotz extends Player
 	{
 		if (getFleetValueUnit(Distractor.class)< 1) {
 			buildUnit(new Distractor(this));
+		} else if (getFleetValueUnit(Catcher.class)< 4) {
+			buildUnit(new Catcher(this));
 		}
 		else if (getFleetValueUnit(Raider.class)< 20 && OverallAnalysis.getCurrentStage() == OverallAnalysis.BUILD) {
 			buildUnit(new Raider(this));
@@ -106,17 +107,17 @@ public class Plotz extends Player
 		}
 		addMessage(""+Raider.getGatherer());
 
-		for (Unit gatherer : OverallAnalysis.getAlly().getMyGathererUnts()) {
-			Point futurePosition = ((Gatherer) gatherer).getFutureHomeBasePosition();
-
-			// line
-			g.setColor(Color.red);
-			g.drawLine(gatherer.getX(), gatherer.getY(), futurePosition.getX(), futurePosition.getY());
-
-			// future pos
-			g.setColor(Color.blue);
-			g.fillOval(futurePosition.getX(), futurePosition.getY(), 6, 6);
-		}
+//		for (Unit gatherer : OverallAnalysis.getAlly().getMyGathererUnts()) {
+//			Point futurePosition = ((Gatherer) gatherer).getFutureHomeBasePosition();
+//
+//			// line
+//			g.setColor(Color.red);
+//			g.drawLine(gatherer.getX(), gatherer.getY(), futurePosition.getX(), futurePosition.getY());
+//
+//			// future pos
+//			g.setColor(Color.blue);
+//			g.fillOval(futurePosition.getX(), futurePosition.getY(), 6, 6);
+//		}
 
 		for (Resource r: Gatherer.thrown) {
 			g.setColor(Color.pink);

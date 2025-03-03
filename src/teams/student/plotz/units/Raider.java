@@ -46,6 +46,7 @@ public class Raider extends Distractor {
 
     public static Point getRally(){ return rally;}
     public static Unit getGatherer(){ return gather;}
+
     
 
 //    public void action() {
